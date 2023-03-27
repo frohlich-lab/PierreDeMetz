@@ -1,3 +1,5 @@
+NOTE THAT THIS ISNT A FORK BUT A STANDALONE REPOSITORY
+
 Welcome to the GitHub repository for the following publication: [Mapping the energetic and allosteric landscapes of protein binding domains (Faure AJ, Domingo J & Schmiedel JM et al., 2022)](https://www.nature.com/articles/s41586-022-04586-4)
 
 Here you'll find an R package with all scripts to reproduce the figures and results from the computational analyses described in the paper.
