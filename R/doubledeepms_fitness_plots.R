@@ -1,4 +1,4 @@
-
+library(data.table)
 #' doubledeepms_fitness_plots
 #'
 #' Plot fitness distributions and scatterplots.
@@ -20,8 +20,9 @@ doubledeepms_fitness_plots <- function(
   outpath,
   colour_scheme,
   execute = TRUE
+  #print(outpath)
   ){
-
+  #print(outpath)
   #Return if analysis not executed
   if(!execute){
     return()

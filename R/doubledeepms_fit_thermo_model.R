@@ -111,7 +111,7 @@ doubledeepms_fit_thermo_model <- function(
     #Output folder
     doubledeepms__create_dir(doubledeepms_dir = file.path(mochi_base_dir, domain_name), overwrite_dir = FALSE)
     mochi_outpath <- file.path(mochi_base_dir, domain_name, mochi_output_name)
-
+    
     #Run
     doubledeepms__mochi__fit_tmodel_3state(
       fitness_folding_inpath = fitness_folding_inpath,
@@ -121,10 +121,11 @@ doubledeepms_fit_thermo_model <- function(
       mut_order_subset_obs = mut_order_subset_obs,
       fit_type = fit_type,
       subsample_prop = tmodel_subsample_prop,
-      mochi_script = system.file("python", "mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepms"),
+      mochi_script = system.file("python", "pierre_mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepmsv2"),
       mochi_outpath = mochi_outpath,
       num_samples = num_samples,
       learning_rate = learning_rate,
       job_number = tmodel_job_number)
   }
 }
+#print('R test')

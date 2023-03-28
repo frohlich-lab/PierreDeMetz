@@ -1,0 +1,2 @@
+phenotype median_count
+binding 193

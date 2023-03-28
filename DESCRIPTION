@@ -1,4 +1,4 @@
-Package: doubledeepms
+Package: doubledeepmsv2
 Title: Analysis scripts to reproduce the figures and results from doubleDeepPCA manuscript
 Version: 0.0.4.9000
 Authors@R: c(

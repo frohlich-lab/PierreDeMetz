@@ -1,0 +1,3 @@
+phenotype median_count
+abundance 15
+binding 16

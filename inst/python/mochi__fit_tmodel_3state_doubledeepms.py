@@ -3,12 +3,11 @@
 #######################################################################
 ## COMMANDLINE ARGUMENTS ##
 #######################################################################
-
 import argparse
 
 #Create parser
 parser = argparse.ArgumentParser()
- 
+
 #Add arguments to the parser
 parser.add_argument("--data_train", help = "Training data")
 parser.add_argument("--data_valid", default = None, help = "Validation data")
@@ -30,10 +29,10 @@ parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Rand
 args = parser.parse_args()
 print(args)
 
-data_train_file = args.data_train 
-data_valid_file = args.data_valid 
-data_obs_file = args.data_obs 
-output_directory = args.output_directory 
+data_train_file = args.data_train
+data_valid_file = args.data_valid
+data_obs_file = args.data_obs
+output_directory = args.output_directory
 number_additive_traits = args.number_additive_traits
 num_epochs_grid = args.num_epochs_grid
 num_epochs = args.num_epochs
@@ -106,7 +105,7 @@ class Between(Constraint):
     def __init__(self, min_value, max_value):
         self.min_value = min_value
         self.max_value = max_value
-    def __call__(self, w):        
+    def __call__(self, w):
         return K.clip(w, self.min_value, self.max_value)
     def get_config(self):
         return {'min_value': self.min_value,
@@ -261,7 +260,7 @@ def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_
   output_layer = keras.layers.Add()([multiplicative_layer_folding, multiplicative_layer_binding])
   #Create keras model defining input and output layers
   model = keras.Model(
-    inputs = [input_layer_select, input_layer_folding, input_layer_binding], 
+    inputs = [input_layer_select, input_layer_folding, input_layer_binding],
     outputs = [output_layer])
   # Compile model
   opt = keras.optimizers.Adam(learning_rate = learn_rate)
@@ -285,9 +284,9 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     learn_rate = param_dict['learning_rate'],
     l1=param_dict['l1_regularization_factor'],
     l2=param_dict['l2_regularization_factor'],
-    input_dim_select = input_data['train']['select'].shape[1], 
-    input_dim_folding = input_data['train']['fold'].shape[1], 
-    input_dim_binding = input_data['train']['bind'].shape[1], 
+    input_dim_select = input_data['train']['select'].shape[1],
+    input_dim_folding = input_data['train']['fold'].shape[1],
+    input_dim_binding = input_data['train']['bind'].shape[1],
     number_additive_traits = param_dict['number_additive_traits'])
   #Validation data
   validation_data = (
@@ -334,8 +333,8 @@ model_data = load_model_data({
 #Resample training data
 if num_resamplings!=0:
   model_data["train"] = resample_training_data(
-    tensor_dict = model_data["train"], 
-    n_resamplings = num_resamplings, 
+    tensor_dict = model_data["train"],
+    n_resamplings = num_resamplings,
     rand_seed = random_seed)
 
 #######################################################################
@@ -351,10 +350,10 @@ if len(l1)==1 and len(l2)==1 and len(batch_size)==1 and len(learn_rate)==1:
 else:
   #All combinations of tunable parameters
   parameter_grid = [{
-  "num_samples":i, 
-  "learning_rate":j, 
-  "l1_regularization_factor":k, 
-  "l2_regularization_factor":l, 
+  "num_samples":i,
+  "learning_rate":j,
+  "l1_regularization_factor":k,
+  "l2_regularization_factor":l,
   "number_additive_traits":1} for i in batch_size for j in learn_rate for k in l1 for l in l2]
   #Perform grid search
   grid_results = [fit_model_grid(i, model_data, num_epochs_grid) for i in parameter_grid]
@@ -383,9 +382,9 @@ model = create_model(
   learn_rate = learning_rate,
   l1=l1_regularization_factor,
   l2=l2_regularization_factor,
-  input_dim_select = model_data['train']['select'].shape[1], 
-  input_dim_folding = model_data['train']['fold'].shape[1], 
-  input_dim_binding = model_data['train']['bind'].shape[1], 
+  input_dim_select = model_data['train']['select'].shape[1],
+  input_dim_folding = model_data['train']['fold'].shape[1],
+  input_dim_binding = model_data['train']['bind'].shape[1],
   number_additive_traits = number_additive_traits)
 print(model.summary())
 
@@ -407,7 +406,7 @@ for model_count in range(num_models):
   model_callbacks = []
   if early_stopping:
     model_callbacks = [
-      keras.callbacks.EarlyStopping(monitor='val_loss', patience=num_epochs*0.1), 
+      keras.callbacks.EarlyStopping(monitor='val_loss', patience=num_epochs*0.1),
       keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_directory, 'my_model_'+str(model_count)), monitor='val_loss', save_best_only=True)]
 
   #Fit the model
@@ -506,4 +505,3 @@ for model_count in range(num_models):
         f.write(str(float(ml.weights[0]))+"\n")
         f.write(ml.name.replace("additive", "linear")+"_bias\n")
         f.write(str(float(ml.weights[1]))+"\n")
-
