@@ -265,10 +265,38 @@ doubledeepms__mochi__fit_tmodel_3state <- function(
   ###########################
   ### Fit model
   ###########################
-
+  print(paste0(
+    "conda activate pierre;python ", mochi_script,
+    " --data_train ",
+    file.path(mochi_outpath, run_name, "dataset_train.txt"),
+    " --data_valid ",
+    file.path(mochi_outpath, run_name, "dataset_valid.txt"),
+    " --data_obs ",
+    file.path(mochi_outpath, run_name, "dataset_all.txt"),
+    " -o ",
+    file.path(mochi_outpath, run_name),
+    " -e ",
+    num_epochs_grid,
+    " --l1_regularization_factor ",
+    "0",
+    " --l2_regularization_factor ",
+    "0",
+    " -p ",
+    num_epochs,
+    " --num_samples ",
+    num_samples,
+    " --learning_rate ",
+    learning_rate,
+    " --num_resamplings ",
+    num_resamplings,
+    " --num_models ",
+    1,
+    " --random_seed ",
+    job_number+1))
+  
   #Run mochi python script on command-line
   system(paste0(
-    "python ", mochi_script,
+    "conda activate pierre;python ", mochi_script,
     " --data_train ",
     file.path(mochi_outpath, run_name, "dataset_train.txt"),
     " --data_valid ",

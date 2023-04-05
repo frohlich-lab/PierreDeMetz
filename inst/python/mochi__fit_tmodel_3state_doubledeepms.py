@@ -27,7 +27,7 @@ parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Rand
 
 #Parse the arguments
 args = parser.parse_args()
-print(args)
+#print(args)
 
 data_train_file = args.data_train
 data_valid_file = args.data_valid
@@ -55,15 +55,15 @@ import numpy as np
 from matplotlib import pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import random
 from sklearn.metrics import mean_absolute_error
 import matplotlib
 import os
 
-from tensorflow.keras.constraints import Constraint
-from tensorflow.keras.layers import Layer
-from tensorflow.keras import backend as K
+from keras.constraints import Constraint
+from keras.layers import Layer
+from keras import backend as K
 
 #######################################################################
 ## CLASSES ##
@@ -355,6 +355,7 @@ else:
   "l1_regularization_factor":k,
   "l2_regularization_factor":l,
   "number_additive_traits":1} for i in batch_size for j in learn_rate for k in l1 for l in l2]
+    
   #Perform grid search
   grid_results = [fit_model_grid(i, model_data, num_epochs_grid) for i in parameter_grid]
   best_params = parameter_grid[[i for i in range(len(grid_results)) if grid_results[i]==min(grid_results)][0]]

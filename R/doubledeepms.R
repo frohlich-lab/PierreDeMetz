@@ -22,6 +22,11 @@
 #'
 #' @return Nothing
 #' @export
+#' 
+#library(reticulate)
+#use_python("/Users/pierredemetz/miniconda3/envs/pierre/bin/python")
+#py_run_file("/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py")
+
 doubledeepms <- function(
   startStage = 1,
   stopStage = 15,

@@ -27,7 +27,7 @@ parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Rand
 
 #Parse the arguments
 args = parser.parse_args()
-print(args)
+#print(args)
 
 data_train_file = args.data_train
 data_valid_file = args.data_valid
@@ -54,6 +54,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import tensorflow as tf
+#tf.config.optimizer.set_jit(False)
 from tensorflow import keras
 from keras.models import load_model
 import random
@@ -65,244 +66,289 @@ from keras.constraints import Constraint
 from keras.layers import Layer
 from keras import backend as K
 
+import jax
+import jax.nn as nn
+from jax.random import normal
+from jax.experimental import sparse
+from jax.tree_util import tree_map
+import jaxlib
+import jax.numpy as jnp
+import haiku as hk
+import optax
+from jax import jit
+from functools import partial
+
+
 #######################################################################
 ## CLASSES ##
 #######################################################################
 
-class State_prob_folded(Layer):
-    def __init__(self, trainable=False, **kwargs):
-        super(State_prob_folded, self).__init__(**kwargs)
-        self.supports_masking = True
-        self.trainable = trainable
-    def build(self, input_shape):
-        super(State_prob_folded, self).build(input_shape)
-    def call(self, inputs, mask=None):
-        return K.pow(K.constant(1.) + K.exp(inputs),-1)
-    def get_config(self):
-        config = {'trainable': self.trainable}
-        base_config = super(State_prob_folded, self).get_config()
-        return dict(list(base_config.items()) + list(config.items()))
-    def compute_output_shape(self, input_shape):
-        return input_shape
+class StateProbFolded(hk.Module):
+    def __call__(self, inputs):
+        return nn.sigmoid(inputs)
 
-class State_prob_bound(Layer):
-    def __init__(self, trainable=False, **kwargs):
-        super(State_prob_bound, self).__init__(**kwargs)
-        self.supports_masking = True
-        self.trainable = trainable
-    def build(self, input_shape):
-        super(State_prob_bound, self).build(input_shape)
-    def call(self, inputs, mask=None):
-        return K.pow(K.constant(1.) + K.exp(inputs[0]) * (K.constant(1.)+K.exp(inputs[1])),-1)
-    def get_config(self):
-        config = {'trainable': self.trainable}
-        base_config = super(State_prob_bound, self).get_config()
-        return dict(list(base_config.items()) + list(config.items()))
-    def compute_output_shape(self, input_shape):
-        return input_shape
+class StateProbBound(hk.Module):
+    def __call__(self, inputs_1, inputs_2):
+        return nn.sigmoid(inputs_1 + nn.softplus(inputs_2))
 
-class Between(Constraint):
-    def __init__(self, min_value, max_value):
+class Between(hk.Module):
+    def __init__(self, min_value, max_value, name=None):
+        super().__init__(name=name)
         self.min_value = min_value
         self.max_value = max_value
-    def __call__(self, w):
-        return K.clip(w, self.min_value, self.max_value)
-    def get_config(self):
-        return {'min_value': self.min_value,
-                'max_value': self.max_value}
+
+    def __call__(self, inputs):
+        return jax.lax.clamp(self.min_value, inputs, self.max_value)
 
 #######################################################################
 ## FUNCTIONS ##
 #######################################################################
 
-#Load model data into sparse tensors
 def load_model_data(file_dict):
-  data_dict = {}
-  for name in file_dict.keys():
-    #Initialise
-    data_dict[name] = {}
-    #Column names
-    ALL_COLUMNS = list(pd.read_csv(file_dict[name], nrows = 1).columns)
-    SELECT_COLUMNS = [i for i in range(len(ALL_COLUMNS)) if str.startswith(ALL_COLUMNS[i], "dataset_")]
-    FOLD_COLUMNS = [i for i in range(len(ALL_COLUMNS)) if str.startswith(ALL_COLUMNS[i], "fold_") or ALL_COLUMNS[i]=="WT"]
-    BIND_COLUMNS = [i for i in range(len(ALL_COLUMNS)) if str.startswith(ALL_COLUMNS[i], "bind_") or ALL_COLUMNS[i]=="WT"]
-    TARGET_COLUMN = [i for i in range(len(ALL_COLUMNS)) if ALL_COLUMNS[i]=="fitness"]
-    TARGET_SD_COLUMN = [i for i in range(len(ALL_COLUMNS)) if ALL_COLUMNS[i]=="fitness_sd"]
-    SEQUENCE_COLUMN = [i for i in range(len(ALL_COLUMNS)) if ALL_COLUMNS[i]=="variant_sequence"]
-    TRAINING_SET_COLUMN = [i for i in range(len(ALL_COLUMNS)) if ALL_COLUMNS[i]=="training_set"]
-    #Save (sparse) tensors
-    data_dict[name]["select"] = tf.convert_to_tensor(np.asarray(pd.read_csv(file_dict[name], usecols = SELECT_COLUMNS)), np.float32)
-    data_dict[name]["fold"] = tf.sparse.from_dense(tf.convert_to_tensor(np.asarray(pd.read_csv(file_dict[name], usecols = FOLD_COLUMNS)), np.float32))
-    data_dict[name]["bind"] = tf.sparse.from_dense(tf.convert_to_tensor(np.asarray(pd.read_csv(file_dict[name], usecols = BIND_COLUMNS)), np.float32))
-    data_dict[name]["target"] = tf.convert_to_tensor(np.asarray(pd.read_csv(file_dict[name], usecols = TARGET_COLUMN)), np.float32)
-    data_dict[name]["target_sd"] = tf.convert_to_tensor(np.asarray(pd.read_csv(file_dict[name], usecols = TARGET_SD_COLUMN)), np.float32)
-    #Save remaining columns
-    if len(SEQUENCE_COLUMN)!=0 and len(TRAINING_SET_COLUMN)!=0:
-      data_dict[name]["sequence"] = np.asarray(pd.read_csv(file_dict[name], usecols = SEQUENCE_COLUMN))
-    if len(TRAINING_SET_COLUMN)!=0:
-      data_dict[name]["training_set"] = np.asarray(pd.read_csv(file_dict[name], usecols = TRAINING_SET_COLUMN))
-    data_dict[name]["fold_colnames"] = np.asarray([ALL_COLUMNS[i].replace("fold_", "") for i in FOLD_COLUMNS])
-    data_dict[name]["bind_colnames"] = np.asarray([ALL_COLUMNS[i].replace("bind_", "") for i in BIND_COLUMNS])
-  return data_dict
+    data_dict = {}
+    for name in file_dict.keys():
+        # Initialize
+        data_dict[name] = {}
+
+        # Read the entire file once
+        df = pd.read_csv(file_dict[name])
+
+        # Column names
+        ALL_COLUMNS = list(df.columns)
+        SELECT_COLUMNS = [col for col in ALL_COLUMNS if col.startswith("dataset_")]
+        FOLD_COLUMNS = [col for col in ALL_COLUMNS if col.startswith("fold_") or col == "WT"]
+        BIND_COLUMNS = [col for col in ALL_COLUMNS if col.startswith("bind_") or col == "WT"]
+        TARGET_COLUMN = "fitness"
+        TARGET_SD_COLUMN = "fitness_sd"
+        SEQUENCE_COLUMN = "variant_sequence"
+        TRAINING_SET_COLUMN = "training_set"
+
+        # Save (sparse) tensors
+        data_dict[name]["select"] = jnp.array(df[SELECT_COLUMNS], dtype=jnp.float32)
+        data_dict[name]["fold"] = sparse.BCOO.fromdense(jnp.array(df[FOLD_COLUMNS], dtype=jnp.float32))
+        data_dict[name]["bind"] = sparse.BCOO.fromdense(jnp.array(df[BIND_COLUMNS], dtype=jnp.float32))
+        data_dict[name]["target"] = jnp.array(df[TARGET_COLUMN], dtype=jnp.float32)
+        data_dict[name]["target_sd"] = jnp.array(df[TARGET_SD_COLUMN], dtype=jnp.float32)
+
+        # Save remaining columns
+        if SEQUENCE_COLUMN in df.columns:
+            data_dict[name]["sequence"] = np.array(df[SEQUENCE_COLUMN].values)
+        if TRAINING_SET_COLUMN in df.columns:
+            data_dict[name]["training_set"] = jnp.expand_dims(jnp.array(df[TRAINING_SET_COLUMN].values), axis=-1)
+
+        data_dict[name]["fold_colnames"] = np.array([col.replace("fold_", "") for col in FOLD_COLUMNS])
+        data_dict[name]["bind_colnames"] = np.array([col.replace("bind_", "") for col in BIND_COLUMNS])
+
+    return data_dict
 
 #Resample training data
-def resample_training_data(tensor_dict, n_resamplings, rand_seed):
-  #Resample observed fitness from error distribution
-  np.random.seed(rand_seed)
-  observed_fitness = np.array(tensor_dict["target"])
-  observed_fitness_sd = np.array(tensor_dict["target_sd"])
-  observed_fitness_resample = np.array(
-    [np.array(
-      [observed_fitness[i]+np.random.normal(0, observed_fitness_sd[i]) for i in range(len(observed_fitness))])
-    for j in range(n_resamplings)])
-  #Save new data
-  tensor_dict["target"] = tf.expand_dims(tf.convert_to_tensor(np.ravel(observed_fitness_resample), np.float32), -1)
-  tensor_dict["select"] = tf.concat([tensor_dict["select"] for i in range(n_resamplings)], axis = 0)
-  tensor_dict["fold"] = tf.sparse.concat(axis = 0, sp_inputs=[tensor_dict["fold"] for i in range(n_resamplings)])
-  tensor_dict["bind"] = tf.sparse.concat(axis = 0, sp_inputs=[tensor_dict["bind"] for i in range(n_resamplings)])
-  return(tensor_dict)
+def resample_training_data_jax(tensor_dict, n_resamplings, rng):
+    # Resample observed fitness from error distribution
+
+    observed_fitness = tensor_dict["target"]
+    observed_fitness_sd = tensor_dict["target_sd"]
+
+    observed_fitness_resample = jnp.array(
+    [jnp.array(
+      [observed_fitness[i]+(observed_fitness_sd[i] * jax.random.normal(rng, shape=(1,))) for i in range(len(observed_fitness))])
+    for j in range(n_resamplings)]
+    )
+    print('here')
+    #Save new data
+
+    tensor_dict["target"] = jax.device_put(jnp.expand_dims(observed_fitness_resample.ravel(), -1))
+
+    select_tensors = [tensor_dict["select"] for i in range(n_resamplings)]  # Assuming n_resamplings is defined
+    tensor_dict["select"] = jnp.concatenate(select_tensors, axis=0)
+
+    fold_matrices = [tensor_dict["fold"] for i in range(n_resamplings)]  # Assuming fold tensors are JAX-compatible sparse matrices
+    tensor_dict["fold"] = jax.experimental.sparse.bcoo_concatenate(fold_matrices, dimension=0)
+
+    bind_matrices = [tensor_dict["bind"] for i in range(n_resamplings)]  # Assuming bind tensors are JAX-compatible sparse matrices
+    tensor_dict["bind"] = jax.experimental.sparse.bcoo_concatenate(bind_matrices, dimension=0)
+
+    return tensor_dict
 
 #Get sequence ID from sequence string
 def get_seq_id(sq):
-  return ":".join([str(i)+sq[i] for i in range(len(sq))])
+    return ":".join([str(i)+sq[i] for i in range(len(sq))])
 
 #Little function that returns layer index corresponding to layer name
 def get_layer_index(model, layername):
-  for idx, layer in enumerate(model.layers):
-    if layer.name == layername:
-      return idx
+    for idx, layer in enumerate(model.layers):
+        if layer.name == layername:
+            return idx
 
-def shuffle_weights(model, weights=None):
-  """Randomly permute the weights in `model`, or the given `weights`.
+def _shuffle_array(rng, arr):
+    flat_arr = arr.ravel()
+    shuffled_flat_arr = jax.random.permutation(rng, flat_arr)
+    return jnp.reshape(shuffled_flat_arr, arr.shape)
 
-  This is a fast approximation of re-initializing the weights of a model.
+def shuffle_weights(rng, model, weights=None):
 
-  Assumes weights are distributed independently of the dimensions of the weight tensors
+    """
+    Randomly permute the weights in `model`, or the given `weights`.
+
+    This is a fast approximation of re-initializing the weights of a model.
+
+    Assumes weights are distributed independently of the dimensions of the weight tensors
     (i.e., the weights have the same distribution along each dimension).
 
-  :param Model model: Modify the weights of the given model.
-  :param list(ndarray) weights: The model's weights will be replaced by a random permutation of these weights.
+    :param Model model: Modify the weights of the given model.
+    :param list(ndarray) weights: The model's weights will be replaced by a random permutation of these weights.
     If `None`, permute the model's current weights.
-  """
-  if weights is None:
-    weights = model.get_weights()
-  weights = [np.random.permutation(w.flat).reshape(w.shape) for w in weights]
-  # Faster, but less random: only permutes along the first dimension
-  # weights = [np.random.permutation(w) for w in weights]
-  model.set_weights(weights)
+    """
 
-#Function to create a keras model
+    if weights is None:
+        weights = model.params
+
+    rngs = jax.random.split(rng, len(weights))
+    shuffled_weights = tree_map(lambda r, w: _shuffle_array(r, w), rngs, weights)
+
+    # Assuming `model` has a method `replace` that replaces its parameters.
+    # Adjust this line if the model structure is different.
+    new_model = model.replace(params=shuffled_weights)
+    return new_model
+
+#might remove
+def between(min_value, max_value):
+    def clip_fn(params):
+        return jax.tree_map(lambda w: jnp.clip(w, min_value, max_value), params)
+    return clip_fn
+
+
+def create_model_fn(number_additive_traits, l1, l2):
+    """
+    This function returns a function that creates the model. The model is a
+    neural network that predicts the log fold change of a protein. The model
+    uses a combination of linear and nonlinear layers. The nonlinear layers
+    use additive traits, which are the outputs of the linear layers.
+    The outputs of the nonlinear layers are then used to create a multiplicative
+    layer that is used in the prediction.
+    """
+    def model_fn(inputs_select, inputs_folding, inputs_binding):
+        """
+        This function creates the model. The model is a neural network that
+        predicts the log fold change of a protein. The model uses a combination
+        of linear and nonlinear layers. The nonlinear layers use additive traits,
+        which are the outputs of the linear layers. The outputs of the nonlinear
+        layers are then used to create a multiplicative layer that is used in
+        the prediction.
+        """
+        input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
+        input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
+
+        folding_additive_trait_layer = hk.Linear(number_additive_traits, w_init=hk.initializers.GlorotNormal(), with_bias=False)(inputs_folding)
+        folding_nonlinear_layer = StateProbFolded()(folding_additive_trait_layer)
+        folding_additive_layer = hk.Linear(1,
+                                           w_init=hk.initializers.GlorotNormal(),
+                                           with_bias=False,
+                                           kernel_regularizer=hk.regularizers.L1L2(l1=l1, l2=l2))(folding_nonlinear_layer)
+
+        binding_additive_trait_layer = hk.Linear(number_additive_traits, w_init=hk.initializers.GlorotNormal(), with_bias=False)(inputs_binding)
+        binding_nonlinear_layer = StateProbBound()(binding_additive_trait_layer, folding_additive_trait_layer)
+        binding_additive_layer = hk.Linear(1,
+                                           w_init=hk.initializers.GlorotNormal(),
+                                           with_bias=False)(binding_nonlinear_layer)
+
+        multiplicative_layer_folding = folding_additive_layer * input_layer_select_folding
+        multiplicative_layer_binding = binding_additive_layer * input_layer_select_binding
+        output_layer = multiplicative_layer_folding + multiplicative_layer_binding
+
+        return output_layer
+
+    return model_fn
+
+
 def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding, number_additive_traits):
-  ### INPUT LAYER
-  ########################################
-  #Input layer select
-  input_layer_select = keras.layers.Input(
-    shape = input_dim_select,
-    name = "input_select")
-  #Split
-  input_layer_select_folding = keras.layers.Lambda(lambda x: tf.expand_dims(x[:,0],-1))(input_layer_select)
-  input_layer_select_binding = keras.layers.Lambda(lambda x: tf.expand_dims(x[:,1],-1))(input_layer_select)
-  #Input layer folding
-  input_layer_folding = keras.layers.Input(
-    shape = input_dim_folding,
-    name = "input_fold", sparse=True)
-  #Input layer binding
-  input_layer_binding = keras.layers.Input(
-    shape = input_dim_binding,
-    name = "input_bind", sparse=True)
-  ### FOLDING LAYERS
-  ########################################
-  #Folding additive trait layer
-  folding_additive_trait_layer = keras.layers.Dense(
-    number_additive_traits,
-    # input_dim = input_dim,
-    kernel_initializer = 'glorot_normal',
-    activation = "linear",
-    use_bias = False,
-    name = "folding_additivetrait")(input_layer_folding)
-    # kernel_regularizer = keras.regularizers.l1_l2(l1 = l1, l2 = l2))(input_layerB)
-  #Folding nonlinear layer
-  folding_nonlinear_layer = State_prob_folded(trainable=False)(folding_additive_trait_layer)
-  #Folding additive layer
-  folding_additive_layer = keras.layers.Dense(
-    1,
-    activation = "linear",
-    name = "folding_additive",
-    kernel_constraint=Between(0, 1e3)#, bias_constraint=Between(-1, 1)
-    )(folding_nonlinear_layer)
-  ### BINDING LAYERS
-  ########################################
-  #Binding additive trait layer
-  binding_additive_trait_layer = keras.layers.Dense(
-    number_additive_traits,
-    # input_dim = input_dim,
-    kernel_initializer = 'glorot_normal',
-    activation = "linear",
-    use_bias = False,
-    name = "binding_additivetrait",
-    kernel_regularizer = keras.regularizers.l1_l2(l1 = l1, l2 = l2))(input_layer_binding)
-  #Binding nonlinear layer
-  binding_nonlinear_layer = State_prob_bound(trainable=False)([binding_additive_trait_layer, folding_additive_trait_layer])
-  #Binding additive layer
-  binding_additive_layer = keras.layers.Dense(
-    1,
-    activation = "linear",
-    name = "binding_additive",
-    kernel_constraint=Between(0, 1e3)#, bias_constraint=Between(-1, 1)
-    )(binding_nonlinear_layer)
-  ### OUTPUT LAYERS
-  ########################################
-  #Multiplicative layer folding
-  multiplicative_layer_folding = keras.layers.Multiply()([folding_additive_layer, input_layer_select_folding])
-  #Multiplicative layer binding
-  multiplicative_layer_binding = keras.layers.Multiply()([binding_additive_layer, input_layer_select_binding])
-  #Sum layer
-  output_layer = keras.layers.Add()([multiplicative_layer_folding, multiplicative_layer_binding])
-  #Create keras model defining input and output layers
-  model = keras.Model(
-    inputs = [input_layer_select, input_layer_folding, input_layer_binding],
-    outputs = [output_layer])
-  # Compile model
-  opt = keras.optimizers.Adam(learning_rate = learn_rate)
-  #Compile the model
-  model.compile(
-    optimizer = opt,
-    loss = 'mean_absolute_error')
-  return model
+    # Create model
+    model_fn = create_model_fn(number_additive_traits, l1, l2)
+    model = hk.without_apply_rng(hk.transform(model_fn))
+
+    # Create optimizer
+    opt = optax.chain(
+        optax.adam(learn_rate),
+        optax.constraint(between(0, 1e3), ['folding_additive', 'binding_additive']),
+    )
+
+    # Create regularizer
+    regularizer = hk.regularizers.L1L2(l1=l1, l2=l2)
+
+    return model, opt, regularizer
+
+
+def generate_batches(input_data, batch_size, rng):
+    """Generate batches for training.
+
+    Args:
+        input_data: A dictionary of NumPy arrays containing the input data.
+        batch_size: The batch size.
+        rng: A JAX PRNGKey.
+
+    Yields:
+        A tuple of (select, fold, bind, target) batches.
+    """
+    num_samples = input_data['select'].shape[0]
+    indices = jnp.arange(num_samples)
+
+    # Shuffle the training data.
+    rng, _ = jax.random.split(rng)
+    indices = jax.random.permutation(rng, indices)
+
+    # Generate batches.
+    for start_idx in range(0, num_samples, batch_size):
+        end_idx = min(start_idx + batch_size, num_samples)
+        batch_indices = indices[start_idx:end_idx]
+
+        batch_select = input_data['select'][batch_indices]
+        batch_fold = input_data['fold'][batch_indices]
+        batch_bind = input_data['bind'][batch_indices]
+        batch_target = input_data['target'][batch_indices]
+
+        yield batch_select, batch_fold, batch_bind, batch_target
 
 #Fit model for gridsearch
-def fit_model_grid(param_dict, input_data, n_epochs):
-  #Clear session
-  keras.backend.clear_session()
-  #Summarize results
-  print("Grid search using %s" % (param_dict))
-  #Set random seeds
-  random.seed(random_seed)
-  tf.random.set_seed(random_seed)
-  #Create model
-  model = create_model(
-    learn_rate = param_dict['learning_rate'],
-    l1=param_dict['l1_regularization_factor'],
-    l2=param_dict['l2_regularization_factor'],
-    input_dim_select = input_data['train']['select'].shape[1],
-    input_dim_folding = input_data['train']['fold'].shape[1],
-    input_dim_binding = input_data['train']['bind'].shape[1],
-    number_additive_traits = param_dict['number_additive_traits'])
-  #Validation data
-  validation_data = (
-    [input_data['valid']['select'], input_data['valid']['fold'], input_data['valid']['bind']],
-    input_data['valid']['target'])
-  #Fit the model
-  history = model.fit(
-    [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
-    input_data['train']['target'],
-    validation_data = validation_data,
-    epochs = n_epochs,
-    batch_size = param_dict['num_samples'],
-    shuffle = True,
-    verbose = 0,
-    use_multiprocessing = True)
-  return(history.history["val_loss"][-1])
+def fit_model_grid(param_dict, input_data, n_epochs, rng):
+
+    #Summarize results
+    print("Grid search using %s" % (param_dict))
+
+    rng_init, rng_batches = jax.random.split(rng)
+
+    #Create model
+    model, optimizer, regularizer = create_model(
+        learn_rate = param_dict['learning_rate'],
+        l1=param_dict['l1_regularization_factor'],
+        l2=param_dict['l2_regularization_factor'],
+        input_dim_select = input_data['train']['select'].shape[1],
+        input_dim_folding = input_data['train']['fold'].shape[1],
+        input_dim_binding = input_data['train']['bind'].shape[1],
+        number_additive_traits = param_dict['number_additive_traits'])
+
+    def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
+        output = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        loss = jnp.mean(jnp.abs(output - target))
+        reg_loss = regularizer(params)
+        total_loss = loss + reg_loss
+        return total_loss
+
+    @jax.jit
+    def update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target):
+        grads = jax.grad(loss_fn)(params, inputs_select, inputs_folding, inputs_binding, target)
+        updates, new_opt_state = optimizer.update(grads, opt_state)
+        new_params = optax.apply_updates(params, updates)
+        return new_params, new_opt_state
+
+    params = model.init(rng, input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind'])
+    opt_state = optimizer.init(params)
+
+    for epoch in range(n_epochs):
+        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
+            inputs_select, inputs_folding, inputs_binding, target = batch_data
+            params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+        # Validation loss
+        val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'], input_data['valid']['bind'], input_data['valid']['target'])
+    return val_loss.item()
 
 #######################################################################
 ## SETUP ##
@@ -314,89 +360,96 @@ def fit_model_grid(param_dict, input_data, n_epochs):
 model_directory = os.path.join(output_directory, "whole_model")
 #Create output model directory
 try:
-  os.mkdir(model_directory)
+    os.mkdir(model_directory)
 except FileExistsError:
-  print("Warning: Output model directory already exists.")
+    print("Warning: Output model directory already exists.")
 
 #Output plot directory
 plot_directory = os.path.join(output_directory, "plots")
 #Create output plot directory
 try:
-  os.mkdir(plot_directory)
+    os.mkdir(plot_directory)
 except FileExistsError:
-  print("Warning: Output plot directory already exists.")
+    print("Warning: Output plot directory already exists.")
+
+#create the rng
+random_seed = 42
+rng = jax.random.PRNGKey(random_seed)
 
 #Load model data
 model_data = load_model_data({
-  "train": data_train_file,
-  "valid": data_valid_file,
-  "obs": data_obs_file})
+    "train": data_train_file,
+    "valid": data_valid_file,
+    "obs": data_obs_file
+    })
 
 #Resample training data
 if num_resamplings!=0:
-  model_data["train"] = resample_training_data(
-    tensor_dict = model_data["train"],
-    n_resamplings = num_resamplings,
-    rand_seed = random_seed)
+    model_data["train"] = resample_training_data_jax(
+        tensor_dict = model_data["train"],
+        n_resamplings = num_resamplings,
+        rand_num_gen = rng
+        )
 
 #######################################################################
 ## TUNE LEARNING RATE, NUMBER OF SAMPLES AND REGULARISATION PARAMS ##
 #######################################################################
 
-if len(l1)==1 and len(l2)==1 and len(batch_size)==1 and len(learn_rate)==1:
-  #Only parameters
-  num_samples = batch_size[0]
-  learning_rate = learn_rate[0]
-  l1_regularization_factor = l1[0]
-  l2_regularization_factor = l2[0]
+#Fit model
+if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) == 1:
+    best_params = {
+        "num_samples": batch_size[0],
+        "learning_rate": learn_rate[0],
+        "l1_regularization_factor": l1[0],
+        "l2_regularization_factor": l2[0],
+        "number_additive_traits": 1
+    }
 else:
-  #All combinations of tunable parameters
-  parameter_grid = [{
-  "num_samples":i,
-  "learning_rate":j,
-  "l1_regularization_factor":k,
-  "l2_regularization_factor":l,
-  "number_additive_traits":1} for i in batch_size for j in learn_rate for k in l1 for l in l2]
-  #Perform grid search
-  grid_results = [fit_model_grid(i, model_data, num_epochs_grid) for i in parameter_grid]
-  best_params = parameter_grid[[i for i in range(len(grid_results)) if grid_results[i]==min(grid_results)][0]]
-  #Summarize results
-  print("Best: %f using %s" % (min(grid_results), best_params))
-  #Best parameters
-  num_samples = best_params['num_samples']
-  learning_rate = best_params['learning_rate']
-  l1_regularization_factor = best_params['l1_regularization_factor']
-  l2_regularization_factor = best_params['l2_regularization_factor']
+    parameter_grid = [{
+        "num_samples": i,
+        "learning_rate": j,
+        "l1_regularization_factor": k,
+        "l2_regularization_factor": l,
+        "number_additive_traits": 1
+    } for i in batch_size for j in learn_rate for k in l1 for l in l2]
+
+    rng = jax.random.PRNGKey(random_seed)
+    rngs = jax.random.split(rng, len(parameter_grid))
+
+    grid_results = [fit_model_grid(params, model_data, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+
+    best_params = parameter_grid[np.argmin(grid_results)]
+
+    print("Best: %f using %s" % (min(grid_results), best_params))
+
+num_samples = best_params['num_samples']
+learning_rate = best_params['learning_rate']
+l1_regularization_factor = best_params['l1_regularization_factor']
+l2_regularization_factor = best_params['l2_regularization_factor']
 
 #######################################################################
 ## BUILD FINAL NEURAL NETWORK ##
 #######################################################################
 
-#Clear session
-keras.backend.clear_session()
-
-#Set random seeds
-random.seed(random_seed)
-tf.random.set_seed(random_seed)
+#create the rng
+random_seed = 42
+rng = jax.random.PRNGKey(random_seed)
 
 #Create model
-model = create_model(
-  learn_rate = learning_rate,
-  l1=l1_regularization_factor,
-  l2=l2_regularization_factor,
-  input_dim_select = model_data['train']['select'].shape[1],
-  input_dim_folding = model_data['train']['fold'].shape[1],
-  input_dim_binding = model_data['train']['bind'].shape[1],
-  number_additive_traits = number_additive_traits)
+model, optimizer, regularizer = create_model(
+    learn_rate = learning_rate,
+    l1=l1_regularization_factor,
+    l2=l2_regularization_factor,
+    input_dim_select = model_data['train']['select'].shape[1],
+    input_dim_folding = model_data['train']['fold'].shape[1],
+    input_dim_binding = model_data['train']['bind'].shape[1],
+    number_additive_traits = number_additive_traits)
 print(model.summary())
 
 #Validation data
 validation_data = (
   [model_data['valid']['select'], model_data['valid']['fold'], model_data['valid']['bind']],
   model_data['valid']['target'])
-
-#Save model weights
-original_model_weights = model.get_weights()
 
 #Fit model(s)
 for model_count in range(num_models):
