@@ -1,5 +1,11 @@
 Results/Data/
 R/
-Results/001_doubledeepms_thermo_model_results_GB1/validation_scatter__lit_fromOlson_f_ddg_conf.txt
 misc/
-Results/001_doubledeepms_thermo_model_results_GB1/model_results.txt
+.Rproj.user
+*.pdf
+*.pdb
+*.txt
+.DS_Store
+.Rhistory
+.Rbuildignore
+.idea/*

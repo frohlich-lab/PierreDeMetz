@@ -53,58 +53,23 @@ learn_rate = [float(i) for i in args.learning_rate.split(",")]
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-import tensorflow as tf
-#tf.config.optimizer.set_jit(False)
 from tensorflow import keras
 from keras.models import load_model
-import random
-from sklearn.metrics import mean_absolute_error
-import matplotlib
 import os
 
-from keras.constraints import Constraint
-from keras.layers import Layer
-from keras import backend as K
-
 import jax
-import jax.nn as nn
-from jax.random import normal
 from jax.experimental import sparse
 from jax.tree_util import tree_map
-import jaxlib
 import jax.numpy as jnp
 import haiku as hk
 import optax
 from jax import jit
-from functools import partial
-
-
-#######################################################################
-## CLASSES ##
-#######################################################################
-
-class StateProbFolded(hk.Module):
-    def __call__(self, inputs):
-        return nn.sigmoid(inputs)
-
-class StateProbBound(hk.Module):
-    def __call__(self, inputs_1, inputs_2):
-        return nn.sigmoid(inputs_1 + nn.softplus(inputs_2))
-
-class Between(hk.Module):
-    def __init__(self, min_value, max_value, name=None):
-        super().__init__(name=name)
-        self.min_value = min_value
-        self.max_value = max_value
-
-    def __call__(self, inputs):
-        return jax.lax.clamp(self.min_value, inputs, self.max_value)
 
 #######################################################################
 ## FUNCTIONS ##
 #######################################################################
 
-def load_model_data(file_dict):
+def load_model_data_jax(file_dict):
     data_dict = {}
     for name in file_dict.keys():
         # Initialize
@@ -125,8 +90,8 @@ def load_model_data(file_dict):
 
         # Save (sparse) tensors
         data_dict[name]["select"] = jnp.array(df[SELECT_COLUMNS], dtype=jnp.float32)
-        data_dict[name]["fold"] = sparse.BCOO.fromdense(jnp.array(df[FOLD_COLUMNS], dtype=jnp.float32))
-        data_dict[name]["bind"] = sparse.BCOO.fromdense(jnp.array(df[BIND_COLUMNS], dtype=jnp.float32))
+        data_dict[name]["fold"] = jnp.array(df[FOLD_COLUMNS], dtype=jnp.float32)
+        data_dict[name]["bind"] = jnp.array(df[BIND_COLUMNS], dtype=jnp.float32)
         data_dict[name]["target"] = jnp.array(df[TARGET_COLUMN], dtype=jnp.float32)
         data_dict[name]["target_sd"] = jnp.array(df[TARGET_SD_COLUMN], dtype=jnp.float32)
 
@@ -161,10 +126,10 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
     select_tensors = [tensor_dict["select"] for i in range(n_resamplings)]  # Assuming n_resamplings is defined
     tensor_dict["select"] = jnp.concatenate(select_tensors, axis=0)
 
-    fold_matrices = [tensor_dict["fold"] for i in range(n_resamplings)]  # Assuming fold tensors are JAX-compatible sparse matrices
+    fold_matrices = [tensor_dict["fold"] for i in range(n_resamplings)]
     tensor_dict["fold"] = jax.experimental.sparse.bcoo_concatenate(fold_matrices, dimension=0)
 
-    bind_matrices = [tensor_dict["bind"] for i in range(n_resamplings)]  # Assuming bind tensors are JAX-compatible sparse matrices
+    bind_matrices = [tensor_dict["bind"] for i in range(n_resamplings)]
     tensor_dict["bind"] = jax.experimental.sparse.bcoo_concatenate(bind_matrices, dimension=0)
 
     return tensor_dict
@@ -210,14 +175,16 @@ def shuffle_weights(rng, model, weights=None):
     new_model = model.replace(params=shuffled_weights)
     return new_model
 
-#might remove
-def between(min_value, max_value):
-    def clip_fn(params):
-        return jax.tree_map(lambda w: jnp.clip(w, min_value, max_value), params)
-    return clip_fn
+
+from functools import partial
+
+from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, between
+from linear import custom_linear
+
+custom_linear_jit = jit(partial(custom_linear, output_size=int(number_additive_traits)))
 
 
-def create_model_fn(number_additive_traits, l1, l2):
+def create_model_fn(number_additive_traits, l1, l2, rng):
     """
     This function returns a function that creates the model. The model is a
     neural network that predicts the log fold change of a protein. The model
@@ -226,6 +193,10 @@ def create_model_fn(number_additive_traits, l1, l2):
     The outputs of the nonlinear layers are then used to create a multiplicative
     layer that is used in the prediction.
     """
+
+    # def custom_linear_wrapper(inputs, num_traits, rng_key):
+    # return custom_linear_jit(inputs, int(num_traits), w_init=None, with_bias=False, rng_key=rng)
+
     def model_fn(inputs_select, inputs_folding, inputs_binding):
         """
         This function creates the model. The model is a neural network that
@@ -238,19 +209,49 @@ def create_model_fn(number_additive_traits, l1, l2):
         input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
         input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
 
-        folding_additive_trait_layer = hk.Linear(number_additive_traits, w_init=hk.initializers.GlorotNormal(), with_bias=False)(inputs_folding)
+        # inputs_folding = inputs_folding.todense()
+        # inputs_binding = inputs_binding.todense()
+
+        # folding
+        ################################# TESTING IN PROGRESS #########################################
+        # linear_sparse = jax.experimental.sparse.sparsify(jax.jit(hk.Linear, static_argnums=0))
+        # num = jnp.array(jax.lax.tie_in(inputs_folding, number_additive_traits),dtype=jnp.int32)
+
+        # folding_additive_trait_layer = custom_linear_jit(inputs_folding,
+        #                                                 w_init=None,
+        #                                                 with_bias=False,
+        #                                                 rng_key=rng)
+
+        #####################################################################################
+        folding_additive_trait_layer = hk.Linear(number_additive_traits,
+                                                 w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
+                                                                                        "truncated_normal"),
+                                                 with_bias=False
+                                                 )(inputs_folding)
+
         folding_nonlinear_layer = StateProbFolded()(folding_additive_trait_layer)
-        folding_additive_layer = hk.Linear(1,
-                                           w_init=hk.initializers.GlorotNormal(),
-                                           with_bias=False,
-                                           kernel_regularizer=hk.regularizers.L1L2(l1=l1, l2=l2))(folding_nonlinear_layer)
 
-        binding_additive_trait_layer = hk.Linear(number_additive_traits, w_init=hk.initializers.GlorotNormal(), with_bias=False)(inputs_binding)
+        folding_additive_layer = hk.Linear(number_additive_traits,
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
+                                           with_bias=False  # ,
+                                           # kernel_regularizer=hk.regularizers.L1L2(l1=l1, l2=l2)
+                                           )(folding_nonlinear_layer)
+
+        # binding
+        binding_additive_trait_layer = hk.Linear(number_additive_traits,
+                                                 w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
+                                                                                        "truncated_normal"),
+                                                 with_bias=False
+                                                 )(inputs_binding)
+
         binding_nonlinear_layer = StateProbBound()(binding_additive_trait_layer, folding_additive_trait_layer)
-        binding_additive_layer = hk.Linear(1,
-                                           w_init=hk.initializers.GlorotNormal(),
-                                           with_bias=False)(binding_nonlinear_layer)
 
+        binding_additive_layer = hk.Linear(number_additive_traits,
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
+                                           with_bias=False
+                                           )(binding_nonlinear_layer)
+
+        # output
         multiplicative_layer_folding = folding_additive_layer * input_layer_select_folding
         multiplicative_layer_binding = binding_additive_layer * input_layer_select_binding
         output_layer = multiplicative_layer_folding + multiplicative_layer_binding
@@ -258,6 +259,24 @@ def create_model_fn(number_additive_traits, l1, l2):
         return output_layer
 
     return model_fn
+
+
+def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding,
+                     number_additive_traits):
+    # Create model
+    model_fn = create_model_fn(number_additive_traits, l1, l2, rng)
+    model = hk.without_apply_rng(hk.transform(model_fn))
+
+    # Create optimizer
+    opt = optax.chain(
+        optax.adam(learn_rate),
+        constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
+    )
+
+    # Create regularizer
+    # regularizer = hk.regularizers.L1L2(l1=l1, l2=l2)
+
+    return model, opt
 
 
 def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding, number_additive_traits):
@@ -307,35 +326,47 @@ def generate_batches(input_data, batch_size, rng):
 
         yield batch_select, batch_fold, batch_bind, batch_target
 
-#Fit model for gridsearch
-def fit_model_grid(param_dict, input_data, n_epochs, rng):
 
-    #Summarize results
+# Fit model for gridsearch
+def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
+    # Summarize results
     print("Grid search using %s" % (param_dict))
 
     rng_init, rng_batches = jax.random.split(rng)
 
-    #Create model
-    model, optimizer, regularizer = create_model(
-        learn_rate = param_dict['learning_rate'],
+    # Create model
+    model, optimizer = create_model_jax(
+        rng=rng_init,
+        learn_rate=param_dict['learning_rate'],
         l1=param_dict['l1_regularization_factor'],
         l2=param_dict['l2_regularization_factor'],
-        input_dim_select = input_data['train']['select'].shape[1],
-        input_dim_folding = input_data['train']['fold'].shape[1],
-        input_dim_binding = input_data['train']['bind'].shape[1],
-        number_additive_traits = param_dict['number_additive_traits'])
+        input_dim_select=input_data['train']['select'].shape[1],
+        input_dim_folding=input_data['train']['fold'].shape[1],
+        input_dim_binding=input_data['train']['bind'].shape[1],
+        number_additive_traits=param_dict['number_additive_traits'])
 
+    @jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
         output = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
-        reg_loss = regularizer(params)
-        total_loss = loss + reg_loss
-        return total_loss
+
+        # Apply L1 and L2 regularization
+        l1_loss = 0
+        l2_loss = 0
+        for p in jax.tree_util.tree_leaves(params):
+            if p.ndim > 1:  # exclude bias parameters
+                l1_loss += jnp.sum(jnp.abs(p))
+                l2_loss += jnp.sum(jnp.square(p))
+        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict[
+            'l2_regularization_factor'] * l2_loss
+
+        return loss
 
     @jax.jit
     def update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target):
         grads = jax.grad(loss_fn)(params, inputs_select, inputs_folding, inputs_binding, target)
         updates, new_opt_state = optimizer.update(grads, opt_state)
+        # print('update done')
         new_params = optax.apply_updates(params, updates)
         return new_params, new_opt_state
 
@@ -346,8 +377,9 @@ def fit_model_grid(param_dict, input_data, n_epochs, rng):
         for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
-        # Validation loss
-        val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'], input_data['valid']['bind'], input_data['valid']['target'])
+        val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
+                           input_data['valid']['bind'], input_data['valid']['target'])
+        print('epoch done')
     return val_loss.item()
 
 #######################################################################
@@ -377,7 +409,7 @@ random_seed = 42
 rng = jax.random.PRNGKey(random_seed)
 
 #Load model data
-model_data = load_model_data({
+model_data_jax = load_model_data_jax({
     "train": data_train_file,
     "valid": data_valid_file,
     "obs": data_obs_file
@@ -385,8 +417,8 @@ model_data = load_model_data({
 
 #Resample training data
 if num_resamplings!=0:
-    model_data["train"] = resample_training_data_jax(
-        tensor_dict = model_data["train"],
+    model_data_jax["train"] = resample_training_data_jax(
+        tensor_dict = model_data_jax["train"],
         n_resamplings = num_resamplings,
         rand_num_gen = rng
         )
@@ -415,12 +447,18 @@ else:
 
     rng = jax.random.PRNGKey(random_seed)
     rngs = jax.random.split(rng, len(parameter_grid))
-
-    grid_results = [fit_model_grid(params, model_data, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+    #print(len(parameter_grid))
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
     print("Best: %f using %s" % (min(grid_results), best_params))
+
+num_samples = best_params['num_samples']
+learning_rate = best_params['learning_rate']
+l1_regularization_factor = best_params['l1_regularization_factor']
+l2_regularization_factor = best_params['l2_regularization_factor']
+
 
 num_samples = best_params['num_samples']
 learning_rate = best_params['learning_rate']
@@ -440,16 +478,16 @@ model, optimizer, regularizer = create_model(
     learn_rate = learning_rate,
     l1=l1_regularization_factor,
     l2=l2_regularization_factor,
-    input_dim_select = model_data['train']['select'].shape[1],
-    input_dim_folding = model_data['train']['fold'].shape[1],
-    input_dim_binding = model_data['train']['bind'].shape[1],
+    input_dim_select = model_data_jax['train']['select'].shape[1],
+    input_dim_folding = model_data_jax['train']['fold'].shape[1],
+    input_dim_binding = model_data_jax['train']['bind'].shape[1],
     number_additive_traits = number_additive_traits)
 print(model.summary())
 
 #Validation data
 validation_data = (
-  [model_data['valid']['select'], model_data['valid']['fold'], model_data['valid']['bind']],
-  model_data['valid']['target'])
+  [model_data_jax['valid']['select'], model_data_jax['valid']['fold'], model_data_jax['valid']['bind']],
+  model_data_jax['valid']['target'])
 
 #Fit model(s)
 for model_count in range(num_models):
@@ -466,8 +504,8 @@ for model_count in range(num_models):
 
   #Fit the model
   history = model.fit(
-    [model_data['train']['select'], model_data['train']['fold'], model_data['train']['bind']],
-    model_data['train']['target'],
+    [model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind']],
+    model_data_jax['train']['target'],
     validation_data = validation_data,
     epochs = num_epochs,
     batch_size = num_samples,
@@ -497,7 +535,9 @@ for model_count in range(num_models):
   #######################################################################
 
   #Model predictions on observed variants
-  model_predictions = model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']])
+  model_predictions = model.predict([model_data_jax['obs']['select'],
+                                     model_data_jax['obs']['fold'],
+                                     model_data_jax['obs']['bind']])
 
   #Index for folding additive trait layer
   layer_idx_folding = get_layer_index(
@@ -508,7 +548,11 @@ for model_count in range(num_models):
     inputs = model.input,
     outputs = model.layers[layer_idx_folding].output)
   #Convert to data frame
-  folding_additive_trait_df = pd.DataFrame(folding_additive_traits_model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']]))
+  folding_additive_trait_df = pd.DataFrame(folding_additive_traits_model.predict([
+      model_data_jax['obs']['select'],
+      model_data_jax['obs']['fold'],
+      model_data_jax['obs']['bind']
+  ]))
   folding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(folding_additive_trait_df.columns))]
 
   #Index for binding additive trait layer
@@ -520,17 +564,21 @@ for model_count in range(num_models):
     inputs = model.input,
     outputs = model.layers[layer_idx_binding].output)
   #Convert to data frame
-  binding_additive_trait_df = pd.DataFrame(binding_additive_traits_model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']]))
+  binding_additive_trait_df = pd.DataFrame(binding_additive_traits_model.predict([
+      model_data_jax['obs']['select'],
+      model_data_jax['obs']['fold'],
+      model_data_jax['obs']['bind']
+  ]))
   binding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(binding_additive_trait_df.columns))]
 
   #Results data frame
   dataframe_to_export = pd.DataFrame({
-    "seq" : np.array(model_data['obs']['sequence']).flatten(),
-    "observed_fitness" : np.array(model_data['obs']['target']).flatten(),
+    "seq" : np.array(model_data_jax['obs']['sequence']).flatten(),
+    "observed_fitness" : np.array(model_data_jax['obs']['target']).flatten(),
     "predicted_fitness" : model_predictions.flatten(),
     "additive_trait_folding" : folding_additive_trait_df["trait 0"],
     "additive_trait_binding" : binding_additive_trait_df["trait 0"],
-    "training_set" : np.array(model_data['obs']['training_set']).flatten()})
+    "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()})
   #Save as csv file
   dataframe_to_export.to_csv(
     os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
@@ -539,10 +587,10 @@ for model_count in range(num_models):
 
   #Save model weights
   dataframe_to_export_folding = pd.DataFrame({
-    "id" : model_data['obs']['fold_colnames'],
+    "id" : model_data_jax['obs']['fold_colnames'],
     "folding_coefficient" : [i[0] for i in model.layers[layer_idx_folding].get_weights()[0]]})
   dataframe_to_export_binding = pd.DataFrame({
-    "id" : model_data['obs']['bind_colnames'],
+    "id" : model_data_jax['obs']['bind_colnames'],
     "binding_coefficient" : [i[0] for i in model.layers[layer_idx_binding].get_weights()[0]]})
   #Merge
   dataframe_to_export = dataframe_to_export_folding.merge(dataframe_to_export_binding, left_on='id', right_on='id', how='outer')
