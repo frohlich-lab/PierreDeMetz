@@ -52,7 +52,7 @@ learn_rate = [float(i) for i in args.learning_rate.split(",")]
 
 import pandas as pd
 import numpy as np
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from tensorflow import keras
 from keras.models import load_model
 import os
@@ -127,10 +127,10 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
     tensor_dict["select"] = jnp.concatenate(select_tensors, axis=0)
 
     fold_matrices = [tensor_dict["fold"] for i in range(n_resamplings)]
-    tensor_dict["fold"] = jax.experimental.sparse.bcoo_concatenate(fold_matrices, dimension=0)
+    tensor_dict["fold"] = jnp.concatenate(fold_matrices, axis=0)
 
     bind_matrices = [tensor_dict["bind"] for i in range(n_resamplings)]
-    tensor_dict["bind"] = jax.experimental.sparse.bcoo_concatenate(bind_matrices, dimension=0)
+    tensor_dict["bind"] = jnp.concatenate(bind_matrices, axis=0)
 
     return tensor_dict
 
@@ -420,7 +420,7 @@ if num_resamplings!=0:
     model_data_jax["train"] = resample_training_data_jax(
         tensor_dict = model_data_jax["train"],
         n_resamplings = num_resamplings,
-        rand_num_gen = rng
+        rng = rng
         )
 
 #######################################################################
@@ -563,6 +563,7 @@ for model_count in range(num_models):
   binding_additive_traits_model = keras.Model(
     inputs = model.input,
     outputs = model.layers[layer_idx_binding].output)
+
   #Convert to data frame
   binding_additive_trait_df = pd.DataFrame(binding_additive_traits_model.predict([
       model_data_jax['obs']['select'],
