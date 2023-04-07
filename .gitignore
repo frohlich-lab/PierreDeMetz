@@ -9,3 +9,7 @@ misc/
 .Rhistory
 .Rbuildignore
 .idea/*
+.vscode
+.RData
+inst/python/__pycache__
+inst/python/.ipynb_checkpoints
