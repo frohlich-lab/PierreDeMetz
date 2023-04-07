@@ -3,14 +3,11 @@ import jax.nn as nn
 from jax.random import normal
 from jax.experimental import sparse
 #from sparse import bcoo_concatenate
-from jax.tree_util import tree_map
-import jaxlib
 import jax.numpy as jnp
 import haiku as hk
 import optax
 from jax import jit
-from functools import partial
-import functools
+
 
 from optax import GradientTransformation
 
@@ -44,8 +41,16 @@ class Between(hk.Module):
 
     def __call__(self, inputs):
         return jax.lax.clamp(self.min_value, inputs, self.max_value)
-    
+
 def between(min_value, max_value):
     def clip_fn(params):
         return jax.tree_map(lambda w: jnp.clip(w, min_value, max_value), params)
     return clip_fn
+
+def get_layer_index(model, layername):
+    for idx, layer in enumerate(model.layers):
+        if layer.name == layername:
+            return idx
+
+def get_seq_id(sq):
+    return ":".join([str(i)+sq[i] for i in range(len(sq))])

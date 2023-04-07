@@ -52,7 +52,7 @@ learn_rate = [float(i) for i in args.learning_rate.split(",")]
 
 import pandas as pd
 import numpy as np
-#from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 from tensorflow import keras
 from keras.models import load_model
 import os
@@ -64,9 +64,14 @@ import jax.numpy as jnp
 import haiku as hk
 import optax
 from jax import jit
+import pickle
+from functools import partial
 
+from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, between, get_seq_id, get_layer_index
+from training import model_training, shuffle_weights, fit_model_grid_jax
+from dataloading import load_model_data_jax, resample_training_data_jax
 #######################################################################
-## FUNCTIONS ##
+## FUNCTIONS ##     COULD BE DELETED
 #######################################################################
 
 def load_model_data_jax(file_dict):
@@ -144,44 +149,23 @@ def get_layer_index(model, layername):
         if layer.name == layername:
             return idx
 
-def _shuffle_array(rng, arr):
-    flat_arr = arr.ravel()
-    shuffled_flat_arr = jax.random.permutation(rng, flat_arr)
-    return jnp.reshape(shuffled_flat_arr, arr.shape)
-
 def shuffle_weights(rng, model, weights=None):
 
-    """
-    Randomly permute the weights in `model`, or the given `weights`.
-
-    This is a fast approximation of re-initializing the weights of a model.
-
-    Assumes weights are distributed independently of the dimensions of the weight tensors
-    (i.e., the weights have the same distribution along each dimension).
-
-    :param Model model: Modify the weights of the given model.
-    :param list(ndarray) weights: The model's weights will be replaced by a random permutation of these weights.
-    If `None`, permute the model's current weights.
-    """
+    def _shuffle_array(rng, arr):
+        flat_arr = arr.ravel()
+        shuffled_flat_arr = jax.random.permutation(rng, flat_arr)
+        return jnp.reshape(shuffled_flat_arr, arr.shape)
 
     if weights is None:
         weights = model.params
 
     rngs = jax.random.split(rng, len(weights))
-    shuffled_weights = tree_map(lambda r, w: _shuffle_array(r, w), rngs, weights)
+    shuffled_weights = jax.tree_util.tree_map(lambda r, w: _shuffle_array(r, w), rngs, weights)
 
     # Assuming `model` has a method `replace` that replaces its parameters.
     # Adjust this line if the model structure is different.
     new_model = model.replace(params=shuffled_weights)
     return new_model
-
-
-from functools import partial
-
-from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, between
-from linear import custom_linear
-
-custom_linear_jit = jit(partial(custom_linear, output_size=int(number_additive_traits)))
 
 
 def create_model_fn(number_additive_traits, l1, l2, rng):
@@ -193,9 +177,6 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
     The outputs of the nonlinear layers are then used to create a multiplicative
     layer that is used in the prediction.
     """
-
-    # def custom_linear_wrapper(inputs, num_traits, rng_key):
-    # return custom_linear_jit(inputs, int(num_traits), w_init=None, with_bias=False, rng_key=rng)
 
     def model_fn(inputs_select, inputs_folding, inputs_binding):
         """
@@ -209,20 +190,6 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
         input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
 
-        # inputs_folding = inputs_folding.todense()
-        # inputs_binding = inputs_binding.todense()
-
-        # folding
-        ################################# TESTING IN PROGRESS #########################################
-        # linear_sparse = jax.experimental.sparse.sparsify(jax.jit(hk.Linear, static_argnums=0))
-        # num = jnp.array(jax.lax.tie_in(inputs_folding, number_additive_traits),dtype=jnp.int32)
-
-        # folding_additive_trait_layer = custom_linear_jit(inputs_folding,
-        #                                                 w_init=None,
-        #                                                 with_bias=False,
-        #                                                 rng_key=rng)
-
-        #####################################################################################
         folding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
                                                                                         "truncated_normal"),
@@ -279,23 +246,6 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
     return model, opt
 
 
-def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding, number_additive_traits):
-    # Create model
-    model_fn = create_model_fn(number_additive_traits, l1, l2)
-    model = hk.without_apply_rng(hk.transform(model_fn))
-
-    # Create optimizer
-    opt = optax.chain(
-        optax.adam(learn_rate),
-        optax.constraint(between(0, 1e3), ['folding_additive', 'binding_additive']),
-    )
-
-    # Create regularizer
-    regularizer = hk.regularizers.L1L2(l1=l1, l2=l2)
-
-    return model, opt, regularizer
-
-
 def generate_batches(input_data, batch_size, rng):
     """Generate batches for training.
 
@@ -326,9 +276,8 @@ def generate_batches(input_data, batch_size, rng):
 
         yield batch_select, batch_fold, batch_bind, batch_target
 
-
 # Fit model for gridsearch
-def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
+def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, testing=False):
     # Summarize results
     print("Grid search using %s" % (param_dict))
 
@@ -380,6 +329,8 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
         print('epoch done')
+    if testing == True:
+        return val_loss.item(), model
     return val_loss.item()
 
 #######################################################################
@@ -458,12 +409,7 @@ num_samples = best_params['num_samples']
 learning_rate = best_params['learning_rate']
 l1_regularization_factor = best_params['l1_regularization_factor']
 l2_regularization_factor = best_params['l2_regularization_factor']
-
-
-num_samples = best_params['num_samples']
-learning_rate = best_params['learning_rate']
-l1_regularization_factor = best_params['l1_regularization_factor']
-l2_regularization_factor = best_params['l2_regularization_factor']
+number_additive_traits = best_params['number_additive_traits']
 
 #######################################################################
 ## BUILD FINAL NEURAL NETWORK ##
@@ -472,140 +418,133 @@ l2_regularization_factor = best_params['l2_regularization_factor']
 #create the rng
 random_seed = 42
 rng = jax.random.PRNGKey(random_seed)
+num_models = 2
 
-#Create model
-model, optimizer, regularizer = create_model(
-    learn_rate = learning_rate,
+model, optimizer = create_model_jax(
+    rng=rng,
+    learn_rate=learning_rate,
     l1=l1_regularization_factor,
     l2=l2_regularization_factor,
-    input_dim_select = model_data_jax['train']['select'].shape[1],
-    input_dim_folding = model_data_jax['train']['fold'].shape[1],
-    input_dim_binding = model_data_jax['train']['bind'].shape[1],
-    number_additive_traits = number_additive_traits)
-print(model.summary())
+    input_dim_select=model_data_jax['train']['select'].shape[1],
+    input_dim_folding=model_data_jax['train']['fold'].shape[1],
+    input_dim_binding=model_data_jax['train']['bind'].shape[1],
+    number_additive_traits=number_additive_traits
+)
 
-#Validation data
-validation_data = (
-  [model_data_jax['valid']['select'], model_data_jax['valid']['fold'], model_data_jax['valid']['bind']],
-  model_data_jax['valid']['target'])
+weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
+opt_state = optimizer.init(weights)
 
-#Fit model(s)
 for model_count in range(num_models):
 
-  #Shuffle model weights
-  shuffle_weights(model, original_model_weights)
+    #Shuffle model weights
+    shuffled_weights = shuffle_weights(rng, weights)
 
-  #Callbacks
-  model_callbacks = []
-  if early_stopping:
-    model_callbacks = [
-      keras.callbacks.EarlyStopping(monitor='val_loss', patience=num_epochs*0.1),
-      keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_directory, 'my_model_'+str(model_count)), monitor='val_loss', save_best_only=True)]
+    #Fit the model on best params
+    history, model = model_training(model, optimizer, shuffled_weights, opt_state, best_params, model_data_jax, num_epochs_grid, rng)
 
-  #Fit the model
-  history = model.fit(
-    [model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind']],
-    model_data_jax['train']['target'],
-    validation_data = validation_data,
-    epochs = num_epochs,
-    batch_size = num_samples,
-    shuffle = True,
-    callbacks = model_callbacks,
-    verbose = 2,
-    use_multiprocessing = True)
+    #save model
+    #model.save(os.path.join(model_directory, 'my_model_'+str(model_count)))
+    with open(f'weights_{model_count}.pickle', 'wb') as handle:
+        pickle.dump(shuffled_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-  #Save the entire model as a SavedModel
-  if early_stopping==False:
-    model.save(os.path.join(model_directory, 'my_model_'+str(model_count)))
+    #load model
+    #model = load_model(os.path.join(model_directory, 'my_model_'+str(model_count)))
+    with open(f'weights_{model_count}.pickle', 'rb') as handle:
+        shuffled_weights_reloaded = pickle.load(handle)
 
-  #Load model
-  custom = {'Between':Between}
-  model = load_model(os.path.join(model_directory, 'my_model_'+str(model_count)))
+    print(history)
+    #Plot model performance per epoch
+    my_figure = plt.figure(figsize = (8,8))
+    plt.plot(np.log(history))
+    plt.xlabel('Number of epochs')
+    plt.ylabel('Mean Absolute Error (MAE) on testing data')
+    plt.show()
+    my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str(model_count)+".pdf"), bbox_inches='tight')
 
-  #Plot model performance per epoch
-  my_figure = plt.figure(figsize = (8,8))
-  plt.plot(
-    np.log(history.history['loss']))
-  plt.xlabel('Number of epochs')
-  plt.ylabel('Mean Absolute Error (MAE) on testing data')
-  my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str(model_count)+".pdf"), bbox_inches='tight')
 
-  #######################################################################
-  ## SAVE OBSERVATIONS, PREDICTIONS & ADDITIVE TRAIT VALUES ##
-  #######################################################################
+    #######################################################################
+    ## SAVE OBSERVATIONS, PREDICTIONS & ADDITIVE TRAIT VALUES ##
+    #######################################################################
+    #Little function that returns layer index corresponding to layer name
+    def get_layer_index(model, layername):
+        for idx, layer in enumerate(model):
+            if layer.name == layername:
+                return idx
 
-  #Model predictions on observed variants
-  model_predictions = model.predict([model_data_jax['obs']['select'],
-                                     model_data_jax['obs']['fold'],
-                                     model_data_jax['obs']['bind']])
+    #Model predictions on observed variants
+    model_predictions = model.predict([model_data_jax['obs']['select'],
+                                        model_data_jax['obs']['fold'],
+                                        model_data_jax['obs']['bind']])
 
-  #Index for folding additive trait layer
-  layer_idx_folding = get_layer_index(
-    model = model,
-    layername = "folding_additivetrait")
-  #Calculate folding additive trait
-  folding_additive_traits_model = keras.Model(
+    #Index for folding additive trait layer
+    layer_idx_folding = get_layer_index(
+        model = model,
+        layername = "folding_additivetrait")
+
+    #Calculate folding additive trait
+    folding_additive_traits_model = keras.Model(
     inputs = model.input,
     outputs = model.layers[layer_idx_folding].output)
-  #Convert to data frame
-  folding_additive_trait_df = pd.DataFrame(folding_additive_traits_model.predict([
-      model_data_jax['obs']['select'],
-      model_data_jax['obs']['fold'],
-      model_data_jax['obs']['bind']
-  ]))
-  folding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(folding_additive_trait_df.columns))]
+    #Convert to data frame
+    folding_additive_trait_df = pd.DataFrame(folding_additive_traits_model.predict([
+        model_data_jax['obs']['select'],
+        model_data_jax['obs']['fold'],
+        model_data_jax['obs']['bind']
+    ]))
+    folding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(folding_additive_trait_df.columns))]
 
-  #Index for binding additive trait layer
-  layer_idx_binding = get_layer_index(
-    model = model,
-    layername = "binding_additivetrait")
-  #Calculate binding additive trait
-  binding_additive_traits_model = keras.Model(
-    inputs = model.input,
-    outputs = model.layers[layer_idx_binding].output)
+    #Index for binding additive trait layer
+    layer_idx_binding = get_layer_index(
+        model = model,
+        layername = "binding_additivetrait")
+    #Calculate binding additive trait
+    binding_additive_traits_model = keras.Model(
+        inputs = model.input,
+        outputs = model.layers[layer_idx_binding].output)
 
-  #Convert to data frame
-  binding_additive_trait_df = pd.DataFrame(binding_additive_traits_model.predict([
-      model_data_jax['obs']['select'],
-      model_data_jax['obs']['fold'],
-      model_data_jax['obs']['bind']
-  ]))
-  binding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(binding_additive_trait_df.columns))]
+    #Convert to data frame
+    binding_additive_trait_df = pd.DataFrame(binding_additive_traits_model.predict([
+        model_data_jax['obs']['select'],
+        model_data_jax['obs']['fold'],
+        model_data_jax['obs']['bind']
+    ]))
+    binding_additive_trait_df.columns = [ "trait " + str(i) for i in range(len(binding_additive_trait_df.columns))]
 
-  #Results data frame
-  dataframe_to_export = pd.DataFrame({
-    "seq" : np.array(model_data_jax['obs']['sequence']).flatten(),
-    "observed_fitness" : np.array(model_data_jax['obs']['target']).flatten(),
-    "predicted_fitness" : model_predictions.flatten(),
-    "additive_trait_folding" : folding_additive_trait_df["trait 0"],
-    "additive_trait_binding" : binding_additive_trait_df["trait 0"],
-    "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()})
-  #Save as csv file
-  dataframe_to_export.to_csv(
-    os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
-    sep = "\t",
-    index = False)
+    #Results data frame
+    dataframe_to_export = pd.DataFrame({
+        "seq" : np.array(model_data_jax['obs']['sequence']).flatten(),
+        "observed_fitness" : np.array(model_data_jax['obs']['target']).flatten(),
+        "predicted_fitness" : model_predictions.flatten(),
+        "additive_trait_folding" : folding_additive_trait_df["trait 0"],
+        "additive_trait_binding" : binding_additive_trait_df["trait 0"],
+        "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()})
 
-  #Save model weights
-  dataframe_to_export_folding = pd.DataFrame({
-    "id" : model_data_jax['obs']['fold_colnames'],
-    "folding_coefficient" : [i[0] for i in model.layers[layer_idx_folding].get_weights()[0]]})
-  dataframe_to_export_binding = pd.DataFrame({
-    "id" : model_data_jax['obs']['bind_colnames'],
-    "binding_coefficient" : [i[0] for i in model.layers[layer_idx_binding].get_weights()[0]]})
-  #Merge
-  dataframe_to_export = dataframe_to_export_folding.merge(dataframe_to_export_binding, left_on='id', right_on='id', how='outer')
-  #Save as csv file
-  dataframe_to_export.to_csv(
-    os.path.join(output_directory, "model_weights_"+str(model_count)+".txt"),
-    sep = "\t",
-    index = False)
+    #Save as csv file
+    dataframe_to_export.to_csv(
+        os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
+        sep = "\t",
+        index = False)
 
-  #Save remaining model parameters (linear layers)
-  with open(os.path.join(output_directory, "model_parameters_"+str(model_count)+".txt"), 'w') as f:
-    for ml in model.layers:
-      if(ml.name in ["folding_additive", "binding_additive"]):
-        f.write(ml.name.replace("additive", "linear")+"_kernel\n")
-        f.write(str(float(ml.weights[0]))+"\n")
-        f.write(ml.name.replace("additive", "linear")+"_bias\n")
-        f.write(str(float(ml.weights[1]))+"\n")
+    #Save model weights
+    dataframe_to_export_folding = pd.DataFrame({
+        "id" : model_data_jax['obs']['fold_colnames'],
+        "folding_coefficient" : [i[0] for i in model.layers[layer_idx_folding].get_weights()[0]]})
+    dataframe_to_export_binding = pd.DataFrame({
+        "id" : model_data_jax['obs']['bind_colnames'],
+        "binding_coefficient" : [i[0] for i in model.layers[layer_idx_binding].get_weights()[0]]})
+    #Merge
+    dataframe_to_export = dataframe_to_export_folding.merge(dataframe_to_export_binding, left_on='id', right_on='id', how='outer')
+    #Save as csv file
+    dataframe_to_export.to_csv(
+        os.path.join(output_directory, "model_weights_"+str(model_count)+".txt"),
+        sep = "\t",
+        index = False)
+
+    #Save remaining model parameters (linear layers)
+    with open(os.path.join(output_directory, "model_parameters_"+str(model_count)+".txt"), 'w') as f:
+        for ml in model.layers:
+            if(ml.name in ["folding_additive", "binding_additive"]):
+                f.write(ml.name.replace("additive", "linear")+"_kernel\n")
+                f.write(str(float(ml.weights[0]))+"\n")
+                f.write(ml.name.replace("additive", "linear")+"_bias\n")
+                f.write(str(float(ml.weights[1]))+"\n")
