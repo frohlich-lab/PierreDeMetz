@@ -56,7 +56,7 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
 
     @jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        output, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
         return loss
 
@@ -130,7 +130,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
 
     @jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        output, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
 
         # Apply L1 and L2 regularization

@@ -14,14 +14,16 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         folding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
                                                                                         "truncated_normal"),
-                                                 with_bias=False
+                                                 with_bias=True,
+                                                 name = 'folding_additive_trait'
                                                  )(inputs_folding)
 
         folding_nonlinear_layer = StateProbFolded()(folding_additive_trait_layer)
 
         folding_additive_layer = hk.Linear(number_additive_traits,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
-                                           with_bias=False  # ,
+                                           with_bias=True,
+                                           name = 'folding_additive' # ,
                                            # kernel_regularizer=hk.regularizers.L1L2(l1=l1, l2=l2)
                                            )(folding_nonlinear_layer)
 
@@ -29,14 +31,16 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
                                                                                         "truncated_normal"),
-                                                 with_bias=False
+                                                 with_bias=True,
+                                                 name = 'binding_additive_trait'
                                                  )(inputs_binding)
 
         binding_nonlinear_layer = StateProbBound()(binding_additive_trait_layer, folding_additive_trait_layer)
 
         binding_additive_layer = hk.Linear(number_additive_traits,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
-                                           with_bias=False
+                                           with_bias=True,
+                                           name = 'binding_additive'
                                            )(binding_nonlinear_layer)
 
         # output
@@ -44,7 +48,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         multiplicative_layer_binding = binding_additive_layer * input_layer_select_binding
         output_layer = multiplicative_layer_folding + multiplicative_layer_binding
 
-        return output_layer
+        return output_layer, folding_additive_trait_layer, binding_additive_trait_layer
 
     return model_fn
 
