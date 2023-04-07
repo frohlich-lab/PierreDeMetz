@@ -79,7 +79,7 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
         history.append(val_loss.item())
         print('epoch done')
 
-    return history, model
+    return history, model, weights
 
 def generate_batches(input_data, batch_size, rng):
     """Generate batches for training.
