@@ -188,8 +188,8 @@ weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['tra
 opt_state = optimizer.init(weights)
 
 for model_count in range(num_models):
-    if model_count>=1:
-        output_directory = str(output_directory + 'bootstrap')
+    #if model_count>=1:
+        #output_directory = str(output_directory + 'bootstrap')
 
     #Shuffle model weights
     shuffled_weights = shuffle_weights(rng, weights)
@@ -204,7 +204,7 @@ for model_count in range(num_models):
                                     model_data_jax['obs']['bind']
                                    )
     #save model
-    print(shuffled_weights)
+    #print(shuffled_weights)
     with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
         pickle.dump(shuffled_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
