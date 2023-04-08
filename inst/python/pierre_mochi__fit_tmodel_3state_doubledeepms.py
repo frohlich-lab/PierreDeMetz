@@ -101,6 +101,14 @@ try:
 except FileExistsError:
   print("Warning: Output weights directory already exists.")
 
+#Boostrap directory
+bootstrap_directory = os.path.join(output_directory, "boostrap")
+#Create output plot directory
+try:
+  os.mkdir(bootstrap_directory)
+except FileExistsError:
+  print("Warning: Output boostrap directory already exists.")
+
 #create the rng
 random_seed = 42
 rng = jax.random.PRNGKey(random_seed)
@@ -143,9 +151,8 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid))
-    #print(len(parameter_grid))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+    rngs = jax.random.split(rng, len(parameter_grid[:3]))
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid[:3], rngs)]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
@@ -181,6 +188,8 @@ weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['tra
 opt_state = optimizer.init(weights)
 
 for model_count in range(num_models):
+    if model_count>=1:
+        output_directory = str(output_directory + 'bootstrap')
 
     #Shuffle model weights
     shuffled_weights = shuffle_weights(rng, weights)
@@ -195,16 +204,14 @@ for model_count in range(num_models):
                                     model_data_jax['obs']['bind']
                                    )
     #save model
-    #model.save(os.path.join(model_directory, 'my_model_'+str(model_count)))
-    with open(os.path.join(weights_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
+    print(shuffled_weights)
+    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
         pickle.dump(shuffled_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     #load model
-    #model = load_model(os.path.join(model_directory, 'my_model_'+str(model_count)))
-    with open(os.path.join(weights_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
+    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
         shuffled_weights_reloaded = pickle.load(handle)
 
-    print(history)
     #Plot model performance per epoch
     my_figure = plt.figure(figsize = (8,8))
     plt.plot(np.log(history))
@@ -222,7 +229,7 @@ for model_count in range(num_models):
                                 model_data_jax['obs']['fold'],
                                 model_data_jax['obs']['bind']
                             )
-    print(model_outputs)
+
     prediction, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
 
     folding_additive_trait_df = pd.DataFrame(folding_additive_trait_layer_outputs)
@@ -246,10 +253,10 @@ for model_count in range(num_models):
     # Save model weights
     dataframe_to_export_folding = pd.DataFrame({
         "id" : model_data_jax['obs']['fold_colnames'],
-        "folding_coefficient" : [trained_weights["folding_additive"]["w"] for _ in range(len(model_data_jax['obs']['fold_colnames']))]})
+        "folding_coefficient" : [jnp.squeeze(trained_weights['folding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['fold_colnames']))]})
     dataframe_to_export_binding = pd.DataFrame({
         "id" : model_data_jax['obs']['bind_colnames'],
-        "binding_coefficient" : [trained_weights["binding_additive"]["w"] for _ in range(len(model_data_jax['obs']['bind_colnames']))]})
+        "binding_coefficient" : [jnp.squeeze(trained_weights['binding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['bind_colnames']))]})
 
     # Save dataframes as csv files
     #Merge
