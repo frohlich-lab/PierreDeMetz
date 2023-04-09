@@ -24,7 +24,6 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
                                            with_bias=True,
                                            name = 'folding_additive' # ,
-                                           # kernel_regularizer=hk.regularizers.L1L2(l1=l1, l2=l2)
                                            )(folding_nonlinear_layer)
 
         # binding
@@ -64,8 +63,5 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
         optax.adam(learn_rate),
         constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
     )
-
-    # Create regularizer
-    # regularizer = hk.regularizers.L1L2(l1=l1, l2=l2)
 
     return model, opt

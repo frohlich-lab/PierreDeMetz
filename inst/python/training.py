@@ -37,6 +37,7 @@ def generate_batches(input_data, batch_size, rng):
     indices = jax.random.permutation(rng, indices)
 
     # Generate batches.
+
     for start_idx in range(0, num_samples, batch_size):
         end_idx = min(start_idx + batch_size, num_samples)
         batch_indices = indices[start_idx:end_idx]
@@ -162,6 +163,6 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
-        print('epoch done')
+        print(f'epoch done with {val_loss.item()}')
 
     return val_loss.item()

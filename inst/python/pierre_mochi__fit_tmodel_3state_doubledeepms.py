@@ -102,7 +102,7 @@ except FileExistsError:
   print("Warning: Output weights directory already exists.")
 
 #Boostrap directory
-bootstrap_directory = os.path.join(output_directory, "boostrap")
+bootstrap_directory = os.path.join(output_directory, "bootstrap")
 #Create output plot directory
 try:
   os.mkdir(bootstrap_directory)
@@ -151,8 +151,8 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid[:3]))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid[:3], rngs)]
+    rngs = jax.random.split(rng, len(parameter_grid))
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
@@ -217,7 +217,6 @@ for model_count in range(num_models):
     plt.plot(np.log(history))
     plt.xlabel('Number of epochs')
     plt.ylabel('Mean Absolute Error (MAE) on testing data')
-    plt.show()
     my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str(model_count)+".pdf"), bbox_inches='tight')
 
     #######################################################################
