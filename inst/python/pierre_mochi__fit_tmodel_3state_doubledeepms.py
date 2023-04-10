@@ -27,7 +27,6 @@ parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Rand
 
 #Parse the arguments
 args = parser.parse_args()
-#print(args)
 
 data_train_file = args.data_train
 data_valid_file = args.data_valid
@@ -40,6 +39,7 @@ num_resamplings = args.num_resamplings
 early_stopping = args.early_stopping
 num_models = args.num_models
 random_seed = args.random_seed
+
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
 l2 = [float(i) for i in args.l2_regularization_factor.split(",")]
@@ -151,39 +151,37 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+    rngs = jax.random.split(rng, len(parameter_grid[:3]))
+
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid[:3], rngs)]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
     print("Best: %f using %s" % (min(grid_results), best_params))
 
-num_samples = best_params['num_samples']
-learning_rate = best_params['learning_rate']
-l1_regularization_factor = best_params['l1_regularization_factor']
-l2_regularization_factor = best_params['l2_regularization_factor']
-number_additive_traits = best_params['number_additive_traits']
 
 #######################################################################
 ## BUILD FINAL NEURAL NETWORK ##
 #######################################################################
 
+
 #create the rng
 random_seed = 42
 rng = jax.random.PRNGKey(random_seed)
-num_models = 2
+rngs = jax.random.split(rng, num_models)
 
 model, optimizer = create_model_jax(
     rng=rng,
-    learn_rate=learning_rate,
-    l1=l1_regularization_factor,
-    l2=l2_regularization_factor,
+    learn_rate=best_params['learning_rate'],
+    l1=best_params['l1_regularization_factor'],
+    l2=best_params['l2_regularization_factor'],
     input_dim_select=model_data_jax['train']['select'].shape[1],
     input_dim_folding=model_data_jax['train']['fold'].shape[1],
     input_dim_binding=model_data_jax['train']['bind'].shape[1],
-    number_additive_traits=number_additive_traits
+    number_additive_traits=best_params['number_additive_traits']
 )
 
+# Need clarification from Fabian as to why we this is needed
 weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
 opt_state = optimizer.init(weights)
 
@@ -192,10 +190,10 @@ for model_count in range(num_models):
         #output_directory = str(output_directory + 'bootstrap')
 
     #Shuffle model weights
-    shuffled_weights = shuffle_weights(rng, weights)
+    shuffled_weights = shuffle_weights(rngs[model_count], weights)
 
     #Fit the model on best params
-    history, model, trained_weights = model_training(model, optimizer, shuffled_weights, opt_state, best_params, model_data_jax, num_epochs_grid, rng)
+    history, model, trained_weights = model_training(model, optimizer, shuffled_weights, opt_state, best_params, model_data_jax, num_epochs, rng)
 
     # Model predictions on observed variants
     model_predictions, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(trained_weights,

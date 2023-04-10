@@ -12,6 +12,7 @@ from jax import jit
 from optax import GradientTransformation
 
 def constrained_gradients(layer_names, min_value, max_value) -> GradientTransformation:
+
     def init_fn(_):
         return ()
 

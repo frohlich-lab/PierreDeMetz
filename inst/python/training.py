@@ -1,22 +1,21 @@
 import jax
 import jax.numpy as jnp
 import optax
-from itertools import zip_longest
 from model_creation import create_model_jax
 
-def shuffle_weights(rng, params):
-    def _shuffle_array(rng, arr):
-        flat_arr = arr.ravel()
-        shuffled_flat_arr = jax.random.permutation(rng, flat_arr)
-        return jnp.reshape(shuffled_flat_arr, arr.shape)
+def shuffle_weights(new_rng, weights):
+    updated_weights = {}
+    for layer, value in weights.items():
+        layer_weights = {}
+        for key, weight in value.items():
+            if key == 'w':
+                shuffled_weight = jax.random.permutation(new_rng, weight)
+                layer_weights[key] = shuffled_weight
+            else:
+                layer_weights[key] = weight
+        updated_weights[layer] = layer_weights
 
-    leaves, _ = jax.tree_util.tree_flatten(params)
-    rngs = jax.random.split(rng, len(leaves))
-    zipped_args = zip_longest(leaves, rngs, fillvalue=None)
-    new_leaves = [(_shuffle_array(rng, leaf) if leaf is not None else leaf) for leaf, rng in zipped_args]
-    new_params = jax.tree_util.tree_unflatten(_, new_leaves)
-
-    return new_params
+    return updated_weights
 
 def generate_batches(input_data, batch_size, rng):
     """Generate batches for training.
@@ -78,7 +77,7 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
         val_loss = loss_fn(weights, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
         history.append(val_loss.item())
-        print('epoch done')
+        print(f'epoch done with {val_loss.item()}')
 
     return history, model, weights
 
