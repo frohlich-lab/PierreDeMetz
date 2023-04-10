@@ -47,15 +47,19 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
     observed_fitness = tensor_dict["target"]
     observed_fitness_sd = tensor_dict["target_sd"]
 
+    rngs = jax.random.split(rng, len(observed_fitness_sd))
+
     observed_fitness_resample = jnp.array(
     [jnp.array(
-      [observed_fitness[i]+(observed_fitness_sd[i] * jax.random.normal(rng, shape=(1,))) for i in range(len(observed_fitness))])
+      [observed_fitness[i]+(observed_fitness_sd[i] * jax.random.normal(rngs[i], shape=(1,))) for i in range(len(observed_fitness))])
+
     for j in range(n_resamplings)]
     )
-    print('here')
     #Save new data
 
-    tensor_dict["target"] = jax.device_put(jnp.expand_dims(observed_fitness_resample.ravel(), -1))
+    tensor_dict["target"] = jax.device_put(observed_fitness_resample.ravel())
+
+    #tensor_dict["target"] = jax.device_put(jnp.squeeze(jnp.expand_dims(observed_fitness_resample.ravel(), -1)))
 
     select_tensors = [tensor_dict["select"] for i in range(n_resamplings)]  # Assuming n_resamplings is defined
     tensor_dict["select"] = jnp.concatenate(select_tensors, axis=0)
