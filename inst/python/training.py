@@ -129,23 +129,40 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
         number_additive_traits=param_dict['number_additive_traits'])
 
     #@jax.jit
-    def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
-        loss = jnp.mean(jnp.abs(output - target))
+    #def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
+        #output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        #loss = jnp.mean(jnp.abs(output - target))
         #print(folding_additive_layer)
         #print(binding_additive_layer)
         #print(folding_additive_trait_layer)
         #print(binding_additive_trait_layer)
 
         # Apply L1 and L2 regularization
+        #l1_loss = 0
+        #l2_loss = 0
+        #print(params['binding_additive_trait']['w'])
+        ##for p in jax.tree_util.tree_leaves(params):
+            #if p.ndim > 1:  # exclude bias parameters
+                #l1_loss += jnp.sum(jnp.abs(p))
+                #l2_loss += jnp.sum(jnp.square(p))
+        #loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict[
+            #'l2_regularization_factor'] * l2_loss
+        #return loss
+
+    def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
+        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        loss = jnp.mean(jnp.abs(output - target))
+
+        # Apply L1 and L2 regularization
         l1_loss = 0
         l2_loss = 0
-        for p in jax.tree_util.tree_leaves(params):
-            if p.ndim > 1:  # exclude bias parameters
-                l1_loss += jnp.sum(jnp.abs(p))
-                l2_loss += jnp.sum(jnp.square(p))
-        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict[
-            'l2_regularization_factor'] * l2_loss
+        binding_additive_trait_params = params['binding_additive_trait']['w']
+
+        if binding_additive_trait_params.ndim > 1:  # exclude bias parameters
+            l1_loss += jnp.sum(jnp.abs(binding_additive_trait_params))
+            l2_loss += jnp.sum(jnp.square(binding_additive_trait_params))
+
+        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict['l2_regularization_factor'] * l2_loss
 
         return loss
 
@@ -167,7 +184,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
-        print(params)
+        #print(params)
         print(f'epoch done with {val_loss.item()}')
 
     return val_loss.item()
