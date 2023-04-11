@@ -151,9 +151,10 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid[:3]))
-
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid[:3], rngs)]
+    rngs = jax.random.split(rng, len(parameter_grid))
+    print(len(parameter_grid))
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+    #grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng) for params in parameter_grid]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
@@ -185,6 +186,7 @@ model, optimizer = create_model_jax(
 weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
 opt_state = optimizer.init(weights)
 
+#all models output almost the same thing
 for model_count in range(num_models):
     #if model_count>=1:
         #output_directory = str(output_directory + 'bootstrap')
@@ -220,6 +222,7 @@ for model_count in range(num_models):
     #######################################################################
     ## SAVE OBSERVATIONS, PREDICTIONS & ADDITIVE TRAIT VALUES ##
     #######################################################################
+
     # Model predictions on observed variants
     model_outputs = model.apply(trained_weights,
                                 model_data_jax['obs']['select'],
@@ -227,7 +230,7 @@ for model_count in range(num_models):
                                 model_data_jax['obs']['bind']
                             )
 
-    prediction, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
+    prediction,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
 
     folding_additive_trait_df = pd.DataFrame(folding_additive_trait_layer_outputs)
     binding_additive_trait_df = pd.DataFrame(binding_additive_trait_layer_outputs)

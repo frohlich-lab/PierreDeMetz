@@ -60,6 +60,7 @@ import random
 from sklearn.metrics import mean_absolute_error
 import matplotlib
 import os
+from keras import layers, Model, callbacks
 
 from keras.constraints import Constraint
 from keras.layers import Layer
@@ -250,6 +251,7 @@ def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_
     name = "binding_additive",
     kernel_constraint=Between(0, 1e3)#, bias_constraint=Between(-1, 1)
     )(binding_nonlinear_layer)
+
   ### OUTPUT LAYERS
   ########################################
   #Multiplicative layer folding
@@ -261,7 +263,7 @@ def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_
   #Create keras model defining input and output layers
   model = keras.Model(
     inputs = [input_layer_select, input_layer_folding, input_layer_binding],
-    outputs = [output_layer])
+    outputs = [output_layer, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer])
   # Compile model
   opt = keras.optimizers.Adam(learning_rate = learn_rate)
   #Compile the model
@@ -269,6 +271,28 @@ def create_model(learn_rate, l1, l2, input_dim_select, input_dim_folding, input_
     optimizer = opt,
     loss = 'mean_absolute_error')
   return model
+
+
+class CustomCallback(callbacks.Callback):
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+
+    def on_epoch_end(self, epoch, logs=None):
+        print(' ')
+        print('binding_additive ')
+        print(self.model.layers[9].get_weights())
+        print(' ')
+        print('bindin_additive_trait ')
+        print(self.model.layers[3].get_weights())
+        print(' ')
+        print('folding_additive ')
+        print(self.model.layers[7].get_weights())
+        print(' ')
+        print('folding_additive_trait ')
+        print(self.model.layers[2].get_weights())
+
+
 
 #Fit model for gridsearch
 def fit_model_grid(param_dict, input_data, n_epochs):
@@ -297,11 +321,13 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
     input_data['train']['target'],
     validation_data = validation_data,
+    callbacks=[CustomCallback(model)],
     epochs = n_epochs,
     batch_size = param_dict['num_samples'],
     shuffle = True,
     verbose = 0,
     use_multiprocessing = True)
+  #print(history)
   return(history.history["val_loss"][-1])
 
 #######################################################################
@@ -355,7 +381,7 @@ else:
   "l1_regularization_factor":k,
   "l2_regularization_factor":l,
   "number_additive_traits":1} for i in batch_size for j in learn_rate for k in l1 for l in l2]
-    
+
   #Perform grid search
   grid_results = [fit_model_grid(i, model_data, num_epochs_grid) for i in parameter_grid]
   best_params = parameter_grid[[i for i in range(len(grid_results)) if grid_results[i]==min(grid_results)][0]]

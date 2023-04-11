@@ -21,7 +21,7 @@ doubledeepms_fit_thermo_model <- function(
   tmodel_job_number = 1,
   tmodel_grid_search = FALSE,
   tmodel_protein = "all",
-  tmodel_subset = "100",
+  tmodel_subset = "50",
   tmodel_hyperparameters,
   execute = TRUE
   ){

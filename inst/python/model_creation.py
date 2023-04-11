@@ -14,14 +14,14 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         folding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
                                                                                         "truncated_normal"),
-                                                 with_bias=True,
+                                                 with_bias=False,
                                                  name = 'folding_additive_trait'
                                                  )(inputs_folding)
 
         folding_nonlinear_layer = StateProbFolded()(folding_additive_trait_layer)
 
         folding_additive_layer = hk.Linear(number_additive_traits,
-                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "uniform"),
                                            with_bias=True,
                                            name = 'folding_additive' # ,
                                            )(folding_nonlinear_layer)
@@ -30,14 +30,14 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_avg",
                                                                                         "truncated_normal"),
-                                                 with_bias=True,
+                                                 with_bias=False,
                                                  name = 'binding_additive_trait'
                                                  )(inputs_binding)
 
         binding_nonlinear_layer = StateProbBound()(binding_additive_trait_layer, folding_additive_trait_layer)
 
         binding_additive_layer = hk.Linear(number_additive_traits,
-                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "truncated_normal"),
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "uniform"),
                                            with_bias=True,
                                            name = 'binding_additive'
                                            )(binding_nonlinear_layer)
@@ -47,21 +47,26 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         multiplicative_layer_binding = binding_additive_layer * input_layer_select_binding
         output_layer = multiplicative_layer_folding + multiplicative_layer_binding
 
-        return output_layer, folding_additive_trait_layer, binding_additive_trait_layer
+        return output_layer,folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer
 
     return model_fn
 
 
 def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding,
                      number_additive_traits):
+
     # Create model
     model_fn = create_model_fn(number_additive_traits, l1, l2, rng)
     model = hk.without_apply_rng(hk.transform(model_fn))
 
+    # Avoid magic numbers
+    min_value = 0
+    max_value = 1e3
+
     # Create optimizer
     opt = optax.chain(
         optax.adam(learn_rate),
-        constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
+        constrained_gradients(['folding_additive', 'binding_additive'], min_value,max_value),
     )
 
     return model, opt

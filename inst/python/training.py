@@ -128,10 +128,14 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
         input_dim_binding=input_data['train']['bind'].shape[1],
         number_additive_traits=param_dict['number_additive_traits'])
 
-    @jax.jit
+    #@jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
+        #print(folding_additive_layer)
+        #print(binding_additive_layer)
+        #print(folding_additive_trait_layer)
+        #print(binding_additive_trait_layer)
 
         # Apply L1 and L2 regularization
         l1_loss = 0
@@ -159,9 +163,11 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
     for epoch in range(n_epochs):
         for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
             inputs_select, inputs_folding, inputs_binding, target = batch_data
+
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
+        print(params)
         print(f'epoch done with {val_loss.item()}')
 
     return val_loss.item()

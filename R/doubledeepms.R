@@ -28,13 +28,13 @@
 #py_run_file("/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py")
 
 doubledeepms <- function(
-  startStage = 1,
+  startStage = 0,
   stopStage = 15,
   base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results/",
   tmodel_job_number = 1,
   tmodel_grid_search = TRUE,
   tmodel_protein = "GRB2-SH3",
-  tmodel_subset = 100
+  tmodel_subset = 50
   ){
   
   # startStage=1

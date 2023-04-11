@@ -52,7 +52,6 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
     observed_fitness_resample = jnp.array(
     [jnp.array(
       [observed_fitness[i]+(observed_fitness_sd[i] * jax.random.normal(rngs[i], shape=(1,))) for i in range(len(observed_fitness))])
-
     for j in range(n_resamplings)]
     )
     #Save new data
