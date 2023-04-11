@@ -8,12 +8,10 @@ def weights_loading(output_directory, model_count):
     weights_filepath = os.path.join(output_directory, "model_weights_"+str(model_count)+".txt")
     weights_dataframe = pd.read_csv(weights_filepath, sep="\t")
 
-    weights_dataframe = weights_dataframe.dropna(subset=['binding_coefficient'])
-
 
     # Extract the folding and binding coefficients
     folding_coefficients = weights_dataframe['folding_coefficient'].to_numpy()
-    binding_coefficients = weights_dataframe['binding_coefficient'].to_numpy()
+    binding_coefficients = weights_dataframe['binding_coefficient'].dropna().to_numpy()
 
     # Load the remaining model parameters (linear layers) from the separate text file
     parameters_filepath = os.path.join(output_directory, "model_parameters_"+str(model_count)+".txt")
