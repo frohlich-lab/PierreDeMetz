@@ -68,8 +68,6 @@ from keras import backend as K
 from keras.callbacks import LambdaCallback
 from keras.models import load_model
 
-#Load our model
-loaded_model = load_model('/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/whole_model/my_model_0/')
 
 #Generate dataset
 def load_model_data(file_dict):
@@ -101,6 +99,10 @@ def load_model_data(file_dict):
     data_dict[name]["bind_colnames"] = np.asarray([ALL_COLUMNS[i].replace("bind_", "") for i in BIND_COLUMNS])
   return data_dict
 
+#Load our model
+loaded_model = load_model('/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/whole_model/my_model_0/')
+
+
 #Load model data
 model_data = load_model_data({
   "train": data_train_file,
@@ -119,14 +121,16 @@ binding_additive_model = keras.Model(
     outputs = loaded_model.layers[9].output)
 
 output_folding = folding_additive_model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']],
-                                                batch_size = 1
+                                                batch_size = 1,
+                                                #shuffle = False
                                                 )
 #print('output folding')
 #print(output_folding)
 #print(type(output_folding))
-print(' ')
+#print(' ')
 output_binding = binding_additive_model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']],
-                                                batch_size=1
+                                                batch_size=1,
+                                                #shuffle = False
                                                 )
 #print('output binding')
 #print(output_binding)
