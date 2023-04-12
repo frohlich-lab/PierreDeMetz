@@ -38,6 +38,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
 
         binding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "uniform"),
+                                           #w_init = hk.initializers.RandomUniform(0,0.000 )
                                            with_bias=True,
                                            name = 'binding_additive'
                                            )(binding_nonlinear_layer)

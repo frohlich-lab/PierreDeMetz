@@ -2,6 +2,7 @@ import jax
 import jax.numpy as jnp
 import optax
 from model_creation import create_model_jax
+import numpy as np
 
 def shuffle_weights(new_rng, weights):
     updated_weights = {}
@@ -34,6 +35,11 @@ def generate_batches(input_data, batch_size, rng):
     # Shuffle the training data.
     rng, _ = jax.random.split(rng)
     indices = jax.random.permutation(rng, indices)
+
+    #save indices
+    #print(type(indices))
+    #numpy_array = np.asarray(indices)
+    #np.save('device_array.npy', numpy_array)
 
     # Generate batches.
 
@@ -128,11 +134,11 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
         grads = jax.grad(loss_fn)(params, inputs_select, inputs_folding, inputs_binding, target)
         updates, new_opt_state = optimizer.update(grads, opt_state)
 
-        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
-        print('binding additive')
-        print(binding_additive_layer)
-        print('folding additive')
-        print(folding_additive_layer)
+        #output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        #print('binding additive')
+        #print(binding_additive_layer)
+        #print('folding additive')
+        #print(folding_additive_layer)
 
         # print('update done')
         new_params = optax.apply_updates(params, updates)
@@ -146,7 +152,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
 
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
-
+            print(params)
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
         #print(params)

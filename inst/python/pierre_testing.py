@@ -177,6 +177,26 @@ model_outputs = model.apply(trained_weights,
 
 prediction,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
 
+
+
+# Convert JAX NumPy arrays to regular NumPy arrays
+array1_np = np.asarray(folding_additive_layer_output)
+array2_np = np.asarray(binding_additive_layer_output)
+
+# Combine the two arrays horizontally
+combined_array = np.hstack((array1_np, array2_np))
+
+# Create a pandas DataFrame from the combined array
+df = pd.DataFrame(combined_array)
+
+# Set the column names
+column_names = ['folding_additive_layer_output', 'binding_additive_layer_output']
+df.columns = column_names
+
+# Save the DataFrame to a CSV file
+df.to_csv("arrays_jax.csv", index=False)
+
+
 folding_additive_trait_df = pd.DataFrame(folding_additive_trait_layer_outputs)
 binding_additive_trait_df = pd.DataFrame(binding_additive_trait_layer_outputs)
 

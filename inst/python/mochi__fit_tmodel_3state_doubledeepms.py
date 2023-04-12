@@ -67,6 +67,7 @@ from keras.layers import Layer
 from keras import backend as K
 
 from keras.callbacks import LambdaCallback
+from keras.models import load_model
 
 #######################################################################
 ## CLASSES ##
@@ -300,6 +301,12 @@ class CustomCallback(callbacks.Callback):
         print(' ')
         print('folding_additive ')
         print(folding_additive_output[:10])
+        print('   ')
+        print('binding additive weights')
+        print(self.model.layers[9].get_weights())
+        print('   ')
+        print('folding additive weights')
+        print(self.model.layers[7].get_weights())
 
     def on_epoch_end(self):
         print('########################EPOCH END########################')
@@ -307,7 +314,12 @@ class CustomCallback(callbacks.Callback):
     #custom_callback.on_batch_end(batch, logs, batch_data=batch)
 
 
-
+def reorder_sparse_tensor(sparse_tensor, indices_to_reorder):
+    reordered_indices = tf.gather(sparse_tensor.indices, indices_to_reorder)
+    reordered_values = tf.gather(sparse_tensor.values, indices_to_reorder)
+    reordered_sparse_tensor = tf.SparseTensor(reordered_indices, reordered_values, sparse_tensor.dense_shape)
+    reordered_sparse_tensor = tf.sparse.reorder(reordered_sparse_tensor)  # Add this line to reorder the indices
+    return reordered_sparse_tensor
 
 #Fit model for gridsearch
 def fit_model_grid(param_dict, input_data, n_epochs):
@@ -345,6 +357,28 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     'bind': tf.sparse.to_dense(input_data['train']['bind'])[batch * 128: (batch + 1) * 128]})
       )
 
+  loaded_array = np.load('device_array.npy')
+  loaded_array_tensor = tf.convert_to_tensor(loaded_array, dtype=tf.int32)
+  print(loaded_array.shape)
+  print(loaded_array_tensor.shape)
+  # Concatenate 'select' and 'target' tensors along the second axis
+  select_target_concat = tf.concat([input_data['train']['select'], input_data['train']['target']], axis=1)
+
+  # Reorder the concatenated tensor using the loaded_array_tensor
+  select_target_concat_reordered = tf.gather(select_target_concat, loaded_array_tensor)
+
+  # Slice the reordered concatenated tensor to get the reordered 'select' and 'target' tensors
+  input_data['train']['select'] = select_target_concat_reordered[:, :2]
+  input_data['train']['target'] = select_target_concat_reordered[:, 2:]
+
+  input_data['train']['fold'] = reorder_sparse_tensor(input_data['train']['fold'], loaded_array_tensor)
+  input_data['train']['bind'] = reorder_sparse_tensor(input_data['train']['bind'], loaded_array_tensor)
+
+  print("Select shape:", input_data['train']['select'].shape)
+  print("Fold shape:", input_data['train']['fold'].shape)
+  print("Bind shape:", input_data['train']['bind'].shape)
+  print("Target shape:", input_data['train']['target'].shape)
+
   history = model.fit(
     [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
     input_data['train']['target'],
@@ -352,9 +386,10 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     callbacks= [intermediate_callback],
     epochs = n_epochs,
     batch_size = param_dict['num_samples'],
-    shuffle = True,
+    shuffle = False,
     verbose = 0,
     use_multiprocessing = True)
+
   #print(history)
   return(history.history["val_loss"][-1])
 
@@ -497,7 +532,9 @@ for model_count in range(num_models):
   #######################################################################
 
   #Model predictions on observed variants
-  model_predictions = model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']])
+  model_predictions = model.predict([model_data['obs']['select'], model_data['obs']['fold'], model_data['obs']['bind']],
+                                    callbacks=None
+                                    )
 
   #Index for folding additive trait layer
   layer_idx_folding = get_layer_index(
