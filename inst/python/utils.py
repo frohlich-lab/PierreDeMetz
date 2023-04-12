@@ -28,11 +28,14 @@ def constrained_gradients(layer_names, min_value, max_value) -> GradientTransfor
 
 class StateProbFolded(hk.Module):
     def __call__(self, inputs):
-        return nn.sigmoid(inputs)
+        return 1/(1+jnp.exp(inputs))
 
 class StateProbBound(hk.Module):
     def __call__(self, inputs_1, inputs_2):
-        return nn.sigmoid(inputs_1 + nn.softplus(inputs_2))
+        return 1/(1+jnp.exp(inputs_1)*(1+jnp.exp(inputs_2)))
+
+
+
 
 class Between(hk.Module):
     def __init__(self, min_value, max_value, name=None):
