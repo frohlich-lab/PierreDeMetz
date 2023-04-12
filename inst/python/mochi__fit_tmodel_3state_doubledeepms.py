@@ -66,6 +66,8 @@ from keras.constraints import Constraint
 from keras.layers import Layer
 from keras import backend as K
 
+from keras.callbacks import LambdaCallback
+
 #######################################################################
 ## CLASSES ##
 #######################################################################
@@ -277,20 +279,33 @@ class CustomCallback(callbacks.Callback):
     def __init__(self, model):
         super().__init__()
         self.model = model
+        self.intermediate_model = Model(inputs=model.input,
+                                        outputs=[model.layers[9].output, model.layers[7].output])
 
-    def on_epoch_end(self, epoch, logs=None):
+    def on_batch_end(self, batch, logs=None, batch_data=None):
+
+        if batch_data is None:
+            print("No batch data provided.")
+            return
+
+        #print(batch_data.shape)
+        input_data = [batch_data['select'], batch_data['fold'], batch_data['bind']]
+
+        # Get the intermediate layer outputs using the input data
+        binding_additive_output, folding_additive_output = self.intermediate_model.predict(input_data)
+
         print(' ')
         print('binding_additive ')
-        print(self.model.layers[9].get_weights())
-        print(' ')
-        print('bindin_additive_trait ')
-        print(self.model.layers[3].get_weights())
+        print(binding_additive_output[:10])
         print(' ')
         print('folding_additive ')
-        print(self.model.layers[7].get_weights())
-        print(' ')
-        print('folding_additive_trait ')
-        print(self.model.layers[2].get_weights())
+        print(folding_additive_output[:10])
+
+    def on_epoch_end(self):
+        print('########################EPOCH END########################')
+#def get_current_batch(batch, logs):
+    #custom_callback.on_batch_end(batch, logs, batch_data=batch)
+
 
 
 
@@ -317,11 +332,24 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     [input_data['valid']['select'], input_data['valid']['fold'], input_data['valid']['bind']],
     input_data['valid']['target'])
   #Fit the model
+
+  def get_current_batch(batch, logs):
+    custom_callback.on_batch_end(batch, logs, batch_data=batch)
+
+  custom_callback = CustomCallback(model)
+
+  intermediate_callback = LambdaCallback(
+      on_batch_end=lambda batch, logs: custom_callback.on_batch_end(batch, logs, batch_data={
+    'select': input_data['train']['select'][batch * 128: (batch + 1) * 128],
+    'fold': tf.sparse.to_dense(input_data['train']['fold'])[batch * 128: (batch + 1) * 128],
+    'bind': tf.sparse.to_dense(input_data['train']['bind'])[batch * 128: (batch + 1) * 128]})
+      )
+
   history = model.fit(
     [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
     input_data['train']['target'],
     validation_data = validation_data,
-    callbacks=[CustomCallback(model)],
+    callbacks= [intermediate_callback],
     epochs = n_epochs,
     batch_size = param_dict['num_samples'],
     shuffle = True,

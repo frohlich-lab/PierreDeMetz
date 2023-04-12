@@ -152,7 +152,7 @@ else:
 
     rng = jax.random.PRNGKey(random_seed)
     rngs = jax.random.split(rng, len(parameter_grid))
-    print(len(parameter_grid))
+    #print(len(parameter_grid))
     grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
     #grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng) for params in parameter_grid]
 
