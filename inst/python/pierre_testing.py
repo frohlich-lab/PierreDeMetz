@@ -134,9 +134,9 @@ if num_resamplings!=0:
 
 best_params = {
         "num_samples": 128,
-        "learning_rate": 0.0001,
-        "l1_regularization_factor": 0.0001,
-        "l2_regularization_factor": 0.0001,
+        "learning_rate": 0.01,
+        "l1_regularization_factor": 0.1,
+        "l2_regularization_factor": 0.1,
         "number_additive_traits": 1
         }
 

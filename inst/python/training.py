@@ -63,6 +63,9 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
 
+            weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+            weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+
         val_loss = loss_fn(weights, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
         history.append(val_loss.item())
@@ -102,9 +105,10 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
             l1_loss += jnp.sum(jnp.abs(binding_additive_trait_params))
             l2_loss += jnp.sum(jnp.square(binding_additive_trait_params))
 
+        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict['l2_regularization_factor'] * l2_loss
         return loss
 
-    @jax.jit
+    #@jax.jit
     def update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target):
 
         grads = jax.grad(loss_fn)(params, inputs_select, inputs_folding, inputs_binding, target)

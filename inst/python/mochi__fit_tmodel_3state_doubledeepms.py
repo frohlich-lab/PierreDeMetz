@@ -314,13 +314,13 @@ class CustomCallback(callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         logs = logs or {}
         train_loss = logs.get("loss")
-        print(f"End of epoch {epoch + 1}, training loss: {train_loss:.4f}")
-
+        #print(f"End of epoch {epoch + 1}, training loss: {train_loss:.4f}")
+        #print(self.model.layers)
         print('binding additive weights')
-        print(self.model.layers[9].get_weights())
+        print(self.model.layers[2].get_weights())
         print('   ')
         print('folding additive weights')
-        print(self.model.layers[7].get_weights())
+        print(self.model.layers[3].get_weights())
 
 #def get_current_batch(batch, logs):
     #custom_callback.on_batch_end(batch, logs, batch_data=batch)
@@ -395,7 +395,7 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
     input_data['train']['target'],
     validation_data = validation_data,
-    #callbacks = [custom_callback],
+    callbacks = [custom_callback],
     #callbacks= [intermediate_callback],
     epochs = n_epochs,
     batch_size = param_dict['num_samples'],
@@ -403,7 +403,7 @@ def fit_model_grid(param_dict, input_data, n_epochs):
     verbose = 0,
     use_multiprocessing = True)
 
-  print(history.history["val_loss"][-1])
+  #print(history.history["val_loss"][-1])
   return(history.history["val_loss"][-1])
 
 #######################################################################

@@ -129,42 +129,16 @@ if num_resamplings!=0:
         )
 
 #######################################################################
-## TUNE LEARNING RATE, NUMBER OF SAMPLES AND REGULARISATION PARAMS ##
-#######################################################################
-
-#Fit model
-if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) == 1:
-    best_params = {
-        "num_samples": batch_size[0],
-        "learning_rate": learn_rate[0],
-        "l1_regularization_factor": l1[0],
-        "l2_regularization_factor": l2[0],
-        "number_additive_traits": 1
-    }
-else:
-    parameter_grid = [{
-        "num_samples": i,
-        "learning_rate": j,
-        "l1_regularization_factor": k,
-        "l2_regularization_factor": l,
-        "number_additive_traits": 1
-    } for i in batch_size for j in learn_rate for k in l1 for l in l2]
-
-    rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid))
-    #print(len(parameter_grid))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
-    #grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng) for params in parameter_grid]
-
-    best_params = parameter_grid[np.argmin(grid_results)]
-
-    print("Best: %f using %s" % (min(grid_results), best_params))
-
-
-#######################################################################
 ## BUILD FINAL NEURAL NETWORK ##
 #######################################################################
 
+best_params = {
+        "num_samples": 128,
+        "learning_rate": 0.01,
+        "l1_regularization_factor": 0.1,
+        "l2_regularization_factor": 0.1,
+        "number_additive_traits": 1
+        }
 
 #create the rng
 random_seed = 42
@@ -207,12 +181,12 @@ for model_count in range(num_models):
     model_predictions ,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
     #save model
     #print(shuffled_weights)
-    # with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
-    #     pickle.dump(shuffled_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
+        pickle.dump(trained_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    # #load model
-    # with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
-    #     shuffled_weights_reloaded = pickle.load(handle)
+    #load model
+    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
+        shuffled_weights_reloaded = pickle.load(handle)
 
     #Plot model performance per epoch
     my_figure = plt.figure(figsize = (8,8))
