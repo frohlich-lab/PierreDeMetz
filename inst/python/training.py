@@ -3,6 +3,7 @@ import jax.numpy as jnp
 import optax
 from model_creation import create_model_jax
 import numpy as np
+from utils import apply_weight_constraints
 
 def shuffle_weights(new_rng, weights):
     updated_weights = {}
@@ -19,31 +20,14 @@ def shuffle_weights(new_rng, weights):
     return updated_weights
 
 def generate_batches(input_data, batch_size, rng):
-    """Generate batches for training.
 
-    Args:
-        input_data: A dictionary of NumPy arrays containing the input data.
-        batch_size: The batch size.
-        rng: A JAX PRNGKey.
-
-    Yields:
-        A tuple of (select, fold, bind, target) batches.
-    """
     num_samples = input_data['select'].shape[0]
     indices = jnp.arange(num_samples)
 
-    # Shuffle the training data.
-    rng, _ = jax.random.split(rng)
     indices = jax.random.permutation(rng, indices)
 
-    #save indices
-    #print(type(indices))
-    #numpy_array = np.asarray(indices)
-    #np.save('device_array.npy', numpy_array)
-
-    # Generate batches.
-
     for start_idx in range(0, num_samples, batch_size):
+
         end_idx = min(start_idx + batch_size, num_samples)
         batch_indices = indices[start_idx:end_idx]
 
@@ -62,7 +46,7 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
 
     @jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer  = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
         return loss
 
@@ -75,7 +59,6 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
 
     history = []
     for epoch in range(n_epochs):
-
         for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
@@ -91,11 +74,11 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
     # Summarize results
     print("Grid search using %s" % (param_dict))
 
-    rng_init, rng_batches = jax.random.split(rng)
+    rng_batches = jax.random.split(rng, num=n_epochs)
 
     # Create model
     model, optimizer = create_model_jax(
-        rng=rng_init,
+        rng=rng,
         learn_rate=param_dict['learning_rate'],
         l1=param_dict['l1_regularization_factor'],
         l2=param_dict['l2_regularization_factor'],
@@ -106,15 +89,9 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
 
     #@jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        #print(inputs_binding.shape)
+
         output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(output - target))
-
-        #print('folding additive')
-        #print(folding_additive_layer)
-
-        #print('binding additive')
-        #print(binding_additive_layer)
 
         # Apply L1 and L2 regularization
         l1_loss = 0
@@ -125,37 +102,36 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
             l1_loss += jnp.sum(jnp.abs(binding_additive_trait_params))
             l2_loss += jnp.sum(jnp.square(binding_additive_trait_params))
 
-        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict['l2_regularization_factor'] * l2_loss
-
         return loss
 
-    #@jax.jit
+    @jax.jit
     def update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target):
+
         grads = jax.grad(loss_fn)(params, inputs_select, inputs_folding, inputs_binding, target)
+
         updates, new_opt_state = optimizer.update(grads, opt_state)
-
-        #output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer = model.apply(params, inputs_select, inputs_folding, inputs_binding)
-        #print('binding additive')
-        #print(binding_additive_layer)
-        #print('folding additive')
-        #print(folding_additive_layer)
-
-        # print('update done')
         new_params = optax.apply_updates(params, updates)
+
         return new_params, new_opt_state
 
     params = model.init(rng, input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind'])
     opt_state = optimizer.init(params)
 
     for epoch in range(n_epochs):
-        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
+        #print(params['binding_additive'])
+        #print(params['folding_additive'])
 
+        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches[epoch]):
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             params, opt_state = update(params, opt_state, inputs_select, inputs_folding, inputs_binding, target)
-            print(params)
+
+            params = apply_weight_constraints(params, 'folding_additive', 0, 1e3)
+            params = apply_weight_constraints(params, 'binding_additive', 0, 1e3)
+
+
         val_loss = loss_fn(params, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
-        #print(params)
+
         print(f'epoch done with {val_loss.item()}')
 
     return val_loss.item()

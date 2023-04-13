@@ -21,7 +21,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         folding_nonlinear_layer = StateProbFolded()(folding_additive_trait_layer)
 
         folding_additive_layer = hk.Linear(1,
-                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "uniform"),
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
                                            with_bias=True,
                                            name = 'folding_additive'
                                            )(folding_nonlinear_layer)
@@ -37,7 +37,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         binding_nonlinear_layer = StateProbBound()(binding_additive_trait_layer, folding_additive_trait_layer)
 
         binding_additive_layer = hk.Linear(1,
-                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_avg", "uniform"),
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
                                            #w_init = hk.initializers.RandomUniform(0,0.000 )
                                            with_bias=True,
                                            name = 'binding_additive'
@@ -59,10 +59,12 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
     model_fn = create_model_fn(number_additive_traits, l1, l2, rng)
     model = hk.without_apply_rng(hk.transform(model_fn))
 
+    opt = optax.adam(learn_rate)
+
     # Create optimizer
-    opt = optax.chain(
-        optax.adam(learn_rate),
-        constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
-    )
+    #opt = optax.chain(
+    #    optax.adam(learn_rate)#,
+        #constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
+    #)
 
     return model, opt

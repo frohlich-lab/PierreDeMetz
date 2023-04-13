@@ -58,3 +58,9 @@ def get_layer_index(model, layername):
 
 def get_seq_id(sq):
     return ":".join([str(i)+sq[i] for i in range(len(sq))])
+
+
+def apply_weight_constraints(params, layer_name, min_val, max_val):
+    constrained_params = params.copy()
+    constrained_params[layer_name]['w'] = jnp.clip(constrained_params[layer_name]['w'], min_val, max_val)
+    return constrained_params

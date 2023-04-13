@@ -105,6 +105,9 @@ class State_prob_bound(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape
 
+
+
+
 class Between(Constraint):
     def __init__(self, min_value, max_value):
         self.min_value = min_value
@@ -283,33 +286,42 @@ class CustomCallback(callbacks.Callback):
         self.intermediate_model = Model(inputs=model.input,
                                         outputs=[model.layers[9].output, model.layers[7].output])
 
-    def on_batch_end(self, batch, logs=None, batch_data=None):
+    #def on_batch_end(self, batch, logs=None, batch_data=None):
 
-        if batch_data is None:
-            print("No batch data provided.")
-            return
+        #if batch_data is None:
+            #print("No batch data provided.")
+            #return
 
         #print(batch_data.shape)
-        input_data = [batch_data['select'], batch_data['fold'], batch_data['bind']]
+        #input_data = [batch_data['select'], batch_data['fold'], batch_data['bind']]
 
         # Get the intermediate layer outputs using the input data
-        binding_additive_output, folding_additive_output = self.intermediate_model.predict(input_data)
+        #binding_additive_output, folding_additive_output = self.intermediate_model.predict(input_data)
 
-        print(' ')
-        print('binding_additive ')
-        print(binding_additive_output[:10])
-        print(' ')
-        print('folding_additive ')
-        print(folding_additive_output[:10])
-        print('   ')
+        #print(' ')
+        #print('binding_additive ')
+        #print(binding_additive_output[:10])
+        #print(' ')
+        #print('folding_additive ')
+        #print(folding_additive_output[:10])
+        #print('   ')
+        #print('binding additive weights')
+        #print(self.model.layers[9].get_weights())
+        #print('   ')
+        #print('folding additive weights')
+        #print(self.model.layers[7].get_weights())
+
+    def on_epoch_end(self, epoch, logs=None):
+        logs = logs or {}
+        train_loss = logs.get("loss")
+        print(f"End of epoch {epoch + 1}, training loss: {train_loss:.4f}")
+
         print('binding additive weights')
         print(self.model.layers[9].get_weights())
         print('   ')
         print('folding additive weights')
         print(self.model.layers[7].get_weights())
 
-    def on_epoch_end(self):
-        print('########################EPOCH END########################')
 #def get_current_batch(batch, logs):
     #custom_callback.on_batch_end(batch, logs, batch_data=batch)
 
@@ -350,17 +362,17 @@ def fit_model_grid(param_dict, input_data, n_epochs):
 
   custom_callback = CustomCallback(model)
 
-  intermediate_callback = LambdaCallback(
-      on_batch_end=lambda batch, logs: custom_callback.on_batch_end(batch, logs, batch_data={
-    'select': input_data['train']['select'][batch * 128: (batch + 1) * 128],
-    'fold': tf.sparse.to_dense(input_data['train']['fold'])[batch * 128: (batch + 1) * 128],
-    'bind': tf.sparse.to_dense(input_data['train']['bind'])[batch * 128: (batch + 1) * 128]})
-      )
+#   intermediate_callback = LambdaCallback(
+#       on_batch_end=lambda batch, logs: custom_callback.on_batch_end(batch, logs, batch_data={
+#     'select': input_data['train']['select'][batch * 128: (batch + 1) * 128],
+#     'fold': tf.sparse.to_dense(input_data['train']['fold'])[batch * 128: (batch + 1) * 128],
+#     'bind': tf.sparse.to_dense(input_data['train']['bind'])[batch * 128: (batch + 1) * 128]})
+#       )
 
   loaded_array = np.load('device_array.npy')
   loaded_array_tensor = tf.convert_to_tensor(loaded_array, dtype=tf.int32)
-  print(loaded_array.shape)
-  print(loaded_array_tensor.shape)
+  #print(loaded_array.shape)
+  #print(loaded_array_tensor.shape)
   # Concatenate 'select' and 'target' tensors along the second axis
   select_target_concat = tf.concat([input_data['train']['select'], input_data['train']['target']], axis=1)
 
@@ -374,23 +386,24 @@ def fit_model_grid(param_dict, input_data, n_epochs):
   input_data['train']['fold'] = reorder_sparse_tensor(input_data['train']['fold'], loaded_array_tensor)
   input_data['train']['bind'] = reorder_sparse_tensor(input_data['train']['bind'], loaded_array_tensor)
 
-  print("Select shape:", input_data['train']['select'].shape)
-  print("Fold shape:", input_data['train']['fold'].shape)
-  print("Bind shape:", input_data['train']['bind'].shape)
-  print("Target shape:", input_data['train']['target'].shape)
+  #print("Select shape:", input_data['train']['select'].shape)
+  #print("Fold shape:", input_data['train']['fold'].shape)
+  #print("Bind shape:", input_data['train']['bind'].shape)
+  #print("Target shape:", input_data['train']['target'].shape)
 
   history = model.fit(
     [input_data['train']['select'], input_data['train']['fold'], input_data['train']['bind']],
     input_data['train']['target'],
     validation_data = validation_data,
-    callbacks= [intermediate_callback],
+    #callbacks = [custom_callback],
+    #callbacks= [intermediate_callback],
     epochs = n_epochs,
     batch_size = param_dict['num_samples'],
     shuffle = False,
     verbose = 0,
     use_multiprocessing = True)
 
-  #print(history)
+  print(history.history["val_loss"][-1])
   return(history.history["val_loss"][-1])
 
 #######################################################################
