@@ -59,6 +59,7 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
     model = hk.without_apply_rng(hk.transform(model_fn))
 
     opt_init, opt_update = optax.adam(learn_rate)
+    #opt_init, opt_update = optax.sgd(learn_rate)
 
     # Create optimizer
     #opt = optax.chain(

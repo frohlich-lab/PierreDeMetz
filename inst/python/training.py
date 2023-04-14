@@ -31,15 +31,16 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
     rng_batches = jax.random.split(rng, num=n_epochs)
 
     #@jax.jit
-    def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output, _, _, _, _  = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+    def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):
+        output, _, _, _, _  = model.apply(weights, inputs_select, inputs_folding, inputs_binding)
         loss = jnp.mean(jnp.abs(target-output))
         return loss
 
     @jax.jit
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
         loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
-        #jax.debug.print('weights : {}', weights)
+        #jax.debug.print('grads : {}', grads.keys())
+        #jax.debug.print('weights : {}', weights.keys())
         updates, opt_state = opt_update(grads, opt_state)
         weights = optax.apply_updates(weights, updates)
         #jax.debug.print('weights updated : {}', weights)
@@ -48,7 +49,7 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
     history = []
     for epoch in range(n_epochs):
         batch_data = generate_batches(input_data['train'], param_dict['num_samples'], rng_batches[epoch])
-
+        #print(weights['binding_additive_trait']['w'][:10])
         for batch in batch_data:
 
             inputs_select, inputs_folding, inputs_binding, target = batch

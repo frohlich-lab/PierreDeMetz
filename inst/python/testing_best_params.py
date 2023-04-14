@@ -116,6 +116,7 @@ except FileExistsError:
 #random_seed = 42
 #rng = jax.random.PRNGKey(random_seed)
 rngs = hk.PRNGSequence(jax.random.PRNGKey(42))
+
 #Load model data
 model_data_jax = load_model_data_jax({
     "train": data_train_file,
@@ -130,8 +131,8 @@ model_data_jax = load_model_data_jax({
 best_params = {
         "num_samples": 128,
         "learning_rate": 0.01,
-        "l1_regularization_factor": 0.001,
-        "l2_regularization_factor": 0.001,
+        "l1_regularization_factor": 0.0001,
+        "l2_regularization_factor": 0.0001,
         "number_additive_traits": 1
         }
 
@@ -151,12 +152,16 @@ weights = model.init(next(rngs),
                      jnp.ones_like(model_data_jax['train']['select']),
                      jnp.ones_like(model_data_jax['train']['fold']),
                      jnp.ones_like(model_data_jax['train']['bind']))
+
 opt_state = opt_init(weights)
 
 weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
 weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 
-history, model, trained_weights = model_training(model, opt_state, opt_update, weights, best_params, model_data_jax, num_epochs, next(rngs))
+history, model, trained_weights = model_training(model,
+                                                 opt_state,
+                                                 opt_update,
+                                                 weights, best_params, model_data_jax, num_epochs, next(rngs))
 
 # Model predictions on observed variants
 model_outputs= model.apply(trained_weights,

@@ -314,13 +314,13 @@ class CustomCallback(callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         logs = logs or {}
         train_loss = logs.get("loss")
-        #print(f"End of epoch {epoch + 1}, training loss: {train_loss:.4f}")
+        print(f"End of epoch {epoch + 1}, training loss: {train_loss:.4f}")
         #print(self.model.layers)
         print('binding additive weights')
-        print(self.model.layers[2].get_weights())
+        print(self.model.layers[7].get_weights())
         print('   ')
         print('folding additive weights')
-        print(self.model.layers[3].get_weights())
+        print(self.model.layers[9].get_weights())
 
 #def get_current_batch(batch, logs):
     #custom_callback.on_batch_end(batch, logs, batch_data=batch)
