@@ -47,7 +47,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng):
         multiplicative_layer_binding = binding_additive_layer * input_layer_select_binding
         output_layer = multiplicative_layer_folding + multiplicative_layer_binding
 
-        return output_layer, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer
+        return output_layer.flatten(), folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer
 
     return model_fn
 
