@@ -58,7 +58,7 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
     model_fn = create_model_fn(number_additive_traits, l1, l2, rng)
     model = hk.without_apply_rng(hk.transform(model_fn))
 
-    opt = optax.adam(learn_rate)
+    opt_init, opt_update = optax.adam(learn_rate)
 
     # Create optimizer
     #opt = optax.chain(
@@ -66,4 +66,4 @@ def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_foldin
         #constrained_gradients(['folding_additive', 'binding_additive'], 0, 1e3),
     #)
 
-    return model, opt
+    return model, opt_init, opt_update

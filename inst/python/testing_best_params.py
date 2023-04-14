@@ -67,15 +67,14 @@ from jax import jit
 import pickle
 from functools import partial
 
-from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, between, get_seq_id, get_layer_index
-from training import model_training, shuffle_weights, fit_model_grid_jax
+from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, between, get_seq_id, get_layer_index, shuffle_weights
+from training import model_training, fit_model_grid_jax
 from dataloading import load_model_data_jax, resample_training_data_jax
 from model_creation import create_model_fn, create_model_jax
 from weights_loading import weights_loading
 #######################################################################
 ## SETUP ##
 #######################################################################
-
 
 #Output model directory
 model_directory = os.path.join(output_directory, "whole_model")
@@ -109,10 +108,14 @@ try:
 except FileExistsError:
   print("Warning: Output boostrap directory already exists.")
 
-#create the rng
-random_seed = 42
-rng = jax.random.PRNGKey(random_seed)
+#######################################################################
+## CREATE DATA ##
+#######################################################################
 
+#create the rng
+#random_seed = 42
+#rng = jax.random.PRNGKey(random_seed)
+rngs = hk.PRNGSequence(jax.random.PRNGKey(42))
 #Load model data
 model_data_jax = load_model_data_jax({
     "train": data_train_file,
@@ -120,33 +123,20 @@ model_data_jax = load_model_data_jax({
     "obs": data_obs_file
     })
 
-#Resample training data
-if num_resamplings!=0:
-    model_data_jax["train"] = resample_training_data_jax(
-        tensor_dict = model_data_jax["train"],
-        n_resamplings = num_resamplings,
-        rng = rng
-        )
-
 #######################################################################
-## BUILD FINAL NEURAL NETWORK ##
+## BUILD NEURAL NETWORK ##
 #######################################################################
 
 best_params = {
         "num_samples": 128,
-        "learning_rate": 0.001,
+        "learning_rate": 0.01,
         "l1_regularization_factor": 0.001,
         "l2_regularization_factor": 0.001,
         "number_additive_traits": 1
         }
 
-#create the rng
-random_seed = 42
-rng = jax.random.PRNGKey(random_seed)
-rngs = jax.random.split(rng, num_models)
-
-model, optimizer = create_model_jax(
-    rng=rng,
+model, opt_init, opt_update = create_model_jax(
+    rng=next(rngs),
     learn_rate=best_params['learning_rate'],
     l1=best_params['l1_regularization_factor'],
     l2=best_params['l2_regularization_factor'],
@@ -156,19 +146,14 @@ model, optimizer = create_model_jax(
     number_additive_traits=best_params['number_additive_traits']
 )
 
-# Need clarification from Fabian as to why we this is needed
-weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
-opt_state = optimizer.init(weights)
+#weights = model.init(next(rngs), model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
+weights = model.init(next(rngs),
+                     jnp.ones_like(model_data_jax['train']['select']),
+                     jnp.ones_like(model_data_jax['train']['fold']),
+                     jnp.ones_like(model_data_jax['train']['bind']))
+opt_state = opt_init(weights)
 
-#all models output almost the same thing
-    #if model_count>=1:
-        #output_directory = str(output_directory + 'bootstrap')
-
-    #Shuffle model weights
-    #shuffled_weights = shuffle_weights(rngs[model_count], weights)
-model_count = 1
-#Fit the model on best params
-history, model, trained_weights = model_training(model, optimizer, weights, opt_state, best_params, model_data_jax, num_epochs, rng)
+history, model, trained_weights = model_training(model, opt_state, opt_update, weights, best_params, model_data_jax, num_epochs, next(rngs))
 
 # Model predictions on observed variants
 model_outputs= model.apply(trained_weights,
@@ -178,8 +163,12 @@ model_outputs= model.apply(trained_weights,
                                 )
 
 prediction ,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
-#save model
-#print(shuffled_weights)
+
+#######################################################################
+## PLOTTING ##
+#######################################################################
+model_count = 1
+
 with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
     pickle.dump(trained_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -210,11 +199,11 @@ dataframe_to_export = pd.DataFrame({
     "additive_trait_binding" : binding_additive_trait_df[0],
     "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()
 })
+
 #Save as csv file
 dataframe_to_export.to_csv(os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
                         sep = "\t",
                         index = False)
-
 
 # Save model weights
 dataframe_to_export_folding = pd.DataFrame({

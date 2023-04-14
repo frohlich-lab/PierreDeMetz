@@ -5,25 +5,11 @@ from model_creation import create_model_jax
 import numpy as np
 from utils import apply_weight_constraints
 
-def shuffle_weights(new_rng, weights):
-    updated_weights = {}
-    for layer, value in weights.items():
-        layer_weights = {}
-        for key, weight in value.items():
-            if key == 'w':
-                shuffled_weight = jax.random.permutation(new_rng, weight)
-                layer_weights[key] = shuffled_weight
-            else:
-                layer_weights[key] = weight
-        updated_weights[layer] = layer_weights
-
-    return updated_weights
 
 def generate_batches(input_data, batch_size, rng):
 
     num_samples = input_data['select'].shape[0]
     indices = jnp.arange(num_samples)
-
     indices = jax.random.permutation(rng, indices)
 
     for start_idx in range(0, num_samples, batch_size):
@@ -39,48 +25,41 @@ def generate_batches(input_data, batch_size, rng):
         yield batch_select, batch_fold, batch_bind, batch_target
 
 
-def model_training(model, optimizer, weights, opt_state, param_dict, input_data, n_epochs, rng):
-    print("Grid search using %s" % (param_dict))
+def model_training(model, opt_state,opt_update, weights, param_dict, input_data, n_epochs, rng):
+
+    print("Training the model with %s" % (param_dict))
     rng_batches = jax.random.split(rng, num=n_epochs)
 
     #@jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
         output, _, _, _, _  = model.apply(params, inputs_select, inputs_folding, inputs_binding)
-
         loss = jnp.mean(jnp.abs(target-output))
-
-        # Apply L1 and L2 regularization
-        l1_loss = 0
-        l2_loss = 0
-        binding_additive_trait_params = params['binding_additive_trait']['w']
-
-        if binding_additive_trait_params.ndim > 1:  # exclude bias parameters
-            l1_loss += jnp.sum(jnp.abs(binding_additive_trait_params))
-            l2_loss += jnp.sum(jnp.square(binding_additive_trait_params))
-
-        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict['l2_regularization_factor'] * l2_loss
         return loss
 
     @jax.jit
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
-        grads = jax.grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
-        updates, new_opt_state = optimizer.update(grads, opt_state)
+        loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
+        #jax.debug.print('loss : {}', loss)
+        updates, opt_state = opt_update(grads, opt_state)
         weights = optax.apply_updates(weights, updates)
-        #print(weights['binding_additive_trait']['w'][:10])
-        return weights, new_opt_state
+
+        return weights, opt_state
 
     history = []
     for epoch in range(n_epochs):
+        batch_data = generate_batches(input_data['train'], param_dict['num_samples'], rng_batches[epoch])
 
-        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches[epoch]):
-            inputs_select, inputs_folding, inputs_binding, target = batch_data
+        for batch in batch_data:
+
+            inputs_select, inputs_folding, inputs_binding, target = batch
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
 
-            weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
-            weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+            #weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+            #weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 
         val_loss = loss_fn(weights, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])
+
         history.append(val_loss.item())
         print(f'epoch done with {val_loss.item()}')
 

@@ -64,3 +64,17 @@ def apply_weight_constraints(params, layer_name, min_val, max_val):
     constrained_params = params.copy()
     constrained_params[layer_name]['w'] = jnp.clip(constrained_params[layer_name]['w'], min_val, max_val)
     return constrained_params
+
+def shuffle_weights(new_rng, weights):
+    updated_weights = {}
+    for layer, value in weights.items():
+        layer_weights = {}
+        for key, weight in value.items():
+            if key == 'w':
+                shuffled_weight = jax.random.permutation(new_rng, weight)
+                layer_weights[key] = shuffled_weight
+            else:
+                layer_weights[key] = weight
+        updated_weights[layer] = layer_weights
+
+    return updated_weights
