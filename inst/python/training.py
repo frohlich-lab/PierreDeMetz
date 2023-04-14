@@ -41,13 +41,24 @@ def generate_batches(input_data, batch_size, rng):
 
 def model_training(model, optimizer, weights, opt_state, param_dict, input_data, n_epochs, rng):
     print("Grid search using %s" % (param_dict))
+    rng_batches = jax.random.split(rng, num=n_epochs)
 
-    rng_init, rng_batches = jax.random.split(rng)
-
-    @jax.jit
+    #@jax.jit
     def loss_fn(params, inputs_select, inputs_folding, inputs_binding, target):
-        output, folding_additive_layer, binding_additive_layer, folding_additive_trait_layer, binding_additive_trait_layer  = model.apply(params, inputs_select, inputs_folding, inputs_binding)
-        loss = jnp.mean(jnp.abs(output - target))
+        output, _, _, _, _  = model.apply(params, inputs_select, inputs_folding, inputs_binding)
+
+        loss = jnp.mean(jnp.abs(target-output))
+
+        # Apply L1 and L2 regularization
+        l1_loss = 0
+        l2_loss = 0
+        binding_additive_trait_params = params['binding_additive_trait']['w']
+
+        if binding_additive_trait_params.ndim > 1:  # exclude bias parameters
+            l1_loss += jnp.sum(jnp.abs(binding_additive_trait_params))
+            l2_loss += jnp.sum(jnp.square(binding_additive_trait_params))
+
+        loss = loss + param_dict['l1_regularization_factor'] * l1_loss + param_dict['l2_regularization_factor'] * l2_loss
         return loss
 
     @jax.jit
@@ -55,11 +66,13 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
         grads = jax.grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
         updates, new_opt_state = optimizer.update(grads, opt_state)
         weights = optax.apply_updates(weights, updates)
+        #print(weights['binding_additive_trait']['w'][:10])
         return weights, new_opt_state
 
     history = []
     for epoch in range(n_epochs):
-        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches):
+
+        for batch_data in generate_batches(input_data['train'], param_dict['num_samples'], rng_batches[epoch]):
             inputs_select, inputs_folding, inputs_binding, target = batch_data
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
 
@@ -72,6 +85,10 @@ def model_training(model, optimizer, weights, opt_state, param_dict, input_data,
         print(f'epoch done with {val_loss.item()}')
 
     return history, model, weights
+
+
+
+
 
 def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
     # Summarize results

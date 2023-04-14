@@ -134,9 +134,9 @@ if num_resamplings!=0:
 
 best_params = {
         "num_samples": 128,
-        "learning_rate": 0.01,
-        "l1_regularization_factor": 0.1,
-        "l2_regularization_factor": 0.1,
+        "learning_rate": 0.001,
+        "l1_regularization_factor": 0.001,
+        "l2_regularization_factor": 0.001,
         "number_additive_traits": 1
         }
 
@@ -161,92 +161,82 @@ weights = model.init(rng, model_data_jax['train']['select'], model_data_jax['tra
 opt_state = optimizer.init(weights)
 
 #all models output almost the same thing
-for model_count in range(num_models):
     #if model_count>=1:
         #output_directory = str(output_directory + 'bootstrap')
 
     #Shuffle model weights
     #shuffled_weights = shuffle_weights(rngs[model_count], weights)
+model_count = 1
+#Fit the model on best params
+history, model, trained_weights = model_training(model, optimizer, weights, opt_state, best_params, model_data_jax, num_epochs, rng)
 
-    #Fit the model on best params
-    history, model, trained_weights = model_training(model, optimizer, weights, opt_state, best_params, model_data_jax, num_epochs, rng)
-
-    # Model predictions on observed variants
-    model_outputs= model.apply(trained_weights,
-                                    model_data_jax['obs']['select'],
-                                    model_data_jax['obs']['fold'],
-                                    model_data_jax['obs']['bind']
-                                   )
-
-    model_predictions ,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
-    #save model
-    #print(shuffled_weights)
-    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
-        pickle.dump(trained_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    #load model
-    with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
-        shuffled_weights_reloaded = pickle.load(handle)
-
-    #Plot model performance per epoch
-    my_figure = plt.figure(figsize = (8,8))
-    plt.plot(np.log(history))
-    plt.xlabel('Number of epochs')
-    plt.ylabel('Mean Absolute Error (MAE) on testing data')
-    my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str(model_count)+".pdf"), bbox_inches='tight')
-
-    #######################################################################
-    ## SAVE OBSERVATIONS, PREDICTIONS & ADDITIVE TRAIT VALUES ##
-    #######################################################################
-
-    # Model predictions on observed variants
-    model_outputs = model.apply(trained_weights,
+# Model predictions on observed variants
+model_outputs= model.apply(trained_weights,
                                 model_data_jax['obs']['select'],
                                 model_data_jax['obs']['fold'],
                                 model_data_jax['obs']['bind']
-                            )
+                                )
 
-    prediction,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
+prediction ,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
+#save model
+#print(shuffled_weights)
+with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'wb') as handle:
+    pickle.dump(trained_weights, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    folding_additive_trait_df = pd.DataFrame(folding_additive_trait_layer_outputs)
-    binding_additive_trait_df = pd.DataFrame(binding_additive_trait_layer_outputs)
+#load model
+with open(os.path.join(model_directory, f'weights_{model_count}.pickle'), 'rb') as handle:
+    shuffled_weights_reloaded = pickle.load(handle)
 
-    #Results data frame
-    dataframe_to_export = pd.DataFrame({
-        "seq" : np.array(model_data_jax['obs']['sequence']).flatten(),
-        "observed_fitness" : np.array(model_data_jax['obs']['target']).flatten(),
-        "predicted_fitness" : model_predictions.flatten(),
-        "additive_trait_folding" : folding_additive_trait_df[0],
-        "additive_trait_binding" : binding_additive_trait_df[0],
-        "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()
-    })
-    #Save as csv file
-    dataframe_to_export.to_csv(os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
-                            sep = "\t",
-                            index = False)
+#Plot model performance per epoch
+my_figure = plt.figure(figsize = (8,8))
+plt.plot(np.log(history))
+plt.xlabel('Number of epochs')
+plt.ylabel('Mean Absolute Error (MAE) on testing data')
+my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str(model_count)+".pdf"), bbox_inches='tight')
+
+#######################################################################
+## SAVE OBSERVATIONS, PREDICTIONS & ADDITIVE TRAIT VALUES ##
+#######################################################################
+
+folding_additive_trait_df = pd.DataFrame(folding_additive_trait_layer_outputs)
+binding_additive_trait_df = pd.DataFrame(binding_additive_trait_layer_outputs)
+
+#Results data frame
+dataframe_to_export = pd.DataFrame({
+    "seq" : np.array(model_data_jax['obs']['sequence']).flatten(),
+    "observed_fitness" : np.array(model_data_jax['obs']['target']).flatten(),
+    "predicted_fitness" : prediction.flatten(),
+    "additive_trait_folding" : folding_additive_trait_df[0],
+    "additive_trait_binding" : binding_additive_trait_df[0],
+    "training_set" : np.array(model_data_jax['obs']['training_set']).flatten()
+})
+#Save as csv file
+dataframe_to_export.to_csv(os.path.join(output_directory, "predicted_fitness_"+str(model_count)+".txt"),
+                        sep = "\t",
+                        index = False)
 
 
-    # Save model weights
-    dataframe_to_export_folding = pd.DataFrame({
-        "id" : model_data_jax['obs']['fold_colnames'],
-        "folding_coefficient" : [jnp.squeeze(trained_weights['folding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['fold_colnames']))]})
-    dataframe_to_export_binding = pd.DataFrame({
-        "id" : model_data_jax['obs']['bind_colnames'],
-        "binding_coefficient" : [jnp.squeeze(trained_weights['binding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['bind_colnames']))]})
+# Save model weights
+dataframe_to_export_folding = pd.DataFrame({
+    "id" : model_data_jax['obs']['fold_colnames'],
+    "folding_coefficient" : [jnp.squeeze(trained_weights['folding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['fold_colnames']))]})
+dataframe_to_export_binding = pd.DataFrame({
+    "id" : model_data_jax['obs']['bind_colnames'],
+    "binding_coefficient" : [jnp.squeeze(trained_weights['binding_additive_trait']['w'][_]) for _ in range(len(model_data_jax['obs']['bind_colnames']))]})
 
-    # Save dataframes as csv files
-    #Merge
-    dataframe_to_export = dataframe_to_export_folding.merge(dataframe_to_export_binding, left_on='id', right_on='id', how='outer')
-    #Save as csv file
-    dataframe_to_export.to_csv(os.path.join(output_directory, "model_weights_"+str(model_count)+".txt"),
-                            sep = "\t",
-                            index = False)
+# Save dataframes as csv files
+#Merge
+dataframe_to_export = dataframe_to_export_folding.merge(dataframe_to_export_binding, left_on='id', right_on='id', how='outer')
+#Save as csv file
+dataframe_to_export.to_csv(os.path.join(output_directory, "model_weights_"+str(model_count)+".txt"),
+                        sep = "\t",
+                        index = False)
 
-    # Save remaining model parameters (linear layers)
-    with open(os.path.join(output_directory, "model_parameters_"+str(model_count)+".txt"), 'w') as f:
-        for module_name, module_params in trained_weights.items():
-            if module_name in ["folding_additive", "binding_additive"]:
-                f.write(module_name.replace("additive", "linear")+"_kernel\n")
-                f.write(str(float(module_params["w"]))+"\n")
-                f.write(module_name.replace("additive", "linear")+"_bias\n")
-                f.write(str(float(module_params["b"]))+"\n")
+# Save remaining model parameters (linear layers)
+with open(os.path.join(output_directory, "model_parameters_"+str(model_count)+".txt"), 'w') as f:
+    for module_name, module_params in trained_weights.items():
+        if module_name in ["folding_additive", "binding_additive"]:
+            f.write(module_name.replace("additive", "linear")+"_kernel\n")
+            f.write(str(float(module_params["w"]))+"\n")
+            f.write(module_name.replace("additive", "linear")+"_bias\n")
+            f.write(str(float(module_params["b"]))+"\n")
