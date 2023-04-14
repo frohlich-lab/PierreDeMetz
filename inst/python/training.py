@@ -39,10 +39,10 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
     @jax.jit
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
         loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
-        #jax.debug.print('loss : {}', loss)
+        #jax.debug.print('weights : {}', weights)
         updates, opt_state = opt_update(grads, opt_state)
         weights = optax.apply_updates(weights, updates)
-
+        #jax.debug.print('weights updated : {}', weights)
         return weights, opt_state
 
     history = []
@@ -54,8 +54,8 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
             inputs_select, inputs_folding, inputs_binding, target = batch
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
 
-            #weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
-            #weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+            weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+            weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 
         val_loss = loss_fn(weights, input_data['valid']['select'], input_data['valid']['fold'],
                            input_data['valid']['bind'], input_data['valid']['target'])

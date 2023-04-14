@@ -56,7 +56,7 @@ from matplotlib import pyplot as plt
 from tensorflow import keras
 from keras.models import load_model
 import os
-
+from utils import apply_weight_constraints
 import jax
 from jax.experimental import sparse
 from jax.tree_util import tree_map
@@ -152,6 +152,9 @@ weights = model.init(next(rngs),
                      jnp.ones_like(model_data_jax['train']['fold']),
                      jnp.ones_like(model_data_jax['train']['bind']))
 opt_state = opt_init(weights)
+
+weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 
 history, model, trained_weights = model_training(model, opt_state, opt_update, weights, best_params, model_data_jax, num_epochs, next(rngs))
 
