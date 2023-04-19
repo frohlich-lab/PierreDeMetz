@@ -151,9 +151,9 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs = jax.random.split(rng, len(parameter_grid))
+    rngs_grid = jax.random.split(rng, len(parameter_grid))
     #print(len(parameter_grid))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs)]
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs_grid)]
     #grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng) for params in parameter_grid]
 
     best_params = parameter_grid[np.argmin(grid_results)]
@@ -167,7 +167,7 @@ else:
 
 
 model, opt_init, opt_update = create_model_jax(
-    rng=next(rngs),
+    rng=rng,
     learn_rate=best_params['learning_rate'],
     l1=best_params['l1_regularization_factor'],
     l2=best_params['l2_regularization_factor'],
