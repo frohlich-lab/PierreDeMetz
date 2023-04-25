@@ -26,6 +26,7 @@ def constrained_gradients(layer_names, min_value, max_value) -> GradientTransfor
     return optax.GradientTransformation(init=init_fn, update=update_fn)
 
 
+
 class StateProbFolded(hk.Module):
     def __call__(self, inputs):
         return 1/(1+jnp.exp(inputs))
@@ -33,6 +34,7 @@ class StateProbFolded(hk.Module):
 class StateProbBound(hk.Module):
     def __call__(self, inputs_1, inputs_2):
         return 1/(1+jnp.exp(inputs_1)*(1+jnp.exp(inputs_2)))
+
 
 
 
