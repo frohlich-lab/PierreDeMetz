@@ -24,7 +24,7 @@ def penalty(x, penalty_weight=1e6):
     return penalty_weight * constraint_violation
 
 # Objective function
-def objective(x, k_fp, k_fm, k_bm, k_b_minus,l):
+def objective_tri_state(x, k_fp, k_fm, k_bm, k_b_minus,l):
 
     x_o, x_f, x_b = x
     f_xo = -k_fp * x_o + k_fm * x_f
@@ -35,7 +35,7 @@ def objective(x, k_fp, k_fm, k_bm, k_b_minus,l):
     return jnp.square(f_xo) + jnp.square(f_xb) + jnp.square(f_xf) + penalty(x)
 
 
-def opt_soln(delta_g_df =-10, delta_g_db=-15, l=1.0):
+def opt_soln_tri_state(delta_g_df, delta_g_db, l=1.0):
 
     k_fp, k_fm, k_bm, k_b_minus = constant_calc(delta_g_df, delta_g_db, l)
 
@@ -43,13 +43,14 @@ def opt_soln(delta_g_df =-10, delta_g_db=-15, l=1.0):
     x0 = jnp.array([1/3, 1/3, 1/3])
 
     # Minimize the objective function
-    result = minimize(objective, x0, method='BFGS', args=(k_fp, k_fm, k_bm, k_b_minus,l))
+    result = minimize(objective_tri_state, x0, method='BFGS', args=(k_fp, k_fm, k_bm, k_b_minus,l))
 
     print("Optimal solution:", result.x)
 
     return result.x
 
+def objective_two_state():
+    pass
 
-
-if __name__ == "__main__":
-    opt_soln(jnp.array([-10,-5]),jnp.array([-15,-12]),jnp.array([1,1]))
+def opt_soln_two_state():
+    pass

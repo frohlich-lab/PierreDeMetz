@@ -7,8 +7,7 @@ import jax.numpy as jnp
 import haiku as hk
 import optax
 from jax import jit
-
-
+from chem_model import opt_soln_tri_state, opt_soln_two_state
 from optax import GradientTransformation
 
 def constrained_gradients(layer_names, min_value, max_value) -> GradientTransformation:
@@ -26,7 +25,7 @@ def constrained_gradients(layer_names, min_value, max_value) -> GradientTransfor
     return optax.GradientTransformation(init=init_fn, update=update_fn)
 
 
-
+############BASIC THERMO MODEL################
 class StateProbFolded(hk.Module):
     def __call__(self, inputs):
         return 1/(1+jnp.exp(inputs))
@@ -35,10 +34,16 @@ class StateProbBound(hk.Module):
     def __call__(self, inputs_1, inputs_2):
         return 1/(1+jnp.exp(inputs_1)*(1+jnp.exp(inputs_2)))
 
+#############IMPLICIT THERMO MODEL#############
+class StateProbBound_Implicit(hk.Module):
+    def __call__(self, inputs_1, inputs_2):
+        return opt_soln_tri_state(inputs_1, inputs_2)
 
+class StateProbFolded_Explicit(hk.Module):
+    def __call__(self, inputs_1):
+        return opt_soln_two_state(inputs_1)
 
-
-
+#############MISCELLANEOUS#############
 class Between(hk.Module):
     def __init__(self, min_value, max_value, name=None):
         super().__init__(name=name)

@@ -24,6 +24,7 @@ parser.add_argument("--num_resamplings", "-r", default = 10, type = int, help = 
 parser.add_argument("--early_stopping", "-l", default = False, type = bool, help = "Whether to stop early (default:False)")
 parser.add_argument("--num_models", "-u", default = 10, type = int, help = "Number of final models to fit (default:10)")
 parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Random seed (default:1)")
+parser.add_argument("--model_type", "-mt", default = 'tri_state_explicit', help = "Model type (default:tri_state_explicit)")
 
 #Parse the arguments
 args = parser.parse_args()
@@ -39,6 +40,7 @@ num_resamplings = args.num_resamplings
 early_stopping = args.early_stopping
 num_models = args.num_models
 random_seed = args.random_seed
+model_type = args.model_type
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -71,7 +73,7 @@ from utils import constrained_gradients, StateProbBound, StateProbFolded, Betwee
 from training import model_training, fit_model_grid_jax
 from dataloading import load_model_data_jax, resample_training_data_jax
 from model_creation import create_model_fn, create_model_jax
-from weights_loading import weights_loading
+
 #######################################################################
 ## SETUP ##
 #######################################################################
