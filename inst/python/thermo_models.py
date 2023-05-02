@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 import haiku as hk
-from chem_model import opt_soln_tri_state, opt_soln_two_state
+from chem_model import opt_2st_vec, opt_3st_vec
 
 ##################### IMPLEMENTATION OF THE THREE MODELS #####################
 class StateProbFolded(hk.Module):
@@ -22,7 +22,7 @@ class StateProbFolded(hk.Module):
         return 1/(1+jnp.exp(inputs))
 
     def _implicit_layers(self, inputs):
-        return opt_soln_two_state(inputs)
+        return opt_2st_vec(inputs)
 
     def _ODE_layers(self, inputs):
         pass
@@ -46,7 +46,7 @@ class StateProbBound(hk.Module):
         return 1/(1+jnp.exp(inputs_1)*(1+jnp.exp(inputs_2)))
 
     def _implicit_layers(self, inputs_1, inputs_2):
-        return opt_soln_tri_state(inputs_1, inputs_2)
+        return opt_3st_vec(inputs_1, inputs_2)
 
     def _ODE_layers(self, inputs_1, inputs_2):
         pass

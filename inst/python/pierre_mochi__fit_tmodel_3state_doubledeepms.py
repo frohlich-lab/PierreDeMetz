@@ -141,7 +141,8 @@ if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) ==
         "learning_rate": learn_rate[0],
         "l1_regularization_factor": l1[0],
         "l2_regularization_factor": l2[0],
-        "number_additive_traits": 1
+        "number_additive_traits": 1,
+        "model_type": model_type
     }
 else:
     parameter_grid = [{
@@ -149,7 +150,8 @@ else:
         "learning_rate": j,
         "l1_regularization_factor": k,
         "l2_regularization_factor": l,
-        "number_additive_traits": 1
+        "number_additive_traits": 1,
+        "model_type": model_type
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)

@@ -54,9 +54,9 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
 
 
 def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding,
-                     number_additive_traits):
+                     number_additive_traits, model_type = 'tri_state_explicit'):
     # Create model
-    model_fn = create_model_fn(number_additive_traits, l1, l2, rng)
+    model_fn = create_model_fn(number_additive_traits, l1, l2, rng, model_type)
     model = hk.without_apply_rng(hk.transform(model_fn))
 
     opt_init, opt_update = optax.adam(learn_rate)
