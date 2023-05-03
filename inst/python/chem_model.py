@@ -28,7 +28,9 @@ def opt_soln_two_state(delta_g_df):
 
     # Create a BFGS solver using jaxopt
     bfgs = BFGS(maxiter=100, fun=objective_and_grad_two_state, value_and_grad=True)
-    result = bfgs.run(init_params=x0, delta_g_df=delta_g_df)
+    result = bfgs.run(init_params=x0,
+                      delta_g_df=delta_g_df
+                      )
     return result.params[1]
 
 
@@ -90,11 +92,16 @@ def solve_two_state_ode(delta_g_df, x0, t0=0, t1=10, dt0=0.1):
     solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(delta_g_df,))
     return solution
 
-def get_steady_state_solution_two_state(delta_g_df, t0=0, t1=10, dt0=0.1):
+def get_steady_state_solution_two_state(delta_g_df):
     x0 = jnp.array([1/2,1/2])
-    solution = solve_two_state_ode(delta_g_df, x0, t0, t1, dt0)
+    solution = solve_two_state_ode(delta_g_df, x0)
     steady_state_solution = solution.ys[-1]
     return jnp.array([steady_state_solution[1]])
+
+def ss_two_state_vec(delta_g_df):
+    ss_two_state_vectorized = vmap(get_steady_state_solution_two_state)
+    results = ss_two_state_vectorized(delta_g_df=delta_g_df)
+    return results.flatten()
 
 ################ THREE STATE ODE MODEL
 def dx_dt_tri_state(t, x, args):
@@ -103,7 +110,7 @@ def dx_dt_tri_state(t, x, args):
     dx_o_dt = -x_o * jnp.exp(-delta_g_df) + x_f
     dx_b_dt = x_f * jnp.exp(-delta_g_db) - x_b
     dx_f_dt = -dx_o_dt - dx_b_dt
-
+    #return jnp.stack([dx_o_dt, dx_f_dt, dx_b_dt])
     return jnp.array([dx_o_dt, dx_f_dt, dx_b_dt]).reshape(-1,)
 
 def solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0=0, t1=10, dt0=0.1):
@@ -113,25 +120,36 @@ def solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0=0, t1=10, dt0=0.1):
     return solution
 
 # Extract the steady-state solution
-def get_steady_state_solution_tri_state(delta_g_df, delta_g_db, t0=0, t1=10, dt0=0.1, l=1.0):
+def get_steady_state_solution_tri_state(l,delta_g_df, delta_g_db):
     x0 = jnp.array([1/3, 1/3, 1/3])
-    solution = solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0, t1, dt0)
+    #l_val=1.0
+    #l = jnp.repeat(l_val, repeats=delta_g_df.shape[0])
+    solution = solve_tri_state_ode(l, delta_g_df, delta_g_db, x0)
     steady_state_solution = solution.ys[-1]
     return jnp.array([steady_state_solution[2]])
 
+def ss_tri_state_vec(delta_g_df, delta_g_db):
+    l_val = 1.0
+    l = jnp.repeat(l_val, repeats=delta_g_df.shape[0])
+    ss_tri_state_vectorized = vmap(get_steady_state_solution_tri_state)
+    results = ss_tri_state_vectorized(l=l, delta_g_df=delta_g_df, delta_g_db=delta_g_db)
+    return results.flatten()
+
 if __name__ == '__main__':
 
-    test_val = jnp.array([-0.12])
-    test_val_b = jnp.array([-0.4])
+    test_val = jnp.array([-0.12, -0.4])
+    test_val_b = jnp.array([-0.4, -0.30])
 
     exp = jnp.exp(test_val)
     exp2 = jnp.exp(test_val_b)
 
     print(opt_2st_vec(test_val))
     print(1/(1+exp))
-    print(get_steady_state_solution_two_state(test_val))
+    #print(get_steady_state_solution_two_state(test_val))
+    print(ss_two_state_vec(test_val))
     print('\n')
 
     print(opt_3st_vec(test_val, test_val_b))
     print(1/(1+ exp2*(1+exp)))
-    print(get_steady_state_solution_tri_state(test_val, test_val_b))
+    #print(get_steady_state_solution_tri_state(test_val, test_val_b))
+    print(ss_tri_state_vec(test_val, test_val_b))
