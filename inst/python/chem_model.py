@@ -4,6 +4,8 @@ from optax import chain
 import jax
 import jax.numpy as jnp
 from jax import vmap
+from diffrax import diffeqsolve, ODETerm, Dopri5
+
 
 ################# TWO STATE MODEL
 def objective_two_state(x, delta_g_df):
@@ -74,18 +76,62 @@ def opt_3st_vec(delta_g_df, delta_g_db, l_val=1.0):
     return results
 
 
-#if __name__ == '__main__':
+################ TWO STATE ODE MODEL
+def dx_dt_two_state(t, x, args):
+    delta_g_df, = args
+    x_o, x_f = x
+    dx_o_dt = -x_o * jnp.exp(-delta_g_df) + x_f
+    dx_f_dt = x_o * jnp.exp(-delta_g_df) - x_f
+    return jnp.array([dx_o_dt, dx_f_dt]).reshape(-1,)
 
-    test_val = jnp.array([0.12])
-    test_val_b = jnp.array([0.4])
+def solve_two_state_ode(delta_g_df, x0, t0=0, t1=10, dt0=0.1):
+    term = ODETerm(dx_dt_two_state)
+    solver = Dopri5()
+    solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(delta_g_df,))
+    return solution
+
+def get_steady_state_solution_two_state(delta_g_df, t0=0, t1=10, dt0=0.1):
+    x0 = jnp.array([1/2,1/2])
+    solution = solve_two_state_ode(delta_g_df, x0, t0, t1, dt0)
+    steady_state_solution = solution.ys[-1]
+    return jnp.array([steady_state_solution[1]])
+
+################ THREE STATE ODE MODEL
+def dx_dt_tri_state(t, x, args):
+    l, delta_g_df, delta_g_db = args
+    x_o, x_f, x_b = x
+    dx_o_dt = -x_o * jnp.exp(-delta_g_df) + x_f
+    dx_b_dt = x_f * jnp.exp(-delta_g_db) - x_b
+    dx_f_dt = -dx_o_dt - dx_b_dt
+
+    return jnp.array([dx_o_dt, dx_f_dt, dx_b_dt]).reshape(-1,)
+
+def solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0=0, t1=10, dt0=0.1):
+    term = ODETerm(dx_dt_tri_state)
+    solver = Dopri5()
+    solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(l, delta_g_df, delta_g_db))
+    return solution
+
+# Extract the steady-state solution
+def get_steady_state_solution_tri_state(delta_g_df, delta_g_db, t0=0, t1=10, dt0=0.1, l=1.0):
+    x0 = jnp.array([1/3, 1/3, 1/3])
+    solution = solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0, t1, dt0)
+    steady_state_solution = solution.ys[-1]
+    return jnp.array([steady_state_solution[2]])
+
+if __name__ == '__main__':
+
+    test_val = jnp.array([-0.12])
+    test_val_b = jnp.array([-0.4])
 
     exp = jnp.exp(test_val)
     exp2 = jnp.exp(test_val_b)
 
     print(opt_2st_vec(test_val))
     print(1/(1+exp))
-
+    print(get_steady_state_solution_two_state(test_val))
     print('\n')
 
     print(opt_3st_vec(test_val, test_val_b))
     print(1/(1+ exp2*(1+exp)))
+    print(get_steady_state_solution_tri_state(test_val, test_val_b))
