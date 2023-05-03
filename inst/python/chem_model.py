@@ -5,104 +5,87 @@ import jax
 import jax.numpy as jnp
 from jax import vmap
 
-################# ENSURE THAT THE PROPORTIONS SUM TO 1
-def penalty(x, penalty_weight=1e6):
-    constraint_violation = jnp.square(jnp.sum(x) - 1.0)
-    return penalty_weight * constraint_violation
-
 ################# TWO STATE MODEL
-def objective_two_state(x,k_fp, k_fm):
+def objective_two_state(x, delta_g_df):
     x_o, x_f = x
-    f_xo = -k_fp * x_o + k_fm * x_f
-    f_xf = -f_xo
-    result = jnp.square(f_xo) + jnp.square(f_xf) + penalty(x)
+    total_conc = 1 - x_o - x_f
+    f_xo = - jnp.exp(-delta_g_df)* x_o + x_f
+    result = jnp.square(f_xo) + jnp.square(total_conc)
     return jnp.squeeze(result)
 
-def objective_and_grad_two_state(x, k_fp, k_fm):
-    objective_value = objective_two_state(x, k_fp, k_fm)
-    grad = jax.grad(objective_two_state)(x, k_fp, k_fm)
+def objective_and_grad_two_state(x, delta_g_df):
+    objective_value = objective_two_state(x, delta_g_df)
+    grad = jax.grad(objective_two_state)(x, delta_g_df)
     return objective_value, grad
 
-def constant_calc_two_state(delta_g_df):
-    # Gas constant and temperature
-    R, T = 8.314, 298.15
 
-    # Calculate the equilibrium constants
-    K_df = jnp.exp(-delta_g_df / (R * T))
+def opt_soln_two_state(delta_g_df):
 
-    # Set arbitrary rate constants and calculate the others based on the equilibrium constants
-    k_fp = jnp.array([1.0])
-    k_fm = k_fp * K_df
-
-    return k_fp, k_fm
-
-def opt_soln_two_state(k_fp, k_fm):
     # Initial guess
     x0 = jnp.array([1/2, 1/2])
 
     # Create a BFGS solver using jaxopt
     bfgs = BFGS(maxiter=100, fun=objective_and_grad_two_state, value_and_grad=True)
+    result = bfgs.run(init_params=x0, delta_g_df=delta_g_df)
+    return result.params[1]
 
-    # Minimize the objective function
-    result = bfgs.run(init_params=x0, k_fp=k_fp, k_fm=k_fm)
-
-    # Return the optimal solution
-    return result.params
 
 def opt_2st_vec(delta_g_df):
-    constant_calc_two_state_vectorized = vmap(constant_calc_two_state)
-    k_fp, k_fm = constant_calc_two_state_vectorized(delta_g_df)
     opt_soln_two_state_vectorized = vmap(opt_soln_two_state)
-    results = opt_soln_two_state_vectorized(k_fp,k_fm)
+    results = opt_soln_two_state_vectorized(delta_g_df)
     return results
 
 ################ THREE STATE MODEL
-def constant_calc_tri_state(delta_g_df, delta_g_db=None, l=None):
-
-    # Gas constant and temperature
-    R, T = 8.314, 298.15
-
-    # Calculate the equilibrium constants
-    K_df = jnp.exp(-delta_g_df / (R * T))
-    K_db = jnp.exp(-delta_g_db / (R * T))
-
-    # Set arbitrary rate constants and calculate the others based on the equilibrium constants
-    k_fp = jnp.array([1.0])
-    k_fm = k_fp * K_df
-    k_bm = jnp.array([1.0])
-    k_b_minus = k_fm * l / K_db
-    return k_fp, k_fm, k_bm, k_b_minus
-
-def objective_tri_state(x, k_fp, k_fm, k_bm, k_b_minus,l):
+def objective_tri_state(x, l, delta_g_df, delta_g_db):
     x_o, x_f, x_b = x
-    f_xo = -k_fp * x_o + k_fm * x_f
-    f_xb = -k_bm * x_b + k_fm * x_f * l
-    f_xf = -f_xb - f_xo
-    result = jnp.square(f_xo) + jnp.square(f_xb) + jnp.square(f_xf) + penalty(x)
+    total_conc = 1 - x_o - x_b - x_f
+
+    f_xo = -x_o * jnp.exp(-delta_g_df) + x_f
+    f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
+
+    result = jnp.square(f_xo) + jnp.square(f_xb) + jnp.square(total_conc) #+ penalty(x)
     return jnp.squeeze(result)
 
-def objective_and_grad_tri_state(x, k_fp, k_fm, k_bm, k_b_minus,l):
-    objective_value = objective_tri_state(x, k_fp, k_fm, k_bm, k_b_minus,l)
-    grad = jax.grad(objective_tri_state)(x, k_fp, k_fm, k_bm, k_b_minus,l)
+def objective_and_grad_tri_state(x, l, delta_g_df, delta_g_db):
+    objective_value = objective_tri_state(x, l, delta_g_df, delta_g_db)
+    grad = jax.grad(objective_tri_state)(x, l, delta_g_df, delta_g_db)
     return objective_value, grad
 
-def opt_soln_tri_state(k_fp, k_fm, k_bm, k_b_minus,l):
+def opt_soln_tri_state(l, delta_g_df, delta_g_db):
 
     # Initial guess
     x0 = jnp.array([1/3, 1/3, 1/3])
-    bfgs = BFGS(maxiter=100, fun=objective_and_grad_tri_state, value_and_grad=True)
+    bfgs = BFGS(maxiter=1000, fun=objective_and_grad_tri_state, value_and_grad=True)
 
     # Minimize the objective function
-    result = bfgs.run(init_params=x0, k_fp=k_fp,
-                      k_fm=k_fm, k_bm=k_bm, k_b_minus=k_b_minus ,l=l)
+    result = bfgs.run(init_params=x0,
+                      l=l,
+                      delta_g_df=delta_g_df,
+                      delta_g_db=delta_g_db
+                      )
 
     # Return the optimal solution
-    return result.params
+    return result.params[2]
 
 def opt_3st_vec(delta_g_df, delta_g_db, l_val=1.0):
     l = jnp.repeat(l_val, repeats=delta_g_df.shape[0])
-    constant_calc_tri_state_vectorized = vmap(constant_calc_tri_state)
-    k_fp, k_fm, k_bm, k_b_minus = constant_calc_tri_state_vectorized(delta_g_df, delta_g_db, l)
     opt_soln_tri_state_vectorized = vmap(opt_soln_tri_state)
-    results = opt_soln_tri_state_vectorized(k_fp, k_fm, k_bm, k_b_minus,l=l)
+    results = opt_soln_tri_state_vectorized(l, delta_g_df=delta_g_df, delta_g_db=delta_g_db)
     return results
+
+
+#if __name__ == '__main__':
+
+    test_val = jnp.array([0.12])
+    test_val_b = jnp.array([0.4])
+
+    exp = jnp.exp(test_val)
+    exp2 = jnp.exp(test_val_b)
+
+    print(opt_2st_vec(test_val))
+    print(1/(1+exp))
+
+    print('\n')
+
+    print(opt_3st_vec(test_val, test_val_b))
+    print(1/(1+ exp2*(1+exp)))

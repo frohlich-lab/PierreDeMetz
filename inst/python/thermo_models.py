@@ -22,7 +22,7 @@ class StateProbFolded(hk.Module):
         return 1/(1+jnp.exp(inputs))
 
     def _implicit_layers(self, inputs):
-        return opt_2st_vec(inputs)
+        return opt_2st_vec(inputs).reshape(-1, 1)
 
     def _ODE_layers(self, inputs):
         pass
@@ -46,7 +46,7 @@ class StateProbBound(hk.Module):
         return 1/(1+jnp.exp(inputs_1)*(1+jnp.exp(inputs_2)))
 
     def _implicit_layers(self, inputs_1, inputs_2):
-        return opt_3st_vec(inputs_1, inputs_2)
+        return opt_3st_vec(inputs_1, inputs_2).reshape(-1, 1)
 
     def _ODE_layers(self, inputs_1, inputs_2):
         pass
