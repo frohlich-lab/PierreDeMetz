@@ -94,7 +94,9 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
 
     @jax.jit
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
-        loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
+        #loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
+        grads = jax.grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
+
         updates, opt_state = opt_update(grads, opt_state)
         #jax.debug.print('weights : {}', weights['folding_additive'])
         weights = optax.apply_updates(weights, updates)
