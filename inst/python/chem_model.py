@@ -47,7 +47,7 @@ def objective_tri_state(x, l, delta_g_df, delta_g_db):
     f_xo = -x_o * jnp.exp(-delta_g_df) + x_f
     f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
 
-    result = jnp.square(f_xo) + jnp.square(f_xb) + jnp.square(total_conc) #+ penalty(x)
+    result = jnp.square(f_xo) + jnp.square(f_xb) + jnp.square(total_conc)
     return jnp.squeeze(result)
 
 def objective_and_grad_tri_state(x, l, delta_g_df, delta_g_db):
@@ -110,7 +110,6 @@ def dx_dt_tri_state(t, x, args):
     dx_o_dt = -x_o * jnp.exp(-delta_g_df) + x_f
     dx_b_dt = x_f * jnp.exp(-delta_g_db) - x_b
     dx_f_dt = -dx_o_dt - dx_b_dt
-    #return jnp.stack([dx_o_dt, dx_f_dt, dx_b_dt])
     return jnp.array([dx_o_dt, dx_f_dt, dx_b_dt]).reshape(-1,)
 
 def solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0=0, t1=10, dt0=0.1):
@@ -122,8 +121,6 @@ def solve_tri_state_ode(l, delta_g_df, delta_g_db, x0, t0=0, t1=10, dt0=0.1):
 # Extract the steady-state solution
 def get_steady_state_solution_tri_state(l,delta_g_df, delta_g_db):
     x0 = jnp.array([1/3, 1/3, 1/3])
-    #l_val=1.0
-    #l = jnp.repeat(l_val, repeats=delta_g_df.shape[0])
     solution = solve_tri_state_ode(l, delta_g_df, delta_g_db, x0)
     steady_state_solution = solution.ys[-1]
     return jnp.array([steady_state_solution[2]])
@@ -135,7 +132,7 @@ def ss_tri_state_vec(delta_g_df, delta_g_db):
     results = ss_tri_state_vectorized(l=l, delta_g_df=delta_g_df, delta_g_db=delta_g_db)
     return results.flatten()
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
     test_val = jnp.array([-0.12, -0.4])
     test_val_b = jnp.array([-0.4, -0.30])
