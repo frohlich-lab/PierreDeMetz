@@ -7,7 +7,7 @@ import jax.numpy as jnp
 import haiku as hk
 import optax
 from jax import jit
-from chem_model import opt_soln_tri_state, opt_soln_two_state
+from chem_model_3eq import opt_soln_tri_state, opt_soln_two_state
 from optax import GradientTransformation
 
 def constrained_gradients(layer_names, min_value, max_value) -> GradientTransformation:
