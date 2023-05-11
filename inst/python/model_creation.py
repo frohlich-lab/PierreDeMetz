@@ -19,14 +19,6 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
                                                  name = 'folding_additive_trait'
                                                  )(inputs_folding)
 
-        folding_nonlinear_layer = StateProbFolded(model_type)(folding_additive_trait_layer)
-
-        folding_additive_layer = hk.Linear(1,
-                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
-                                           with_bias=True,
-                                           name = 'folding_additive'
-                                           )(folding_nonlinear_layer)
-
         # binding
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
@@ -35,8 +27,14 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
                                                  name = 'binding_additive_trait'
                                                  )(inputs_binding)
 
-        binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer)
+        folding_nonlinear_layer = StateProbFolded(model_type)(binding_additive_trait_layer, folding_additive_trait_layer)
+        folding_additive_layer = hk.Linear(1,
+                                           w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
+                                           with_bias=True,
+                                           name = 'folding_additive'
+                                           )(folding_nonlinear_layer)
 
+        binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer)
         binding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
                                            with_bias=True,
