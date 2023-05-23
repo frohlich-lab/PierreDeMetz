@@ -8,17 +8,34 @@ import optax
 def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state_explicit'):
 
     def model_fn(inputs_select, inputs_folding, inputs_binding):
-
+        #jax.debug.print('shape folding = {x}, shape binding = {y}', x=inputs_folding.shape, y=inputs_binding.shape)
         input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
         input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
+        #jax.debug.print('{x}',x=(inputs_folding-inputs_binding).shape)
+        #sjax.debug.print("{x}",x=jnp.sum(input_layer_select_folding-input_layer_select_binding))
 
+        #module_folding_1 = hk.Linear(number_additive_traits,
+                                                 #w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
+                                                 #                                       "truncated_normal"),
+                                                 #with_bias=False,
+                                                 #name = 'folding_additive_trait'
+                                                 #)
+
+        #folding_additive_trait_layer_binding = module_folding_1(inputs_binding)
+
+        #module_folding_2 = hk.Linear(number_additive_traits,
+                                                 #w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
+                                                                                        #"truncated_normal"),
+                                                 #with_bias=False,
+                                                 #name = 'folding_additive_trait'
+                                                 #)
+        #folding_additive_trait_layer_folding = module_folding_2(inputs_folding)
         folding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
                                                                                         "truncated_normal"),
                                                  with_bias=False,
                                                  name = 'folding_additive_trait'
                                                  )(inputs_folding)
-
         # binding
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
@@ -27,6 +44,7 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
                                                  name = 'binding_additive_trait'
                                                  )(inputs_binding)
 
+        #folding_nonlinear_layer = StateProbFolded(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_folding)
         folding_nonlinear_layer = StateProbFolded(model_type)(binding_additive_trait_layer, folding_additive_trait_layer)
         folding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
@@ -34,6 +52,8 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
                                            name = 'folding_additive'
                                            )(folding_nonlinear_layer)
 
+
+        #binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_binding)
         binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer)
         binding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),

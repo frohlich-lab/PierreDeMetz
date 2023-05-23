@@ -37,7 +37,6 @@ def load_model_data_jax(file_dict):
 
         data_dict[name]["fold_colnames"] = np.array([col.replace("fold_", "") for col in FOLD_COLUMNS])
         data_dict[name]["bind_colnames"] = np.array([col.replace("bind_", "") for col in BIND_COLUMNS])
-
     return data_dict
 
 #Resample training data
