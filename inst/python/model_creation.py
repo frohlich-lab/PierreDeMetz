@@ -14,13 +14,13 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
         #jax.debug.print('input_folding : {}', inputs_folding.shape)
         #jax.debug.print('input_binding : {}', inputs_binding.shape)
 
-        #what input do I need to give to this function?
         synthesis_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
                                                                                         "truncated_normal"),
                                                  with_bias=False,
                                                  name = 'synthesis_additive_trait'
                                                  )(inputs_folding)
+
         module = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
                                                                                         "truncated_normal"),
@@ -30,7 +30,9 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
 
         folding_additive_trait_layer_foldingset = module(inputs_folding)
 
-        #folding_additive_trait_layer_bindingset = module(inputs_binding)
+        ####### UNCOMMENT TO USE UNION MODE
+
+        folding_additive_trait_layer_bindingset = module(inputs_binding)
 
         # binding
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
@@ -54,9 +56,9 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
 
         # IF WANTING TO USE USION MODE THEN UNCOMMENT THE FOLDING BINDING SET LAYER AND CHANGE FOLDING TO BINDING JUST BELOW
         if model_type == 'tri_state_non_equilibrium_implicit':
-            binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_foldingset, synthesis_additive_trait_layer)
+            binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_bindingset, synthesis_additive_trait_layer)
         else:
-            binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_foldingset)
+            binding_nonlinear_layer = StateProbBound(model_type)(binding_additive_trait_layer, folding_additive_trait_layer_bindingset)
 
         binding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
