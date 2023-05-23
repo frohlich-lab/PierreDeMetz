@@ -25,6 +25,7 @@ parser.add_argument("--early_stopping", "-l", default = False, type = bool, help
 parser.add_argument("--num_models", "-u", default = 10, type = int, help = "Number of final models to fit (default:10)")
 parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Random seed (default:1)")
 parser.add_argument("--model_type", "-mt", default = 'tri_state_explicit', help = "Model type (default:tri_state_explicit)")
+parser.add_argument("--union_mode", "-um", default = 'False', help = "Union mode (default:union)")
 
 #Parse the arguments
 args = parser.parse_args()
@@ -41,6 +42,7 @@ early_stopping = args.early_stopping
 num_models = args.num_models
 random_seed = args.random_seed
 model_type = args.model_type
+union_mode = args.union_mode
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -120,7 +122,9 @@ model_data_jax = load_model_data_jax({
     "train": data_train_file,
     "valid": data_valid_file,
     "obs": data_obs_file
-    })
+    },
+                                     union_mode
+                                     )
 
 #Resample training data
 if num_resamplings!=0:

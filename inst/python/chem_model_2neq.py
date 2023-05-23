@@ -10,12 +10,12 @@ from diffrax import diffeqsolve, ODETerm, Dopri5
 def objective_two_state_noneq_folding_implicit(x, delta_g_df):
     x_f = x
     l = 1.0
-    total_conc = 1 - x_f
 
+    #total_conc = 1 - x_f
     f_xf = jnp.exp(-delta_g_df) - x_f
 
     # OPTIMISATION OBJECTIVE
-    result = jnp.square(f_xf) + jnp.square(total_conc)
+    result = jnp.square(f_xf) #+ jnp.square(total_conc)
     return jnp.squeeze(result)
 
 def objective_and_grad_two_state_noneq_folding_implicit(x, delta_g_df):
