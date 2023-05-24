@@ -56,15 +56,12 @@ def create_union_dataset(data_dict):
 
     # Find the columns that are in fold_colnames but not in bind_colnames
     new_columns_bind = [col for col in fold_colnames if col not in bind_colnames_set]
-
-    # Assuming 'bind' is your data array
     bind = data_dict['bind']
 
     # Add new columns to 'bind'
     for col in new_columns_bind:
         bind = np.column_stack((bind, np.zeros(bind.shape[0])))
 
-    # Update 'bind' in the dictionary
     data_dict['bind'] = bind
 
     # Now, 'bind' has the same number of columns as 'fold', and 'fold_colnames' can be used for both 'fold' and 'bind'

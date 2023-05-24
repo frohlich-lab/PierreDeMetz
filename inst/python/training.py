@@ -59,7 +59,7 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
                            input_data['valid']['bind'], input_data['valid']['target'])
 
         history.append(val_loss.item())
-        print(f'epoch done with {val_loss.item()}')
+        print(f'epoch done with {val_loss.item():.3f}')
 
     return history, model, weights
 
@@ -126,6 +126,6 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
                            input_data['valid']['bind'], input_data['valid']['target'])
 
         history.append(val_loss.item())
-        print(f'epoch done with {val_loss.item()}')
+        print(f'epoch done with {val_loss.item():.3f}')
 
     return val_loss.item()

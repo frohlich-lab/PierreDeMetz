@@ -1,8 +1,8 @@
 import jax.numpy as jnp
 import haiku as hk
 from chem_model_3eq import opt_2st_vec, opt_3st_vec, ss_two_state_vec, ss_tri_state_vec
-from chem_model_2neq import two_state_noneq_folding_implicit_vec, two_state_noneq_binding_implicit_vec
-from chem_model_3neq import three_state_noneq_binding_implicit_vec, three_state_noneq_folding_implicit_vec
+from chem_model_2neq import two_state_noneq_folding_implicit_vec, two_state_noneq_binding_implicit_vec, two_state_noneq_folding_ode_vec, two_state_noneq_binding_ode_vec
+from chem_model_3neq import three_state_noneq_binding_implicit_vec, three_state_noneq_folding_implicit_vec, three_state_noneq_binding_ode_vec, three_state_noneq_folding_ode_vec
 
 ##################### IMPLEMENTATION OF THE THREE MODELS #####################
 class StateProbFolded(hk.Module):
@@ -10,7 +10,7 @@ class StateProbFolded(hk.Module):
         super().__init__()
         self.model_type = model_type
 
-    def __call__(self, binding, folding, synthesis=None):
+    def __call__(self, binding, folding, synthesis=None, degradation=None):
         if self.model_type == 'tri_state_equilibrium_explicit':
             return self._tri_state_explicit(folding)
         elif self.model_type == 'tri_state_equilibrium_implicit':
@@ -20,11 +20,11 @@ class StateProbFolded(hk.Module):
         elif self.model_type == 'two_state_non_equilibrium_implicit':
             return self._two_state_non_equilibrium_implicit(folding)
         elif self.model_type == 'two_state_non_equilibrium_ODE':
-            pass
+            return self._two_state_non_equilibrium_ODE(folding)
         elif self.model_type == 'tri_state_non_equilibrium_implicit':
             return self._tri_state_non_equilibrium_implicit(folding, synthesis)
         elif self.model_type == 'tri_state_non_equilibrium_ODE':
-            pass
+            return self._tri_state_non_equilibrium_ODE(folding, synthesis)
         else:
             raise ValueError('model_type does not exist')
 
@@ -38,18 +38,16 @@ class StateProbFolded(hk.Module):
         return ss_two_state_vec(folding).reshape(-1, 1)
 
     def _two_state_non_equilibrium_implicit(self, folding):
-        #change results processing to only keep folded proportion
         return two_state_noneq_folding_implicit_vec(folding).reshape(-1, 1)
 
-    def _two_state_non_equilibrium_ODE(self, inputs):
-        pass
+    def _two_state_non_equilibrium_ODE(self, folding):
+        return two_state_noneq_folding_ode_vec(folding).reshape(-1, 1)
 
     def _tri_state_non_equilibrium_implicit(self, folding, synthesis):
-        #change results processing to only keep folded proportion
         return three_state_noneq_folding_implicit_vec(folding, synthesis).reshape(-1, 1)
 
-    def _tri_state_non_equilibrium_ODE(self, inputs):
-        pass
+    def _tri_state_non_equilibrium_ODE(self, folding, synthesis):
+        return three_state_noneq_folding_ode_vec(folding, synthesis).reshape(-1, 1)
 
 
 class StateProbBound(hk.Module):
@@ -57,7 +55,7 @@ class StateProbBound(hk.Module):
         super().__init__()
         self.model_type = model_type
 
-    def __call__(self, binding, folding, synthesis=None):
+    def __call__(self, binding, folding, synthesis=None, degradation=None):
         if self.model_type == 'tri_state_equilibrium_explicit':
             return self._tri_state_explicit(binding, folding)
         elif self.model_type == 'tri_state_equilibrium_implicit':
@@ -65,13 +63,13 @@ class StateProbBound(hk.Module):
         elif self.model_type == 'tri_state_equilibrium_ODE':
             return self._ODE_layers(binding, folding)
         elif self.model_type == 'two_state_non_equilibrium_implicit':
-            return self._two_state_non_equilibrium_implicit(binding, folding)
+            return self._two_state_non_equilibrium_implicit(binding, folding, degradation)
         elif self.model_type == 'two_state_non_equilibrium_ODE':
-            pass
+            return self._two_state_non_equilibrium_ODE(binding, folding, degradation)
         elif self.model_type == 'tri_state_non_equilibrium_implicit':
-            return self._tri_state_non_equilibrium_implicit(binding, folding, synthesis)
+            return self._tri_state_non_equilibrium_implicit(binding, folding, synthesis, degradation)
         elif self.model_type == 'tri_state_non_equilibrium_ODE':
-            pass
+            return self._tri_state_non_equilibrium_ODE(binding, folding, synthesis, degradation)
         else:
             raise ValueError('model type does not exist')
 
@@ -84,16 +82,16 @@ class StateProbBound(hk.Module):
     def _ODE_layers(self, binding, folding):
         return ss_tri_state_vec(binding, folding).reshape(-1, 1)
 
-    def _two_state_non_equilibrium_implicit(self, binding, folding):
+    def _two_state_non_equilibrium_implicit(self, binding, folding, degradation):
         #change results processing to only keep bound proportion
-        return two_state_noneq_binding_implicit_vec(binding, folding).reshape(-1, 1)
+        return two_state_noneq_binding_implicit_vec(binding, folding, degradation).reshape(-1, 1)
 
-    def _two_state_non_equilibrium_ODE(self, binding, folding):
-        pass
+    def _two_state_non_equilibrium_ODE(self, binding, folding, degradation):
+        return two_state_noneq_binding_ode_vec(binding, folding, degradation).reshape(-1, 1)
 
-    def _tri_state_non_equilibrium_implicit(self, binding, folding, synthesis):
+    def _tri_state_non_equilibrium_implicit(self, binding, folding, synthesis, degradation):
         #change results processing to only keep bound proportion
-        return three_state_noneq_binding_implicit_vec(binding, folding, synthesis).reshape(-1, 1)
+        return three_state_noneq_binding_implicit_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
 
-    def _tri_state_non_equilibrium_ODE(self, binding, folding):
-        pass
+    def _tri_state_non_equilibrium_ODE(self, binding, folding, synthesis, degradation):
+        return three_state_noneq_binding_ode_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
