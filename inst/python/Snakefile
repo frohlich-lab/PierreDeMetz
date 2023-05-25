@@ -1,0 +1,34 @@
+# List of parameters
+model_types = ["tri_state_equilibrium_explicit", "tri_state_equilibrium_implicit", "tri_state_equilibrium_ODE","two_state_non_equilibrium_implicit","two_state_non_equilibrium_ODE","tri_state_non_equilibrium_implicit","tri_state_non_equilibrium_ODE"]
+proteins = ["GRB2-SH3", "GB1", "PSD95-PDZ3"]
+datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128", "mochi__fit_tmodel_3state_sparse_dimsum128_bindingonly", "mochi__fit_tmodel_3state_sparse_dimsum128_singlesonly", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample2p", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample10p", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample20p", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p", "mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p"]
+
+rule all:
+    input:
+        expand([
+            "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
+            "Results/Data/mochi/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
+            "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_weights.txt",
+            "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_parameters.txt"
+        ], protein=proteins, dataset=datasets, model_type=model_types)
+
+
+rule run_model:
+    output:
+        pdf = "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
+        pred = "Results/Data/mochi/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
+        weights = "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_weights.txt",
+        params = "Results/Data/mochi/{protein}/{dataset}/{model_type}/model_parameters.txt"
+    params:
+        wc = lambda wildcards: wildcards
+    shell:
+        """
+        mkdir -p Results/Data/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};
+        python /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py \
+        --data_train /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/{params.wc.protein}/{params.wc.dataset}//dataset_train.txt \
+        --data_valid /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/{params.wc.protein}/{params.wc.dataset}//dataset_valid.txt \
+        --data_obs /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/{params.wc.protein}/{params.wc.dataset}//dataset_all.txt \
+        -o Results/Data/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
+        -e 100  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
+        --model_type {params.wc.model_type};
+        """
