@@ -1,0 +1,33 @@
+{
+    "os": "macOS-13.0.1-arm64-arm-64bit",
+    "python": "3.8.16",
+    "heartbeatAt": "2023-05-30T08:28:51.874905",
+    "startedAt": "2023-05-30T08:28:51.443246",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "git@github.com:frohlich-lab/PierreDeMetz.git",
+        "commit": "8a1fa6f43cc98945c8457b5d6033c4fc12e6c89f"
+    },
+    "email": "demetz.pierre@icloud.com",
+    "root": "/Users/pierredemetz/UCL_work/Crick/doubledeepms",
+    "host": "Pierres-MBP.dhcp.thecrick.org",
+    "username": "pierredemetz",
+    "executable": "/Users/pierredemetz/miniconda3/envs/pierre/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 278.42243576049805
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 32.0
+    }
+}

@@ -26,6 +26,7 @@ parser.add_argument("--num_models", "-u", default = 10, type = int, help = "Numb
 parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Random seed (default:1)")
 parser.add_argument("--model_type", "-mt", default = 'tri_state_explicit', help = "Model type (default:tri_state_explicit)")
 parser.add_argument("--union_mode", "-um", default = 'False', help = "Union mode (default:union)")
+parser.add_argument("--protein", '-prot', default = 'GRB2', help = "Protein name (default:GRB2)")
 
 #Parse the arguments
 args = parser.parse_args()
@@ -43,6 +44,7 @@ num_models = args.num_models
 random_seed = args.random_seed
 model_type = args.model_type
 union_mode = args.union_mode
+protein = args.protein
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -75,7 +77,7 @@ from utils import constrained_gradients, StateProbBound, StateProbFolded, Betwee
 from training import model_training, fit_model_grid_jax
 from dataloading import load_model_data_jax, resample_training_data_jax
 from model_creation import create_model_fn, create_model_jax
-
+import wandb
 #######################################################################
 ## SETUP ##
 #######################################################################
@@ -112,6 +114,20 @@ try:
   os.mkdir(bootstrap_directory)
 except FileExistsError:
   print("Warning: Output boostrap directory already exists.")
+
+
+wandb_config = {
+    'number_additive_traits': args.number_additive_traits,
+    'num_epochs_grid': args.num_epochs_grid,
+    'num_epochs': args.num_epochs,
+    'num_resamplings': args.num_resamplings,
+    'num_models': args.num_models,
+    'random_seed': args.random_seed,
+    'model_type': args.model_type,
+    'union_mode': args.union_mode,
+    'protein': args.protein
+}
+
 
 
 rngs = hk.PRNGSequence(jax.random.PRNGKey(42))
@@ -160,9 +176,17 @@ else:
 
     rng = jax.random.PRNGKey(random_seed)
     rngs_grid = jax.random.split(rng, len(parameter_grid))
-    #print(len(parameter_grid))
-    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs_grid)]
-    #grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng) for params in parameter_grid]
+
+    grid_results = [
+        fit_model_grid_jax(
+            params,
+            model_data_jax,
+            num_epochs_grid,
+            rng_key,
+            {**wandb_config, 'run_number': i+1}
+        )
+        for i, (params, rng_key) in enumerate(zip(parameter_grid, rngs_grid))
+    ]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
@@ -185,7 +209,6 @@ model, opt_init, opt_update = create_model_jax(
     number_additive_traits=best_params['number_additive_traits']
 )
 
-#weights = model.init(next(rngs), model_data_jax['train']['select'], model_data_jax['train']['fold'], model_data_jax['train']['bind'])
 weights = model.init(next(rngs),
                      jnp.ones_like(model_data_jax['train']['select']),
                      jnp.ones_like(model_data_jax['train']['fold']),

@@ -1,0 +1,65 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 1.093
+epoch done with 0.995
+epoch done with 0.912
+epoch done with 0.839
+epoch done with 0.776
+epoch done with 0.722
+epoch done with 0.676
+epoch done with 0.637
+epoch done with 0.603
+epoch done with 0.574
+epoch done with 0.550
+epoch done with 0.527
+epoch done with 0.508
+epoch done with 0.490
+epoch done with 0.474
+epoch done with 0.459
+epoch done with 0.445
+epoch done with 0.433
+epoch done with 0.422
+epoch done with 0.411
+epoch done with 0.401
+epoch done with 0.392
+epoch done with 0.382
+epoch done with 0.373
+epoch done with 0.365
+epoch done with 0.356
+epoch done with 0.346
+epoch done with 0.335
+epoch done with 0.324
+epoch done with 0.312
+epoch done with 0.301
+epoch done with 0.290
+epoch done with 0.279
+epoch done with 0.268
+epoch done with 0.256
+epoch done with 0.243
+epoch done with 0.229
+epoch done with 0.213
+epoch done with 0.197
+epoch done with 0.184
+epoch done with 0.173
+epoch done with 0.165
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.151
+epoch done with 0.148
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 177, in <module>
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key, wandb_config) for params, rng_key in zip(parameter_grid, rngs_grid)]
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 177, in <listcomp>
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key, wandb_config) for params, rng_key in zip(parameter_grid, rngs_grid)]
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 130, in fit_model_grid_jax
+    weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+  File "<string>", line 1, in __new__
+KeyboardInterrupt

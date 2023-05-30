@@ -1,0 +1,159 @@
+
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_non_equilibrium_implicit'}
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 1.093
+epoch done with 0.995
+epoch done with 0.911
+epoch done with 0.839
+epoch done with 0.776
+epoch done with 0.722
+epoch done with 0.676
+epoch done with 0.637
+epoch done with 0.603
+epoch done with 0.574
+epoch done with 0.550
+epoch done with 0.527
+epoch done with 0.508
+epoch done with 0.490
+epoch done with 0.473
+epoch done with 0.459
+epoch done with 0.445
+epoch done with 0.433
+epoch done with 0.422
+epoch done with 0.411
+epoch done with 0.401
+epoch done with 0.392
+epoch done with 0.383
+epoch done with 0.374
+epoch done with 0.365
+epoch done with 0.356
+epoch done with 0.347
+epoch done with 0.336
+epoch done with 0.325
+epoch done with 0.313
+epoch done with 0.302
+epoch done with 0.291
+epoch done with 0.280
+epoch done with 0.269
+epoch done with 0.257
+epoch done with 0.244
+epoch done with 0.229
+epoch done with 0.214
+epoch done with 0.198
+epoch done with 0.184
+epoch done with 0.174
+epoch done with 0.166
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.151
+epoch done with 0.148
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_non_equilibrium_implicit'}
+epoch done with 0.726
+epoch done with 0.685
+epoch done with 0.648
+epoch done with 0.616
+epoch done with 0.589
+epoch done with 0.566
+epoch done with 0.546
+epoch done with 0.528
+epoch done with 0.511
+epoch done with 0.496
+epoch done with 0.482
+epoch done with 0.469
+epoch done with 0.457
+epoch done with 0.445
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs_grid)]
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <listcomp>
+    grid_results = [fit_model_grid_jax(params, model_data_jax, num_epochs_grid, rng_key) for params, rng_key in zip(parameter_grid, rngs_grid)]
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 118, in fit_model_grid_jax
+    for batch in batch_data:
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 21, in generate_batches
+    batch_fold = input_data['fold'][batch_indices]
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/array.py", line 271, in __getitem__
+    return lax_numpy._rewriting_take(self, idx)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3955, in _rewriting_take
+    return _gather(arr, treedef, static_idx, dynamic_idx, indices_are_sorted,
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3964, in _gather
+    indexer = _index_to_gather(shape(arr), idx)  # shared with _scatter_update
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 4091, in _index_to_gather
+    advanced_indexes, idx_advanced_axes, x_advanced_axes = zip(*advanced_pairs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 4089, in <genexpr>
+    advanced_pairs = ((_normalize_index(e, x_shape[j]), i, j)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3809, in _normalize_index
+    return lax.select(index < 0, lax.add(index, axis_size_val), index)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 5071, in deferring_binary_op
+    return binary_op(*args)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 163, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 237, in cache_miss
+    outs, out_flat, out_tree, args_flat = _python_pjit_helper(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 180, in _python_pjit_helper
+    args_flat, _, params, in_tree, out_tree, _ = infer_params_fn(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/api.py", line 443, in infer_params
+    return pjit.common_infer_params(pjit_info_args, *args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 520, in common_infer_params
+    jaxpr, consts, canonicalized_out_shardings_flat = _pjit_jaxpr(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/linear_util.py", line 295, in memoized_fun
+    config.jax_default_device, config._trace_context())
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/config.py", line 464, in _trace_context
+    tls = jax_jit.thread_local_state()
+KeyboardInterrupt

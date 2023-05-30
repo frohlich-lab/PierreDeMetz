@@ -1,0 +1,8 @@
+
+<wandb.sdk.wandb_run.Run object at 0x142b5ca60>
+  File "<stdin>", line 9
+    wandb.finish()
+    ^
+SyntaxError: invalid syntax
+KeyboardInterrupt
+KeyboardInterrupt

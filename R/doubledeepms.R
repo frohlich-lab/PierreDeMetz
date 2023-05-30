@@ -33,7 +33,7 @@ doubledeepms <- function(
   base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results/",
   tmodel_job_number = 1,
   tmodel_grid_search = TRUE,
-  tmodel_protein = "GRB2-SH3",
+  tmodel_protein = "PSD95-PDZ3",
   tmodel_subset = 50
   ){
   

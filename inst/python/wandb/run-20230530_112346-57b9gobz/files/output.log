@@ -1,0 +1,80 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 0.726
+epoch done with 0.685
+epoch done with 0.648
+epoch done with 0.616
+epoch done with 0.589
+epoch done with 0.566
+epoch done with 0.546
+epoch done with 0.528
+epoch done with 0.511
+epoch done with 0.496
+epoch done with 0.482
+epoch done with 0.469
+epoch done with 0.457
+epoch done with 0.445
+epoch done with 0.434
+epoch done with 0.424
+epoch done with 0.414
+epoch done with 0.404
+epoch done with 0.394
+epoch done with 0.384
+epoch done with 0.373
+epoch done with 0.361
+epoch done with 0.349
+epoch done with 0.338
+epoch done with 0.328
+epoch done with 0.320
+epoch done with 0.313
+epoch done with 0.307
+epoch done with 0.302
+epoch done with 0.298
+epoch done with 0.295
+epoch done with 0.292
+epoch done with 0.288
+epoch done with 0.284
+Traceback (most recent call last):
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/api_util.py", line 556, in shaped_abstractify
+    return _shaped_abstractify_handlers[type(x)](x)
+KeyError: <class 'int'>
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 141, in fit_model_grid_jax
+    weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/utils.py", line 72, in apply_weight_constraints
+    constrained_params[layer_name]['w'] = jnp.clip(constrained_params[layer_name]['w'], min_val, max_val)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 163, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 237, in cache_miss
+    outs, out_flat, out_tree, args_flat = _python_pjit_helper(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 180, in _python_pjit_helper
+    args_flat, _, params, in_tree, out_tree, _ = infer_params_fn(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/api.py", line 443, in infer_params
+    return pjit.common_infer_params(pjit_info_args, *args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 504, in common_infer_params
+    local_in_avals = tuple(shaped_abstractify(a) for a in args_flat)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 504, in <genexpr>
+    local_in_avals = tuple(shaped_abstractify(a) for a in args_flat)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/api_util.py", line 558, in shaped_abstractify
+    return _shaped_abstractify_slow(x)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/api_util.py", line 538, in _shaped_abstractify_slow
+    x if isinstance(x, core.AbstractValue) else core.get_aval(x))
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1330, in get_aval
+    return concrete_aval(x)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1319, in concrete_aval
+    if handler: return handler(x)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/abstract_arrays.py", line 77, in _make_concrete_python_scalar
+    return canonical_concrete_aval(np.array(x, dtype=dtype), weak_type=weak_type)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/abstract_arrays.py", line 53, in canonical_concrete_aval
+    return ConcreteArray(dtypes.canonicalize_dtype(np.result_type(val)), val,
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1544, in __init__
+    super().__init__(
+KeyboardInterrupt
+epoch done with 0.278

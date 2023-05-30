@@ -4,7 +4,7 @@ import optax
 from model_creation import create_model_jax
 import numpy as np
 from utils import apply_weight_constraints
-
+import wandb
 
 def generate_batches(input_data, batch_size, rng):
 
@@ -25,10 +25,19 @@ def generate_batches(input_data, batch_size, rng):
         yield batch_select, batch_fold, batch_bind, batch_target
 
 
-def model_training(model, opt_state,opt_update, weights, param_dict, input_data, n_epochs, rng):
+def model_training(model, opt_state,opt_update, weights, param_dict, input_data, n_epochs, rng, wandb_config):
 
     print("Training the model with %s" % (param_dict))
     rng_batches = jax.random.split(rng, num=n_epochs)
+    wandb_config_updated = {**wandb_config, **param_dict}
+
+    wandb.init(
+    project='Complete_test',
+    config=wandb_config_updated,
+    group = wandb_config['model_type'],
+    job_type='final_model_training',
+    reinit=True,
+    name = f'Actual model training')
 
     @jax.jit
     def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):
@@ -60,6 +69,7 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
 
         history.append(val_loss.item())
         print(f'epoch done with {val_loss.item():.3f}')
+        wandb.log({'val_loss_train': round(val_loss.item(),3)})
 
     return history, model, weights
 
@@ -67,11 +77,22 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
 
 
 
-def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
+def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
     # Summarize results
     print("Grid search using %s" % (param_dict))
 
     rng_batches = jax.random.split(rng, num=n_epochs)
+    run_number = wandb_config.get('run_number', 1)
+    wandb_config_updated = {**wandb_config, **param_dict}
+
+    wandb.init(
+        project='Complete_test',
+        config=wandb_config_updated,
+        group=wandb_config['model_type'],
+        job_type='grid_search',
+        reinit=True,
+        name=f'Run {run_number}'
+    )
 
     # Create model
     model, opt_init, opt_update = create_model_jax(
@@ -84,8 +105,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
         input_dim_binding=input_data['train']['bind'].shape[1],
         number_additive_traits=param_dict['number_additive_traits'],
         model_type=param_dict['model_type'])
-    #print(param_dict['model_type'])
-    #@jax.jit
+
     @jax.jit
     def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):
         output, _, _, _, _  = model.apply(weights, inputs_select, inputs_folding, inputs_binding)
@@ -127,5 +147,5 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng):
 
         history.append(val_loss.item())
         print(f'epoch done with {val_loss.item():.3f}')
-
+        wandb.log({'val_loss_fit': round(val_loss.item(),3)})
     return val_loss.item()

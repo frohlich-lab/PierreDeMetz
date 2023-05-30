@@ -1,0 +1,14 @@
+2023-05-30 11:14:32,993 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Current SDK version is 0.15.3
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Configure stats pid to 13391
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/.config/wandb/settings
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/settings
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'program': 'pierre_mochi__fit_tmodel_3state_doubledeepms.py'}
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_init.py:_log_setup():507] Logging user logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_111432-ll98xg9d/logs/debug.log
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_111432-ll98xg9d/logs/debug-internal.log
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_init.py:init():547] calling init triggers
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'number_additive_traits': 1, 'num_epochs_grid': 75, 'num_epochs': 250, 'num_resamplings': 0, 'num_models': 1, 'random_seed': 1, 'model_type': 'tri_state_non_equilibrium_implicit', 'union_mode': 'False', 'protein': 'GRB2-SH3'}
+2023-05-30 11:14:32,994 INFO    MainThread:13391 [wandb_init.py:init():591] wandb.init() called when a run is still active
+2023-05-30 11:16:21,709 WARNING MsgRouterThr:13391 [router.py:message_loop():77] message_loop has been closed
