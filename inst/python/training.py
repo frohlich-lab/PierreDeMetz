@@ -33,11 +33,12 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
 
     wandb.init(
     project='Complete_test',
+    entity = 'lab_frohlich',
     config=wandb_config_updated,
     group = wandb_config['model_type'],
     job_type='final_model_training',
     reinit=True,
-    name = f'Actual model training')
+    name = f'Actual model training : {param_dict}')
 
     @jax.jit
     def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):
@@ -87,6 +88,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
 
     wandb.init(
         project='Complete_test',
+        entity = 'lab_frohlich',
         config=wandb_config_updated,
         group=wandb_config['model_type'],
         job_type='grid_search',
