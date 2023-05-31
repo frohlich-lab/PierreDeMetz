@@ -88,7 +88,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
     run_number = wandb_config.get('run_number', 1)
     wandb_config_updated = {**wandb_config, **param_dict}
 
-    if wandb_config['status'] == 'True':
+    if wandb_config_updated['status'] == 'True':
         wandb.init(
             project=wandb_config['project_name'],
             entity = 'lab_frohlich',

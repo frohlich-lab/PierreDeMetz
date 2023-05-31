@@ -32,6 +32,6 @@ rule run_model:
         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
         --model_type {params.wc.model_type} \
         --protein {params.wc.protein} \
-        --project_name pierre_mochi__fit_tmodel_3state_doubledeepms
-        --wandb True
+        --project_name pierre_mochi__fit_tmodel_3state_doubledeepms \
+        --wandb True;
         """

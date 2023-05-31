@@ -12,42 +12,21 @@ class StateProbFolded(hk.Module):
 
     def __call__(self, binding, folding, synthesis=None, degradation=None):
         if self.model_type == 'tri_state_equilibrium_explicit':
-            return self._tri_state_explicit(folding)
+            return 1/(1+jnp.exp(folding))
         elif self.model_type == 'tri_state_equilibrium_implicit':
-            return self._implicit_layers(folding)
+            return opt_2st_vec(folding).reshape(-1, 1)
         elif self.model_type == 'tri_state_equilibrium_ODE':
-            return self._ODE_layers(folding)
+            return ss_two_state_vec(folding).reshape(-1, 1)
         elif self.model_type == 'two_state_non_equilibrium_implicit':
-            return self._two_state_non_equilibrium_implicit(folding)
+            return two_state_noneq_folding_implicit_vec(folding).reshape(-1, 1)
         elif self.model_type == 'two_state_non_equilibrium_ODE':
-            return self._two_state_non_equilibrium_ODE(folding)
+            return two_state_noneq_folding_ode_vec(folding).reshape(-1, 1)
         elif self.model_type == 'tri_state_non_equilibrium_implicit':
-            return self._tri_state_non_equilibrium_implicit(folding, synthesis)
+            return three_state_noneq_folding_implicit_vec(folding, synthesis).reshape(-1, 1)
         elif self.model_type == 'tri_state_non_equilibrium_ODE':
-            return self._tri_state_non_equilibrium_ODE(folding, synthesis)
+            return three_state_noneq_folding_ode_vec(folding, synthesis).reshape(-1, 1)
         else:
             raise ValueError('model_type does not exist')
-
-    def _tri_state_explicit(self, folding):
-        return 1/(1+jnp.exp(folding))
-
-    def _implicit_layers(self, folding):
-        return opt_2st_vec(folding).reshape(-1, 1)
-
-    def _ODE_layers(self, folding):
-        return ss_two_state_vec(folding).reshape(-1, 1)
-
-    def _two_state_non_equilibrium_implicit(self, folding):
-        return two_state_noneq_folding_implicit_vec(folding).reshape(-1, 1)
-
-    def _two_state_non_equilibrium_ODE(self, folding):
-        return two_state_noneq_folding_ode_vec(folding).reshape(-1, 1)
-
-    def _tri_state_non_equilibrium_implicit(self, folding, synthesis):
-        return three_state_noneq_folding_implicit_vec(folding, synthesis).reshape(-1, 1)
-
-    def _tri_state_non_equilibrium_ODE(self, folding, synthesis):
-        return three_state_noneq_folding_ode_vec(folding, synthesis).reshape(-1, 1)
 
 
 class StateProbBound(hk.Module):
@@ -57,41 +36,18 @@ class StateProbBound(hk.Module):
 
     def __call__(self, binding, folding, synthesis=None, degradation=None):
         if self.model_type == 'tri_state_equilibrium_explicit':
-            return self._tri_state_explicit(binding, folding)
+         return 1/(1+jnp.exp(binding)*(1+jnp.exp(folding)))
         elif self.model_type == 'tri_state_equilibrium_implicit':
-            return self._implicit_layers(binding, folding)
+            return opt_3st_vec(binding, folding).reshape(-1, 1)
         elif self.model_type == 'tri_state_equilibrium_ODE':
-            return self._ODE_layers(binding, folding)
+            return ss_tri_state_vec(binding, folding).reshape(-1, 1)
         elif self.model_type == 'two_state_non_equilibrium_implicit':
-            return self._two_state_non_equilibrium_implicit(binding, folding, degradation)
+            return two_state_noneq_binding_implicit_vec(binding, folding, degradation).reshape(-1, 1)
         elif self.model_type == 'two_state_non_equilibrium_ODE':
-            return self._two_state_non_equilibrium_ODE(binding, folding, degradation)
+            return two_state_noneq_binding_ode_vec(binding, folding, degradation).reshape(-1, 1)
         elif self.model_type == 'tri_state_non_equilibrium_implicit':
-            return self._tri_state_non_equilibrium_implicit(binding, folding, synthesis, degradation)
+            return three_state_noneq_binding_implicit_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
         elif self.model_type == 'tri_state_non_equilibrium_ODE':
-            return self._tri_state_non_equilibrium_ODE(binding, folding, synthesis, degradation)
+            return three_state_noneq_binding_ode_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
         else:
             raise ValueError('model type does not exist')
-
-    def _tri_state_explicit(self, binding, folding):
-        return 1/(1+jnp.exp(binding)*(1+jnp.exp(folding)))
-
-    def _implicit_layers(self, binding, folding):
-        return opt_3st_vec(binding, folding).reshape(-1, 1)
-
-    def _ODE_layers(self, binding, folding):
-        return ss_tri_state_vec(binding, folding).reshape(-1, 1)
-
-    def _two_state_non_equilibrium_implicit(self, binding, folding, degradation):
-        #change results processing to only keep bound proportion
-        return two_state_noneq_binding_implicit_vec(binding, folding, degradation).reshape(-1, 1)
-
-    def _two_state_non_equilibrium_ODE(self, binding, folding, degradation):
-        return two_state_noneq_binding_ode_vec(binding, folding, degradation).reshape(-1, 1)
-
-    def _tri_state_non_equilibrium_implicit(self, binding, folding, synthesis, degradation):
-        #change results processing to only keep bound proportion
-        return three_state_noneq_binding_implicit_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
-
-    def _tri_state_non_equilibrium_ODE(self, binding, folding, synthesis, degradation):
-        return three_state_noneq_binding_ode_vec(binding, folding, synthesis, degradation).reshape(-1, 1)
