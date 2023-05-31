@@ -4,7 +4,7 @@ from optax import chain
 import jax
 import jax.numpy as jnp
 from jax import vmap
-from diffrax import diffeqsolve, ODETerm, Dopri5
+from diffrax import diffeqsolve, ODETerm, Dopri5, Tsit5
 
 ################# THREE STATE NON EQ MODEL IMPLICIT FOLDING
 def objective_three_state_noneq_folding_implicit(x, delta_g_df, delta_g_do):
@@ -52,7 +52,7 @@ def objective_three_state_noneq_folding_ODE(t, x, args):
 
 def objective_and_grad_three_state_noneq_folding_ODE(delta_g_df, delta_g_do, x0, t0=0, t1=10, dt0=0.1):
     term = ODETerm(objective_three_state_noneq_folding_ODE)
-    solver = Dopri5()
+    solver = Tsit5()
     solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(delta_g_df,delta_g_do))
     return solution
 
@@ -118,7 +118,7 @@ def objective_three_state_noneq_binding_ODE(t,x,args):
 
 def objective_and_grad_three_state_noneq_binding_ODE(l, delta_g_df, delta_g_do, delta_g_db, delta_g_dd, x0, t0=0, t1=10, dt0=0.01):
     term = ODETerm(objective_three_state_noneq_binding_ODE)
-    solver = Dopri5()
+    solver = Tsit5()
     solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(l, delta_g_df,delta_g_do, delta_g_db, delta_g_dd))
     return solution
 
@@ -137,3 +137,18 @@ def three_state_noneq_binding_ode_vec(delta_g_db, delta_g_df, delta_g_do, delta_
                                       delta_g_db=delta_g_db,
                                       delta_g_dd=delta_g_dd)
     return results.flatten()
+
+
+
+if __name__ == '__main__':
+
+    test_val_db = jnp.array([-0.12, -0.4])
+    test_val_df = jnp.array([-0.4, -0.30])
+    test_val_do = jnp.array([-0.4, -0.30])
+    test_val_dd = jnp.array([-0.4, -0.30])
+
+    print(three_state_noneq_binding_ode_vec(test_val_db, test_val_df, test_val_do, test_val_dd))
+    print(three_state_noneq_binding_implicit_vec(test_val_db, test_val_df, test_val_do, test_val_dd))
+
+    print(three_state_noneq_folding_ode_vec(test_val_df, test_val_do))
+    print(three_state_noneq_folding_implicit_vec(test_val_df, test_val_do))

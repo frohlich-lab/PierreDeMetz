@@ -27,6 +27,9 @@ parser.add_argument("--random_seed", "-d", default = 1, type = int, help = "Rand
 parser.add_argument("--model_type", "-mt", default = 'tri_state_explicit', help = "Model type (default:tri_state_explicit)")
 parser.add_argument("--union_mode", "-um", default = 'False', help = "Union mode (default:union)")
 parser.add_argument("--protein", '-prot', default = 'GRB2', help = "Protein name (default:GRB2)")
+parser.add_argument("--wandb", '-w', default = 'False', help = "Whether to use wandb (default:False)")
+parser.add_argument("--project_name", '-pn', default = 'pierre_mochi__fit_tmodel_3state_doubledeepms', help = "Wandb project name (default:pierre_mochi__fit_tmodel_3state_doubledeepms)")
+
 
 #Parse the arguments
 args = parser.parse_args()
@@ -45,6 +48,8 @@ random_seed = args.random_seed
 model_type = args.model_type
 union_mode = args.union_mode
 protein = args.protein
+wandb_status = args.wandb
+project_name = args.project_name
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -125,7 +130,9 @@ wandb_config = {
     'random_seed': args.random_seed,
     'model_type': args.model_type,
     'union_mode': args.union_mode,
-    'protein': args.protein
+    'protein': args.protein,
+    'project_name': args.project_name,
+    'status': args.wandb
 }
 
 

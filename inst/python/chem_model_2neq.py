@@ -4,7 +4,7 @@ from optax import chain
 import jax
 import jax.numpy as jnp
 from jax import vmap
-from diffrax import diffeqsolve, ODETerm, Dopri5
+from diffrax import diffeqsolve, ODETerm, Dopri5, Tsit5
 
 ################# TWO STATE NON EQ MODEL IMPLICIT FOLDING
 def objective_two_state_noneq_folding_implicit(x, delta_g_df):

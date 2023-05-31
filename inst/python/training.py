@@ -31,14 +31,15 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
     rng_batches = jax.random.split(rng, num=n_epochs)
     wandb_config_updated = {**wandb_config, **param_dict}
 
-    wandb.init(
-    project='Complete_test',
-    entity = 'lab_frohlich',
-    config=wandb_config_updated,
-    group = wandb_config['model_type'],
-    job_type='final_model_training',
-    reinit=True,
-    name = f'Actual model training : {param_dict}')
+    if wandb_config['status'] == 'True':
+        wandb.init(
+        project=wandb_config['project_name'],
+        entity = 'lab_frohlich',
+        config=wandb_config_updated,
+        group = wandb_config['model_type'],
+        job_type='final_model_training',
+        reinit=True,
+        name = f'Actual model training : {param_dict}')
 
     @jax.jit
     def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):
@@ -50,7 +51,6 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
         loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
         updates, opt_state = opt_update(grads, opt_state)
-        #jax.debug.print('weights : {}', weights['folding_additive'])
         weights = optax.apply_updates(weights, updates)
         return weights, opt_state
 
@@ -70,7 +70,9 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
 
         history.append(val_loss.item())
         print(f'epoch done with {val_loss.item():.3f}')
-        wandb.log({'val_loss_train': round(val_loss.item(),3)})
+
+        if wandb_config['status'] == 'True':
+            wandb.log({'val_loss_train': round(val_loss.item(),3)})
 
     return history, model, weights
 
@@ -79,22 +81,23 @@ def model_training(model, opt_state,opt_update, weights, param_dict, input_data,
 
 
 def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
-    # Summarize results
+
     print("Grid search using %s" % (param_dict))
 
     rng_batches = jax.random.split(rng, num=n_epochs)
     run_number = wandb_config.get('run_number', 1)
     wandb_config_updated = {**wandb_config, **param_dict}
 
-    wandb.init(
-        project='Complete_test',
-        entity = 'lab_frohlich',
-        config=wandb_config_updated,
-        group=wandb_config['model_type'],
-        job_type='grid_search',
-        reinit=True,
-        name=f'Run {run_number}'
-    )
+    if wandb_config['status'] == 'True':
+        wandb.init(
+            project=wandb_config['project_name'],
+            entity = 'lab_frohlich',
+            config=wandb_config_updated,
+            group=wandb_config['model_type'],
+            job_type='grid_search',
+            reinit=True,
+            name=f'Run {run_number}'
+        )
 
     # Create model
     model, opt_init, opt_update = create_model_jax(
@@ -116,11 +119,8 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
 
     @jax.jit
     def update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target):
-        #loss, grads = jax.value_and_grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
         grads = jax.grad(loss_fn)(weights, inputs_select, inputs_folding, inputs_binding, target)
-
         updates, opt_state = opt_update(grads, opt_state)
-        #jax.debug.print('weights : {}', weights['folding_additive'])
         weights = optax.apply_updates(weights, updates)
         return weights, opt_state
 
@@ -149,5 +149,8 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
 
         history.append(val_loss.item())
         print(f'epoch done with {val_loss.item():.3f}')
-        wandb.log({'val_loss_fit': round(val_loss.item(),3)})
+
+        if wandb_config['status'] == 'True':
+            wandb.log({'val_loss_fit': round(val_loss.item(),3)})
+
     return val_loss.item()
