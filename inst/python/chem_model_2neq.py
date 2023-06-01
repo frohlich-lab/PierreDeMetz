@@ -12,7 +12,7 @@ def objective_two_state_noneq_folding_implicit(x, delta_g_df):
     f_xf = jnp.exp(-delta_g_df) - x_f
 
     # OPTIMISATION OBJECTIVE
-    result = jnp.square(f_xf) #+ jnp.square(total_conc)
+    result = jnp.square(f_xf)
     return jnp.squeeze(result)
 
 def objective_and_grad_two_state_noneq_folding_implicit(x, delta_g_df):
@@ -61,16 +61,18 @@ def two_state_noneq_folding_ode_vec(delta_g_df):
     return results.flatten()
 
 ################# TWO STATE NON EQ MODEL IMPLICIT BINDING
-def objective_two_state_noneq_binding_implicit(x, delta_g_df, delta_g_db, delta_g_dd):
+def objective_two_state_noneq_binding_implicit(x, delta_g_df, delta_g_db, delta_g_dd=None, deg='False'):
     x_b, x_f = x
     l = 1.0
-    #old version
-    #f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
-    #f_xf = jnp.exp(-delta_g_df) - x_f - f_xb
 
-    #new version w/ degradation
-    f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
-    f_xf = jnp.exp(-delta_g_df) - x_f - f_xb + x_b * jnp.exp(delta_g_dd)
+    #old version
+    if deg=='False':
+        f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
+        f_xf = jnp.exp(-delta_g_df) - x_f - f_xb
+
+    else:
+        f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
+        f_xf = jnp.exp(-delta_g_df) - x_f - f_xb + x_b * jnp.exp(delta_g_dd)
 
     result = jnp.square(f_xb) + jnp.square(f_xf)
     return jnp.squeeze(result)
@@ -98,6 +100,7 @@ def two_state_noneq_binding_implicit_vec(delta_g_df, delta_g_db, delta_g_dd):
     results = opt_soln_two_state_vectorized(delta_g_df, delta_g_db, delta_g_dd)
     return results
 ################# TWO STATE NON EQ MODEL ODE BINDING
+
 def objective_two_state_noneq_binding_ODE(t, x, args):
     l, delta_g_df, delta_g_db, delta_g_dd = args
     x_f, x_b = x

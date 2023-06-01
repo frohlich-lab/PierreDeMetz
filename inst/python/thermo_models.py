@@ -4,7 +4,6 @@ from chem_model_3eq import opt_2st_vec, opt_3st_vec, ss_two_state_vec, ss_tri_st
 from chem_model_2neq import two_state_noneq_folding_implicit_vec, two_state_noneq_binding_implicit_vec, two_state_noneq_folding_ode_vec, two_state_noneq_binding_ode_vec
 from chem_model_3neq import three_state_noneq_binding_implicit_vec, three_state_noneq_folding_implicit_vec, three_state_noneq_binding_ode_vec, three_state_noneq_folding_ode_vec
 
-##################### IMPLEMENTATION OF THE THREE MODELS #####################
 class StateProbFolded(hk.Module):
     def __init__(self, model_type='tri_state_equilibrium_explicit'):
         super().__init__()

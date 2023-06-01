@@ -6,7 +6,6 @@ import jax.numpy as jnp
 from jax import vmap
 from diffrax import diffeqsolve, ODETerm, Dopri5
 
-
 ################# TWO STATE MODEL
 def objective_two_state(x, delta_g_df):
     x_o, x_f = x
@@ -19,7 +18,6 @@ def objective_and_grad_two_state(x, delta_g_df):
     objective_value = objective_two_state(x, delta_g_df)
     grad = jax.grad(objective_two_state)(x, delta_g_df)
     return objective_value, grad
-
 
 def opt_soln_two_state(delta_g_df):
 
@@ -131,22 +129,3 @@ def ss_tri_state_vec(delta_g_df, delta_g_db):
     ss_tri_state_vectorized = vmap(get_steady_state_solution_tri_state)
     results = ss_tri_state_vectorized(l=l, delta_g_df=delta_g_df, delta_g_db=delta_g_db)
     return results.flatten()
-
-#if __name__ == '__main__':
-
-    test_val = jnp.array([-0.12, -0.4])
-    test_val_b = jnp.array([-0.4, -0.30])
-
-    exp = jnp.exp(test_val)
-    exp2 = jnp.exp(test_val_b)
-
-    print(opt_2st_vec(test_val))
-    print(1/(1+exp))
-    #print(get_steady_state_solution_two_state(test_val))
-    print(ss_two_state_vec(test_val))
-    print('\n')
-
-    print(opt_3st_vec(test_val, test_val_b))
-    print(1/(1+ exp2*(1+exp)))
-    #print(get_steady_state_solution_tri_state(test_val, test_val_b))
-    print(ss_tri_state_vec(test_val, test_val_b))
