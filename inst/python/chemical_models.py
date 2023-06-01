@@ -16,21 +16,11 @@ class ChemicalModel(eqx.Module):
 
     def objective_and_grad(self, objective, x, args):
         objective_value = objective(x, args)
-        if self.is_implicit:
-            grad = jax.grad(objective)(x, args)
-        else:
-            grad = None  # or calculate gradient differently if needed
+        grad = jax.grad(objective)(x, args)
         return objective_value, grad
 
-    def solve_implicit(self, x0, args, objective=None):
-        if objective is None:
-            raise ValueError("An objective function must be provided.")
-
-        #def wrapped_objective_and_grad(x, *args):
-            #return self.objective_and_grad(objective, x, args)
-
+    def solve_implicit(self, x0, args, objective):
         bfgs = BFGS(maxiter=1000, fun=self.objective_and_grad, value_and_grad=True)
-
         try:
             result = bfgs.run(objective, x0, args)
             print(f'Successfully solved for {result.x}')
@@ -51,7 +41,7 @@ class ChemicalModel(eqx.Module):
         steady_state_solution = solution[-1]
         return steady_state_solution
 
-    def opt_vectorize(self, x0, args, objective, t0=None, t1=None, dt0=None):
+    def opt_vectorize(self, x0, args, objective):
         if self.is_implicit:
             solve_implicit_vectorized = vmap(self.solve_implicit)
             results = solve_implicit_vectorized(x0, args, objective)
@@ -92,7 +82,7 @@ class ThreeStateEquilibrium(ChemicalModel):
             return jnp.squeeze(result)
 
     def objective_binding(self, x, args):
-        delta_g_df, delta_g_db = args
+        l, delta_g_df, delta_g_db = args
         x_o, x_f, x_b = x
         total_conc = 1 - x_o - x_f - x_b
 
