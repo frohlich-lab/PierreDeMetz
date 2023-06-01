@@ -60,6 +60,7 @@ def opt_soln_tri_state(l, delta_g_df, delta_g_db):
     bfgs = BFGS(maxiter=1000, fun=objective_and_grad_tri_state, value_and_grad=True)
 
     # Minimize the objective function
+
     result = bfgs.run(init_params=x0,
                       l=l,
                       delta_g_df=delta_g_df,
@@ -129,3 +130,9 @@ def ss_tri_state_vec(delta_g_df, delta_g_db):
     ss_tri_state_vectorized = vmap(get_steady_state_solution_tri_state)
     results = ss_tri_state_vectorized(l=l, delta_g_df=delta_g_df, delta_g_db=delta_g_db)
     return results.flatten()
+
+if __name__ == '__main__':
+    delta_g_df = jnp.array([1/2])
+    delta_g_db = jnp.array([1/2])
+    print(ss_two_state_vec(delta_g_df))
+    print(ss_tri_state_vec(delta_g_df, delta_g_db))

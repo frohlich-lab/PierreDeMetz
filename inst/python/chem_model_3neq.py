@@ -123,7 +123,7 @@ def objective_and_grad_three_state_noneq_binding_ODE(l, delta_g_df, delta_g_do, 
     return solution
 
 def opt_soln_three_state_noneq_binding_ODE(l,delta_g_df, delta_g_do, delta_g_db, delta_g_dd):
-    x0 = jnp.array([1/10,1/10, 1/10])
+    x0 = jnp.array([1/10,1/10,1/10])
     solution = objective_and_grad_three_state_noneq_binding_ODE(l, delta_g_df, delta_g_do, delta_g_db, delta_g_dd, x0)
     steady_state_solution = solution.ys[-1]
     return jnp.array([steady_state_solution[2]])
