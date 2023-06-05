@@ -29,15 +29,14 @@ class ChemicalModel(eqx.Module):
             return None
 
     def solve_ode(self, x0, objective, args ,t0=0, t1=10, dt0=0.1):
-        print(type(objective))
         term = ODETerm(objective)
         solver = Dopri5()
-        solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=args)
+        solution = diffeqsolve(terms=term, solver=solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=args)
         return solution
 
-    def get_steady_state_solution(self, x0, args, objective):
-        solution = self.solve_ode(objective, x0, args)
-        steady_state_solution = solution[-1]
+    def get_steady_state_solution(self, x0, objective, args):
+        solution = self.solve_ode(x0,objective,args)
+        steady_state_solution = solution.ys[-1]
         return steady_state_solution
 
     def opt_vectorize(self, x0, args, objective):
@@ -58,7 +57,11 @@ class ThreeStateEquilibrium(ChemicalModel):
         self.x0_two = jnp.array([1/2, 1/2])
         self.x0_tri = jnp.array([1/3, 1/3, 1/3])
 
-    def objective_folding(self, x, args):
+    def objective_folding(self, *args):#, **kwargs):
+        if not self.is_implicit:
+            t, x, args = args
+        else:
+            x, args = args
         delta_g_df = args
         x_o, x_f = x
         total_conc = 1 - x_o - x_f
@@ -70,7 +73,11 @@ class ThreeStateEquilibrium(ChemicalModel):
             result = jnp.square(f_xo) + jnp.square(f_xf)+jnp.square(total_conc)
             return jnp.squeeze(result)
 
-    def objective_binding(self, x, args):
+    def objective_binding(self, *args):#:, **kwargs):
+        if not self.is_implicit:
+            t, x, args = args
+        else:
+            x, args = args
         delta_g_df, delta_g_db = args
         x_o, x_f, x_b = x
         total_conc = 1 - x_o - x_f - x_b
@@ -85,11 +92,11 @@ class ThreeStateEquilibrium(ChemicalModel):
 
     def solve_folding(self, args_folding):
         results = self.opt_vectorize(self.x0_two, args_folding, self.objective_folding)
-        return results[0][1]
+        return results.T[:][2]
 
     def solve_binding(self, args_binding):
         results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
-        return results[0][2]
+        return results.T[:][2]
 
 if __name__ == '__main__':
     three_state_model = ThreeStateEquilibrium(False)

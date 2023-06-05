@@ -88,7 +88,7 @@ def dx_dt_two_state(t, x, args):
 def solve_two_state_ode(delta_g_df, x0, t0=0, t1=10, dt0=0.1):
     term = ODETerm(dx_dt_two_state)
     solver = Dopri5()
-    solution = diffeqsolve(term, solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(delta_g_df,))
+    solution = diffeqsolve(terms=term, solver=solver, t0=t0, t1=t1, dt0=dt0, y0=x0, args=(delta_g_df,))
     return solution
 
 def get_steady_state_solution_two_state(delta_g_df):
@@ -132,7 +132,7 @@ def ss_tri_state_vec(delta_g_df, delta_g_db):
     return results.flatten()
 
 if __name__ == '__main__':
-    delta_g_df = jnp.array([1/2])
-    delta_g_db = jnp.array([1/2])
+    delta_g_df = jnp.array([1/2,0.2])
+    delta_g_db = jnp.array([1/2,0.2])
     print(ss_two_state_vec(delta_g_df))
     print(ss_tri_state_vec(delta_g_df, delta_g_db))
