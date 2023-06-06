@@ -103,10 +103,12 @@ class ThreeStateEquilibrium(ChemicalModel):
         return results.T[:][2]
 
 class TwoStateNonEquilibrium(ChemicalModel):
-    def __init__(self, is_implicit, is_degradation,is_synthesis):
-        super().__init__(is_implicit, is_degradation,is_synthesis)
+    x0_two: jnp.ndarray
+    x0_tri: jnp.ndarray
+    def __init__(self, is_implicit, is_degradation, is_synthesis):
+        super().__init__(is_implicit, is_degradation, is_synthesis)
         self.x0_two = jnp.array([1/2])
-        self.x0_tri = jnp.array([1])
+        self.x0_tri = jnp.array([1/2,1/2])
 
     def objective_folding(self, *args):
         if not self.is_implicit:
@@ -116,6 +118,7 @@ class TwoStateNonEquilibrium(ChemicalModel):
 
         delta_g_df = args
         x_f = x
+
         f_xf = jnp.exp(-delta_g_df) - x_f
 
         if not self.is_implicit:
@@ -129,10 +132,12 @@ class TwoStateNonEquilibrium(ChemicalModel):
             t, x, args = args
         else:
             x, args = args
+
         if self.is_degradation == False:
             delta_g_df, delta_g_db = args
         else:
             delta_g_df, delta_g_db, delta_g_dd = args
+
         x_f, x_b = x
         l = 1.0
 
@@ -151,10 +156,19 @@ class TwoStateNonEquilibrium(ChemicalModel):
             result = jnp.square(f_xf) + jnp.square(f_xb)
             return jnp.squeeze(result)
 
+    def solve_folding(self, args_folding):
+        results = self.opt_vectorize(self.x0_two, args_folding, self.objective_folding)
+        return results.T[:].flatten()
+
+    def solve_binding(self, args_binding):
+        results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
+        return results.T[:][1]
 
 class ThreeStateNonEquilibrium(ChemicalModel):
-    def __init__(self, is_implicit, is_degradation,is_synthesis):
-        super().__init__(is_implicit, is_degradation,is_synthesis)
+    x0_two: jnp.ndarray
+    x0_tri: jnp.ndarray
+    def __init__(self, is_implicit, is_degradation, is_synthesis):
+        super().__init__(is_implicit, is_degradation, is_synthesis)
         self.x0_two = jnp.array([1/2, 1/2])
         self.x0_tri = jnp.array([1/3, 1/3, 1/3])
 
@@ -174,7 +188,7 @@ class ThreeStateNonEquilibrium(ChemicalModel):
             f_xo = flux * jnp.exp(delta_g_do) + x_f * jnp.exp(delta_g_df) -2 * x_o
             f_xf = x_o * jnp.exp(-delta_g_df) - x_f
         else:
-            f_xo =  x_f * jnp.exp(delta_g_df) -2 * x_o
+            f_xo =  x_f * jnp.exp(delta_g_df) -  x_o
             f_xf = x_o * jnp.exp(-delta_g_df) - x_f
 
 
@@ -189,6 +203,7 @@ class ThreeStateNonEquilibrium(ChemicalModel):
             t, x, args = args
         else:
             x, args = args
+
         if self.is_degradation == False and self.is_synthesis == False:
             delta_g_df, delta_g_db = args
         elif self.is_degradation == True and self.is_synthesis == False:
@@ -204,11 +219,11 @@ class ThreeStateNonEquilibrium(ChemicalModel):
         l = 1.0
 
         if self.is_degradation == False and self.is_synthesis == False:
-            f_xo = flux * jnp.exp(delta_g_do) + x_f * jnp.exp(delta_g_df) -2 * x_o
+            f_xo = x_f * jnp.exp(delta_g_df) -  x_o
             f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
             f_xf = x_o * jnp.exp(-delta_g_df) - x_f - f_xb
         elif self.is_degradation == True and self.is_synthesis == False:
-            f_xo =  x_f * jnp.exp(delta_g_df) -2 * x_o
+            f_xo =  x_f * jnp.exp(delta_g_df) - x_o
             f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
             f_xf = x_o * jnp.exp(-delta_g_df) - x_f - f_xb  - x_b * jnp.exp(delta_g_dd)
         elif self.is_degradation == False and self.is_synthesis == True:
@@ -236,15 +251,52 @@ class ThreeStateNonEquilibrium(ChemicalModel):
         return results.T[:][2]
 
 if __name__ == '__main__':
+    delta_g_df = jnp.array([0.5, 0.2])
+    delta_g_db = jnp.array([0.5, 0.2])
+    delta_g_dd = jnp.array([0.5,0.3])
+    delta_g_do = jnp.array([0.5,0.3])
+
+    ###THRE STATE EQUILIBRIUM
     three_state_model = ThreeStateEquilibrium(is_implicit = False,
                                               is_degradation = False,
                                               is_synthesis=False)
 
-    args_folding = (jnp.array([0.5, 0.2]))
-    args_binding = (jnp.array([0.5, 0.2]), jnp.array([0.5, 0.2]))
+    args_folding = (delta_g_df)
+    args_binding = (delta_g_df, delta_g_db)
 
     solution_folding = three_state_model.solve_folding(args_folding)
     solution_binding = three_state_model.solve_binding(args_binding)
+    print('Three State Equilibrium')
+    print("Solution for folding:", solution_folding)
+    print("Solution for binding:", solution_binding)
 
+    ### TWO STATE NON EQUILIBRIUM
+    two_state_non_eq_model = TwoStateNonEquilibrium(is_implicit = False,
+                                              is_degradation = False,
+                                              is_synthesis=False)
+
+    args_folding = (delta_g_df)
+    args_binding = (delta_g_df, delta_g_db)#, delta_g_dd)
+
+    solution_folding = two_state_non_eq_model.solve_folding(args_folding)
+    solution_binding = two_state_non_eq_model.solve_binding(args_binding)
+
+    print('Two State Non Equilibrium')
+    print("Solution for folding:", solution_folding)
+    print("Solution for binding:", solution_binding)
+
+    ### THREE STATE NON EQUILIBRIUM
+    three_state_non_eq_model = ThreeStateNonEquilibrium(is_implicit = False,
+                                              is_degradation = False,
+                                              is_synthesis=False)
+
+    #args_folding = (delta_g_do, delta_g_df)
+    args_folding = (delta_g_df)
+    args_binding = (delta_g_df, delta_g_db)#, delta_g_dd, delta_g_do)
+
+    solution_folding = three_state_non_eq_model.solve_folding(args_folding)
+    solution_binding = three_state_non_eq_model.solve_binding(args_binding)
+
+    print('Three State Non Equilibrium')
     print("Solution for folding:", solution_folding)
     print("Solution for binding:", solution_binding)

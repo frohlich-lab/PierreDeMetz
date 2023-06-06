@@ -129,3 +129,11 @@ def two_state_noneq_binding_ode_vec(delta_g_df, delta_g_db, delta_g_dd):
                                       delta_g_db=delta_g_db,
                                       delta_g_dd = delta_g_dd)
     return results.flatten()
+
+if __name__ == '__main__':
+    delta_g_df = jnp.array([0.5, 0.2])
+    delta_g_db = jnp.array([0.5, 0.2])
+    delta_g_dd = jnp.array([0,0])
+
+    print(two_state_noneq_folding_implicit_vec(delta_g_df))
+    print(two_state_noneq_binding_implicit_vec(delta_g_df, delta_g_db, delta_g_dd))

@@ -140,15 +140,11 @@ def three_state_noneq_binding_ode_vec(delta_g_db, delta_g_df, delta_g_do, delta_
 
 
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
+    delta_g_df = jnp.array([0.5, 0.2])
+    delta_g_db = jnp.array([0.5, 0.2])
+    delta_g_dd = jnp.array([0.5,0.3])
+    delta_g_do = jnp.array([0.5,0.3])
 
-    test_val_db = jnp.array([-0.12, -0.4])
-    test_val_df = jnp.array([-0.4, -0.30])
-    test_val_do = jnp.array([-0.4, -0.30])
-    test_val_dd = jnp.array([-0.4, -0.30])
-
-    print(three_state_noneq_binding_ode_vec(test_val_db, test_val_df, test_val_do, test_val_dd))
-    print(three_state_noneq_binding_implicit_vec(test_val_db, test_val_df, test_val_do, test_val_dd))
-
-    print(three_state_noneq_folding_ode_vec(test_val_df, test_val_do))
-    print(three_state_noneq_folding_implicit_vec(test_val_df, test_val_do))
+    print(three_state_noneq_folding_implicit_vec(delta_g_df,delta_g_do))
+    print(three_state_noneq_binding_implicit_vec(delta_g_df, delta_g_do, delta_g_db, delta_g_dd))
