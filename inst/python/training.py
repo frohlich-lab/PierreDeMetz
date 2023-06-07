@@ -109,7 +109,9 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
         input_dim_folding=input_data['train']['fold'].shape[1],
         input_dim_binding=input_data['train']['bind'].shape[1],
         number_additive_traits=param_dict['number_additive_traits'],
-        model_type=param_dict['model_type'])
+        model_type=param_dict['model_type'],
+        specs=param_dict['specs']
+        )
 
     @jax.jit
     def loss_fn(weights, inputs_select, inputs_folding, inputs_binding, target):

@@ -29,6 +29,8 @@ parser.add_argument("--union_mode", "-um", default = 'False', help = "Union mode
 parser.add_argument("--protein", '-prot', default = 'GRB2', help = "Protein name (default:GRB2)")
 parser.add_argument("--wandb", '-w', default = 'False', help = "Whether to use wandb (default:False)")
 parser.add_argument("--project_name", '-pn', default = 'pierre_mochi__fit_tmodel_3state_doubledeepms', help = "Wandb project name (default:pierre_mochi__fit_tmodel_3state_doubledeepms)")
+parser.add_argument('--is_implicit', action='store_true', default=False, help='Set is_implicit as True')
+parser.add_argument('--is_degradation', action='store_true', default=False, help='Set is_degradation as True')
 
 
 #Parse the arguments
@@ -50,6 +52,9 @@ union_mode = args.union_mode
 protein = args.protein
 wandb_status = args.wandb
 project_name = args.project_name
+is_implicit = args.is_implicit
+is_degradation = args.is_degradation
+specs = (is_implicit, is_degradation)
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -169,8 +174,10 @@ if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) ==
         "l1_regularization_factor": l1[0],
         "l2_regularization_factor": l2[0],
         "number_additive_traits": 1,
-        "model_type": model_type
+        "model_type": model_type,
+        "specs": specs
     }
+
 else:
     parameter_grid = [{
         "num_samples": i,
@@ -178,7 +185,8 @@ else:
         "l1_regularization_factor": k,
         "l2_regularization_factor": l,
         "number_additive_traits": 1,
-        "model_type": model_type
+        "model_type": model_type,
+        "specs": specs
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
@@ -213,7 +221,9 @@ model, opt_init, opt_update = create_model_jax(
     input_dim_select=model_data_jax['train']['select'].shape[1],
     input_dim_folding=model_data_jax['train']['fold'].shape[1],
     input_dim_binding=model_data_jax['train']['bind'].shape[1],
-    number_additive_traits=best_params['number_additive_traits']
+    number_additive_traits=best_params['number_additive_traits'],
+    model_type=best_params['model_type'],
+    specs=best_params['specs']
 )
 
 weights = model.init(next(rngs),
