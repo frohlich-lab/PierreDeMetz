@@ -1,11 +1,8 @@
 from jaxopt import BFGS
-from jaxopt import OptaxSolver
-from optax import chain
 import jax
 import jax.numpy as jnp
-from jax import vmap, grad
+from jax import vmap
 from diffrax import diffeqsolve, ODETerm, Dopri5
-from functools import partial
 import equinox as eqx
 
 def create_chemical_model(model_type, is_implicit, is_degradation):
