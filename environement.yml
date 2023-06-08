@@ -1,6 +1,5 @@
-name: base
+name: demetzp
 channels:
-  - pytorch
   - conda-forge
   - bioconda
   - defaults
@@ -9,8 +8,11 @@ dependencies:
   - snakemake-minimal=7.26.0
   - pip=23.0.1
   - configargparse=1.5.3
+  - python=3.8.16
 
   - pip:
+    - remote-ikernel
+    - ipykernel
     - diffrax==0.3.1
     - distrax==0.1.3
     - dm-env==1.6
@@ -19,7 +21,7 @@ dependencies:
     - equinox==0.10.2
     - gast==0.5.3
     - jax==0.4.4
-    - jaxlib==0.3.22
+    - jaxlib==0.4.2
     - jaxopt==0.6
     - jaxtyping==0.2.15
     - jmp==0.0.4
