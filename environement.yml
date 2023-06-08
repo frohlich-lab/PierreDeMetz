@@ -232,7 +232,7 @@ dependencies:
   - python-irodsclient=1.1.8
   - python-xxhash=2.0.2
   - python_abi=3.8
-  - pytorch=1.13.1=py3.8_0
+  - pytorch=1.13.1
   - pytorch-lightning=1.9.2
   - pytz=2023.3
   - pyu2f=0.1.5
