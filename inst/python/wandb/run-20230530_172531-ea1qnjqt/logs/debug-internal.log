@@ -1,0 +1,652 @@
+2023-05-30 17:25:31,854 INFO    StreamThr :17116 [internal.py:wandb_internal():86] W&B internal server running at pid: 17116, started at: 2023-05-30 17:25:31.854607
+2023-05-30 17:25:31,855 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status
+2023-05-30 17:25:31,859 INFO    WriterThread:17116 [datastore.py:open_for_write():85] open: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/run-ea1qnjqt.wandb
+2023-05-30 17:25:31,859 DEBUG   SenderThread:17116 [sender.py:send():375] send: header
+2023-05-30 17:25:31,883 DEBUG   SenderThread:17116 [sender.py:send():375] send: run
+2023-05-30 17:25:32,304 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: check_version
+2023-05-30 17:25:32,305 INFO    SenderThread:17116 [dir_watcher.py:__init__():219] watching files in: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files
+2023-05-30 17:25:32,305 INFO    SenderThread:17116 [sender.py:_start_run_threads():1124] run started: ea1qnjqt with start time 1685463931.853508
+2023-05-30 17:25:32,305 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:25:32,306 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:25:32,306 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: check_version
+2023-05-30 17:25:32,384 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: run_start
+2023-05-30 17:25:32,385 DEBUG   HandlerThread:17116 [system_info.py:__init__():31] System info init
+2023-05-30 17:25:32,385 DEBUG   HandlerThread:17116 [system_info.py:__init__():46] System info init done
+2023-05-30 17:25:32,386 INFO    HandlerThread:17116 [system_monitor.py:start():181] Starting system monitor
+2023-05-30 17:25:32,386 INFO    SystemMonitor:17116 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-05-30 17:25:32,386 INFO    HandlerThread:17116 [system_monitor.py:probe():201] Collecting system info
+2023-05-30 17:25:32,387 DEBUG   HandlerThread:17116 [system_info.py:probe():195] Probing system
+2023-05-30 17:25:32,387 INFO    SystemMonitor:17116 [interfaces.py:start():190] Started cpu monitoring
+2023-05-30 17:25:32,387 INFO    SystemMonitor:17116 [interfaces.py:start():190] Started disk monitoring
+2023-05-30 17:25:32,387 INFO    SystemMonitor:17116 [interfaces.py:start():190] Started gpuapple monitoring
+2023-05-30 17:25:32,398 INFO    SystemMonitor:17116 [interfaces.py:start():190] Started memory monitoring
+2023-05-30 17:25:32,399 INFO    SystemMonitor:17116 [interfaces.py:start():190] Started network monitoring
+2023-05-30 17:25:32,408 DEBUG   HandlerThread:17116 [system_info.py:_probe_git():180] Probing git
+2023-05-30 17:25:32,428 DEBUG   HandlerThread:17116 [system_info.py:_probe_git():188] Probing git done
+2023-05-30 17:25:32,429 DEBUG   HandlerThread:17116 [system_info.py:probe():240] Probing system done
+2023-05-30 17:25:32,429 DEBUG   HandlerThread:17116 [system_monitor.py:probe():210] {'os': 'macOS-13.0.1-arm64-arm-64bit', 'python': '3.8.16', 'heartbeatAt': '2023-05-30T16:25:32.387299', 'startedAt': '2023-05-30T16:25:31.835639', 'docker': None, 'cuda': None, 'args': ('--data_train', '../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt', '--data_valid', '../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt', '--data_obs', '../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt', '-o', 'Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/', '-e', '75', '-p', '250', '--num_resamplings', '0', '--num_samples', '128', '--num_models', '1', '--random_seed', '1', '--union_mode', 'False', '--model_type', 'tri_state_non_equilibrium_implicit', '--protein', 'GRB2-SH3'), 'state': 'running', 'program': 'pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'codePath': 'inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'git': {'remote': 'git@github.com:frohlich-lab/PierreDeMetz.git', 'commit': '23b16f35061dd33a7100d24a99e0deb87b74e4f0'}, 'email': 'demetz.pierre@icloud.com', 'root': '/Users/pierredemetz/UCL_work/Crick/doubledeepms', 'host': 'Pierres-MBP', 'username': 'pierredemetz', 'executable': '/Users/pierredemetz/miniconda3/envs/pierre/bin/python', 'cpu_count': 10, 'cpu_count_logical': 10, 'disk': {'total': 460.4317207336426, 'used': 279.1265983581543}, 'gpuapple': {'type': 'arm', 'vendor': 'Apple'}, 'memory': {'total': 32.0}}
+2023-05-30 17:25:32,429 INFO    HandlerThread:17116 [system_monitor.py:probe():211] Finished collecting system info
+2023-05-30 17:25:32,429 INFO    HandlerThread:17116 [system_monitor.py:probe():214] Publishing system info
+2023-05-30 17:25:32,429 DEBUG   HandlerThread:17116 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-05-30 17:25:32,429 DEBUG   HandlerThread:17116 [system_info.py:_save_pip():67] Saving pip packages done
+2023-05-30 17:25:32,430 DEBUG   HandlerThread:17116 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-05-30 17:25:33,314 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/requirements.txt
+2023-05-30 17:25:33,315 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/conda-environment.yaml
+2023-05-30 17:25:33,315 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:25:35,007 DEBUG   HandlerThread:17116 [system_info.py:_save_conda():86] Saving conda packages done
+2023-05-30 17:25:35,007 INFO    HandlerThread:17116 [system_monitor.py:probe():216] Finished publishing system info
+2023-05-30 17:25:35,012 DEBUG   SenderThread:17116 [sender.py:send():375] send: files
+2023-05-30 17:25:35,012 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-05-30 17:25:35,016 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:25:35,016 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:25:35,181 DEBUG   SenderThread:17116 [sender.py:send():375] send: telemetry
+2023-05-30 17:25:35,320 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/conda-environment.yaml
+2023-05-30 17:25:35,320 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-metadata.json
+2023-05-30 17:25:35,452 INFO    wandb-upload_0:17116 [upload_job.py:push():137] Uploaded file /var/folders/fj/2tpv7lyn7wdfyvz0bs3bwkl80000gn/T/tmpzoo6w1qhwandb/1x18kqjv-wandb-metadata.json
+2023-05-30 17:25:37,192 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:25:42,356 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:25:42,676 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:25:44,366 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:25:47,700 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:25:50,088 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:25:50,089 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:25:53,233 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:25:58,258 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:25:59,779 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:25:59,781 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:25:59,781 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:25:59,782 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:00,443 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:01,103 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:01,104 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:01,104 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:01,104 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:01,448 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:02,382 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:02,382 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:02,382 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:02,383 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:02,449 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:02,449 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:03,390 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:03,666 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:04,459 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:04,957 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:05,091 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:26:06,219 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:06,385 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:06,386 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:06,386 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:06,386 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:06,386 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:06,387 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:06,387 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:26:06,468 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:06,468 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/config.yaml
+2023-05-30 17:26:06,597 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:06,597 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:06,597 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:07,469 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:07,470 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:07,470 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:07,470 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:07,473 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:08,475 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:08,697 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:08,698 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:08,698 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:08,699 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:09,481 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:09,973 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:09,974 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:09,974 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:09,974 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:10,486 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:10,486 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:11,229 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:11,230 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:11,230 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:11,230 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:11,491 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:12,235 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:12,491 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:12,491 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:12,491 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:12,492 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:12,494 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:12,494 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:13,741 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:13,741 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:13,741 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:13,742 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:14,504 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:14,505 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:15,100 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:15,101 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:15,101 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:15,101 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:15,509 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:16,373 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:16,373 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:16,373 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:16,374 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:16,515 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:16,515 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:17,379 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:17,735 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:17,736 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:17,736 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:17,736 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:18,522 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:18,522 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:19,011 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:19,012 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:19,012 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:19,012 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:19,527 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:20,097 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:26:20,097 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:26:20,381 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:20,381 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:20,381 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:20,382 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:20,532 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:20,532 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:21,704 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:21,704 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:21,704 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:21,705 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:22,543 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:22,543 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:22,709 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:23,085 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:23,085 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:23,085 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:23,086 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:23,548 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:24,415 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:24,415 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:24,415 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:24,416 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:24,550 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:24,550 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:25,871 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:25,872 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:25,872 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:25,872 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:26,559 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:26,559 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:27,247 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:27,247 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:27,247 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:27,248 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:27,565 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:28,252 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:28,570 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:28,701 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:28,701 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:28,701 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:28,702 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:29,575 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:30,092 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:30,092 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:30,093 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:30,093 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:30,580 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:30,581 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:31,556 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:31,557 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:31,557 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:31,557 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:31,586 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:32,403 DEBUG   SystemMonitor:17116 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-05-30 17:26:32,403 DEBUG   SenderThread:17116 [sender.py:send():375] send: telemetry
+2023-05-30 17:26:32,403 DEBUG   SenderThread:17116 [sender.py:send():375] send: stats
+2023-05-30 17:26:32,591 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:32,997 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:32,997 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:32,997 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:32,998 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:33,594 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:34,001 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:34,549 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:34,599 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:35,101 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:26:36,069 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:36,953 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:36,953 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:36,954 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:36,954 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:26:37,614 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:37,614 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/config.yaml
+2023-05-30 17:26:37,647 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:37,677 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:37,678 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:37,678 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:37,678 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:37,678 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:37,678 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:38,619 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:38,619 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:39,179 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:39,180 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:39,180 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:39,180 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:39,623 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:40,628 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:40,862 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:40,862 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:40,863 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:40,863 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:41,633 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:42,513 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:42,514 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:42,514 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:42,514 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:42,515 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:42,638 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:42,638 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:44,158 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:44,158 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:44,158 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:44,159 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:44,649 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:44,649 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:45,845 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:45,846 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:45,846 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:45,846 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:46,659 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:46,659 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:47,444 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:47,445 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:47,445 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:47,445 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:47,661 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:48,450 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:48,666 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:49,114 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:49,115 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:49,115 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:49,115 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:49,672 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:50,105 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:26:50,106 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:26:50,677 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:50,771 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:50,771 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:50,771 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:50,771 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:51,682 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:52,368 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:52,368 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:52,368 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:52,369 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:52,688 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:52,688 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:53,989 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:53,989 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:26:53,990 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:53,990 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:53,990 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:54,698 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:54,698 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:55,596 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:55,596 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:55,596 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:55,597 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:55,704 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:56,709 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:57,266 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:57,266 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:57,266 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:57,267 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:57,715 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:58,718 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:26:58,817 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:26:58,818 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:26:58,818 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:26:58,818 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:26:59,723 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:26:59,823 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:00,369 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:00,370 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:00,370 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:00,370 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:00,728 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:00,728 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:01,970 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:01,971 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:01,971 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:01,971 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:02,408 DEBUG   SenderThread:17116 [sender.py:send():375] send: stats
+2023-05-30 17:27:02,739 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:02,739 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:03,484 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:03,485 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:03,485 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:03,485 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:03,744 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:04,749 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:05,110 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:27:05,110 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:27:05,131 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:05,243 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:05,243 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:05,243 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:05,244 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:05,755 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:06,702 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:06,702 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:06,703 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:06,703 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:06,760 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:06,760 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:08,301 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:08,302 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:08,302 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:08,302 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:08,771 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:08,771 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:09,833 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:09,834 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:09,834 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:09,834 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:10,782 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:10,782 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:10,839 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:11,401 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:11,401 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:11,401 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:11,402 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:11,787 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:12,792 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:13,034 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:13,034 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:13,034 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:13,035 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:13,797 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:14,547 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:14,547 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:14,547 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:14,547 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:14,803 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:14,803 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:16,152 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:16,152 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:16,153 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:16,153 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:16,153 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:16,813 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:16,813 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:17,671 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:17,671 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:17,671 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:17,671 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:17,819 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:18,824 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:19,317 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:19,317 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:19,318 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:19,318 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:19,829 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:20,117 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:27:20,117 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:27:20,835 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:20,885 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:20,886 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:20,886 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:20,886 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:21,840 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:21,891 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:22,461 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:22,462 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:22,462 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:22,462 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:22,845 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:22,845 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:24,030 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:24,030 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:24,030 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:24,031 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:24,856 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:24,856 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:25,588 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:25,589 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:25,589 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:25,589 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:25,861 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:26,867 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:27,187 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:27,188 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:27,188 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:27,188 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:27,188 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:27,872 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:28,800 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:28,801 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:28,801 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:28,801 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:28,877 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:28,877 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:30,434 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:30,435 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:30,435 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:30,435 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:30,888 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:30,888 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:32,102 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:32,103 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:32,103 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:32,104 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:32,412 DEBUG   SenderThread:17116 [sender.py:send():375] send: stats
+2023-05-30 17:27:32,413 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:32,895 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:32,895 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:33,777 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:33,778 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:33,778 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:33,778 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:33,900 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:34,906 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:35,118 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:27:35,118 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:27:35,454 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:35,455 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:35,455 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:35,455 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:35,911 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:36,916 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:37,055 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:37,056 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:37,056 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:37,056 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:37,922 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:38,061 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:38,717 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:38,717 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:38,718 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:38,718 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:38,927 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:38,927 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:40,326 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:40,327 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:40,327 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:40,327 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:40,937 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:40,937 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:41,976 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:41,976 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:41,976 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:41,976 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:42,945 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:42,946 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:43,626 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:43,627 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:43,627 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:43,627 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:43,627 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:43,950 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:44,956 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:45,213 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:45,213 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:45,213 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:45,213 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:45,961 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:46,826 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:46,827 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:46,827 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:46,827 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:46,966 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:46,967 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:48,428 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:48,428 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:48,428 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:48,429 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:48,974 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:48,974 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:49,434 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:50,053 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:50,054 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:50,054 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:50,055 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:50,121 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: stop_status
+2023-05-30 17:27:50,121 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: stop_status
+2023-05-30 17:27:50,984 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:50,984 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:51,695 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: partial_history
+2023-05-30 17:27:51,695 DEBUG   SenderThread:17116 [sender.py:send():375] send: history
+2023-05-30 17:27:51,695 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: summary_record
+2023-05-30 17:27:51,696 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:51,766 DEBUG   SenderThread:17116 [sender.py:send():375] send: telemetry
+2023-05-30 17:27:51,767 DEBUG   SenderThread:17116 [sender.py:send():375] send: exit
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:send_exit():598] handling exit code: 0
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:send_exit():600] handling runtime: 139
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:send_exit():606] send defer
+2023-05-30 17:27:51,767 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,767 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 0
+2023-05-30 17:27:51,767 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 0
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 1
+2023-05-30 17:27:51,767 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,767 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 1
+2023-05-30 17:27:51,767 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 1
+2023-05-30 17:27:51,767 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 2
+2023-05-30 17:27:51,767 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,767 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 2
+2023-05-30 17:27:51,767 INFO    HandlerThread:17116 [system_monitor.py:finish():190] Stopping system monitor
+2023-05-30 17:27:51,768 DEBUG   SystemMonitor:17116 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-05-30 17:27:51,768 DEBUG   SystemMonitor:17116 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-05-30 17:27:51,768 INFO    HandlerThread:17116 [interfaces.py:finish():202] Joined cpu monitor
+2023-05-30 17:27:51,768 INFO    HandlerThread:17116 [interfaces.py:finish():202] Joined disk monitor
+2023-05-30 17:27:51,768 INFO    HandlerThread:17116 [interfaces.py:finish():202] Joined gpuapple monitor
+2023-05-30 17:27:51,768 INFO    HandlerThread:17116 [interfaces.py:finish():202] Joined memory monitor
+2023-05-30 17:27:51,768 INFO    HandlerThread:17116 [interfaces.py:finish():202] Joined network monitor
+2023-05-30 17:27:51,768 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 2
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 3
+2023-05-30 17:27:51,769 DEBUG   SenderThread:17116 [sender.py:send():375] send: stats
+2023-05-30 17:27:51,769 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,769 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 3
+2023-05-30 17:27:51,769 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 3
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 4
+2023-05-30 17:27:51,769 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,769 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 4
+2023-05-30 17:27:51,769 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 4
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 5
+2023-05-30 17:27:51,769 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,769 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 5
+2023-05-30 17:27:51,769 DEBUG   SenderThread:17116 [sender.py:send():375] send: summary
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-05-30 17:27:51,769 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 5
+2023-05-30 17:27:51,769 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 6
+2023-05-30 17:27:51,770 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,770 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 6
+2023-05-30 17:27:51,770 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,770 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 6
+2023-05-30 17:27:51,772 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: status_report
+2023-05-30 17:27:51,947 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 7
+2023-05-30 17:27:51,947 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:51,947 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 7
+2023-05-30 17:27:51,947 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:51,947 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 7
+2023-05-30 17:27:51,990 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:51,991 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/config.yaml
+2023-05-30 17:27:52,774 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: poll_exit
+2023-05-30 17:27:52,994 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:54,091 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 8
+2023-05-30 17:27:54,092 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: poll_exit
+2023-05-30 17:27:54,093 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:54,094 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 8
+2023-05-30 17:27:54,095 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:54,095 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 8
+2023-05-30 17:27:54,109 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 9
+2023-05-30 17:27:54,110 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:54,110 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 9
+2023-05-30 17:27:54,112 DEBUG   SenderThread:17116 [sender.py:send():375] send: artifact
+2023-05-30 17:27:55,003 INFO    Thread-12 :17116 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:55,289 INFO    wandb-upload_1:17116 [upload_job.py:push():95] Uploaded file /Users/pierredemetz/Library/Application Support/wandb/artifacts/staging/tmpzzje8xfu
+2023-05-30 17:27:55,290 INFO    wandb-upload_0:17116 [upload_job.py:push():95] Uploaded file /Users/pierredemetz/Library/Application Support/wandb/artifacts/staging/tmpx057zbx5
+2023-05-30 17:27:56,408 INFO    SenderThread:17116 [sender.py:send_artifact():1474] sent artifact job-git_github.com_frohlich-lab_PierreDeMetz.git_inst_python_pierre_mochi__fit_tmodel_3state_doubledeepms.py - {'id': 'QXJ0aWZhY3Q6NDcwNzg2Njg1', 'digest': '61dc8e9e63ec687ad9f58f2d6bf2634e', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjcyOTk1NjU1', 'latestArtifact': None}, 'version': 'latest'}
+2023-05-30 17:27:56,408 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:56,409 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 9
+2023-05-30 17:27:56,409 INFO    SenderThread:17116 [dir_watcher.py:finish():365] shutting down directory watcher
+2023-05-30 17:27:57,008 INFO    SenderThread:17116 [dir_watcher.py:finish():395] scan: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files
+2023-05-30 17:27:57,009 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/requirements.txt requirements.txt
+2023-05-30 17:27:57,009 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log output.log
+2023-05-30 17:27:57,016 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/config.yaml config.yaml
+2023-05-30 17:27:57,016 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json wandb-summary.json
+2023-05-30 17:27:57,017 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/conda-environment.yaml conda-environment.yaml
+2023-05-30 17:27:57,017 INFO    SenderThread:17116 [dir_watcher.py:finish():409] scan save: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-metadata.json wandb-metadata.json
+2023-05-30 17:27:57,017 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 10
+2023-05-30 17:27:57,025 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:57,028 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 10
+2023-05-30 17:27:57,028 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:57,032 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 10
+2023-05-30 17:27:57,033 INFO    SenderThread:17116 [file_pusher.py:finish():167] shutting down file pusher
+2023-05-30 17:27:57,466 INFO    wandb-upload_0:17116 [upload_job.py:push():137] Uploaded file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/output.log
+2023-05-30 17:27:57,478 INFO    wandb-upload_1:17116 [upload_job.py:push():137] Uploaded file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/requirements.txt
+2023-05-30 17:27:57,513 INFO    wandb-upload_3:17116 [upload_job.py:push():137] Uploaded file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/wandb-summary.json
+2023-05-30 17:27:57,516 INFO    wandb-upload_2:17116 [upload_job.py:push():137] Uploaded file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/config.yaml
+2023-05-30 17:27:57,525 INFO    wandb-upload_4:17116 [upload_job.py:push():137] Uploaded file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/files/conda-environment.yaml
+2023-05-30 17:27:57,731 INFO    Thread-11 :17116 [sender.py:transition_state():626] send defer: 11
+2023-05-30 17:27:57,732 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:57,733 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 11
+2023-05-30 17:27:57,733 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:57,734 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 11
+2023-05-30 17:27:57,734 INFO    SenderThread:17116 [file_pusher.py:join():172] waiting for file pusher
+2023-05-30 17:27:57,734 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 12
+2023-05-30 17:27:57,734 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:57,734 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 12
+2023-05-30 17:27:57,735 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:57,735 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 12
+2023-05-30 17:27:57,794 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: keepalive
+2023-05-30 17:27:58,256 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 13
+2023-05-30 17:27:58,257 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:58,257 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 13
+2023-05-30 17:27:58,258 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:58,258 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 13
+2023-05-30 17:27:58,259 INFO    SenderThread:17116 [sender.py:transition_state():626] send defer: 14
+2023-05-30 17:27:58,259 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: defer
+2023-05-30 17:27:58,259 INFO    HandlerThread:17116 [handler.py:handle_request_defer():170] handle defer: 14
+2023-05-30 17:27:58,260 DEBUG   SenderThread:17116 [sender.py:send():375] send: final
+2023-05-30 17:27:58,260 DEBUG   SenderThread:17116 [sender.py:send():375] send: footer
+2023-05-30 17:27:58,260 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: defer
+2023-05-30 17:27:58,260 INFO    SenderThread:17116 [sender.py:send_request_defer():622] handle sender defer: 14
+2023-05-30 17:27:58,263 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: poll_exit
+2023-05-30 17:27:58,263 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: server_info
+2023-05-30 17:27:58,263 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: poll_exit
+2023-05-30 17:27:58,263 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: get_summary
+2023-05-30 17:27:58,264 DEBUG   SenderThread:17116 [sender.py:send_request():402] send_request: server_info
+2023-05-30 17:27:58,264 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: sampled_history
+2023-05-30 17:27:58,399 DEBUG   HandlerThread:17116 [handler.py:handle_request():144] handle_request: shutdown
+2023-05-30 17:27:58,400 INFO    HandlerThread:17116 [handler.py:finish():842] shutting down handler
+2023-05-30 17:27:59,267 INFO    WriterThread:17116 [datastore.py:close():298] close: /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_172531-ea1qnjqt/run-ea1qnjqt.wandb
+2023-05-30 17:27:59,401 INFO    SenderThread:17116 [sender.py:finish():1550] shutting down sender
+2023-05-30 17:27:59,406 INFO    SenderThread:17116 [file_pusher.py:finish():167] shutting down file pusher
+2023-05-30 17:27:59,406 INFO    SenderThread:17116 [file_pusher.py:join():172] waiting for file pusher

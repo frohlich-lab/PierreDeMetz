@@ -1,0 +1,37 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+run_model      189              1              1
+total          190              1              1
+
+Select jobs to execute...
+
+[Thu May 25 16:13:14 2023]
+rule run_model:
+    output: Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_performance_perepoch.pdf, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/predicted_fitness.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_weights.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_parameters.txt
+    jobid: 155
+    reason: Missing output files: Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_weights.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_performance_perepoch.pdf, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/predicted_fitness.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_parameters.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p, model_type=tri_state_equilibrium_explicit
+    resources: tmpdir=/var/folders/fj/2tpv7lyn7wdfyvz0bs3bwkl80000gn/T
+
+[Thu May 25 16:13:14 2023]
+Error in rule run_model:
+    jobid: 155
+    output: Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_performance_perepoch.pdf, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/predicted_fitness.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_weights.txt, Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/model_parameters.txt
+    shell:
+        
+        conda init zsh
+        conda activate pierre;
+        mkdir -p Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit;
+        python /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p.py         --data_train /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p//dataset_train.txt         --data_valid /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p//dataset_valid.txt         --data_obs /Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p//dataset_all.txt         -o Results/Data/mochi/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample5p/tri_state_equilibrium_explicit/         -e 100  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium_explicit;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-05-25T161313.856519.snakemake.log

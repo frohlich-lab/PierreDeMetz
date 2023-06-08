@@ -1,0 +1,17 @@
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Current SDK version is 0.15.3
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Configure stats pid to 14322
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/.config/wandb/settings
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/settings
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'program': 'pierre_mochi__fit_tmodel_3state_doubledeepms.py'}
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_init.py:_log_setup():507] Logging user logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_142021-3o0fxill/logs/debug.log
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_142021-3o0fxill/logs/debug-internal.log
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_init.py:init():547] calling init triggers
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'number_additive_traits': 1, 'num_epochs_grid': 75, 'num_epochs': 250, 'num_resamplings': 0, 'num_models': 1, 'random_seed': 1, 'model_type': 'tri_state_non_equilibrium_implicit', 'union_mode': 'False', 'protein': 'GRB2-SH3', 'run_number': 18, 'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.001}
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_init.py:init():571] re-initializing run, found existing run on stack: 6sfg9w78
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_run.py:_finish():1893] finishing run demetz-pierre/Complete_test/6sfg9w78
+2023-05-30 14:20:21,900 INFO    MainThread:14322 [wandb_run.py:_atexit_cleanup():2127] got exitcode: 0
+2023-05-30 14:20:21,901 INFO    MainThread:14322 [wandb_run.py:_restore():2110] restore
+2023-05-30 14:20:21,901 INFO    MainThread:14322 [wandb_run.py:_restore():2116] restore done

@@ -1,0 +1,51 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 0.896
+epoch done with 0.847
+epoch done with 0.800
+epoch done with 0.757
+epoch done with 0.717
+epoch done with 0.681
+epoch done with 0.648
+epoch done with 0.619
+epoch done with 0.593
+epoch done with 0.569
+epoch done with 0.547
+epoch done with 0.527
+epoch done with 0.509
+epoch done with 0.492
+epoch done with 0.476
+epoch done with 0.461
+epoch done with 0.448
+epoch done with 0.436
+epoch done with 0.424
+epoch done with 0.414
+epoch done with 0.404
+epoch done with 0.395
+epoch done with 0.386
+epoch done with 0.379
+epoch done with 0.372
+epoch done with 0.367
+epoch done with 0.361
+epoch done with 0.357
+epoch done with 0.353
+epoch done with 0.350
+epoch done with 0.348
+epoch done with 0.346
+epoch done with 0.344
+epoch done with 0.342
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 140, in fit_model_grid_jax
+    weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+  File "<string>", line 1, in __new__
+KeyboardInterrupt

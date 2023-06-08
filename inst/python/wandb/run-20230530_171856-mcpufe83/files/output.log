@@ -1,0 +1,82 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 140, in fit_model_grid_jax
+    weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 163, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 237, in cache_miss
+    outs, out_flat, out_tree, args_flat = _python_pjit_helper(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 185, in _python_pjit_helper
+    out_flat = pjit_p.bind(*args_flat, **params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 2559, in bind
+    return self.bind_with_trace(top_trace, args, params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 346, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 789, in process_primitive
+    return primitive.impl(*tracers, **params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1286, in _pjit_call_impl
+    compiled = _pjit_lower(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1372, in _pjit_lower
+    return _pjit_lower_cached(jaxpr, in_shardings, out_shardings, *args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1437, in _pjit_lower_cached
+    return pxla.lower_sharding_computation(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/pxla.py", line 2991, in lower_sharding_computation
+    lowering_result = mlir.lower_jaxpr_to_module(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 739, in lower_jaxpr_to_module
+    lower_jaxpr_to_fun(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 1021, in lower_jaxpr_to_fun
+    out_vals, tokens_out = jaxpr_subcomp(ctx.replace(name_stack=callee_name_stack),
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 1155, in jaxpr_subcomp
+    ans = rule(rule_ctx, *map(_unwrap_singleton_ir_values, in_nodes),
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1491, in _pjit_lowering
+    func = mlir.lower_jaxpr_to_fun(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 1021, in lower_jaxpr_to_fun
+    out_vals, tokens_out = jaxpr_subcomp(ctx.replace(name_stack=callee_name_stack),
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 1155, in jaxpr_subcomp
+    ans = rule(rule_ctx, *map(_unwrap_singleton_ir_values, in_nodes),
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/mlir.py", line 1215, in f_lowered
+    jaxpr, _, consts = pe.trace_to_jaxpr_dynamic(wrapped_fun, ctx.avals_in)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1985, in trace_to_jaxpr_dynamic
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 2002, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/linear_util.py", line 165, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/custom_derivatives.py", line 714, in _custom_vjp_call_jaxpr_impl
+    return core.jaxpr_as_fun(fun_jaxpr)(*args)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 211, in jaxpr_as_fun
+    return eval_jaxpr(closed_jaxpr.jaxpr, closed_jaxpr.consts, *args)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 409, in eval_jaxpr
+    ans = eqn.primitive.bind(*subfuns, *map(read, eqn.invars), **bind_params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 343, in bind
+    return self.bind_with_trace(find_top_trace(args), args, params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 346, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1721, in process_primitive
+    return self.default_process_primitive(primitive, tracers, params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1725, in default_process_primitive
+    out_avals, effects = primitive.abstract_eval(*avals, **params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 379, in abstract_eval_
+    return abstract_eval(*args, **kwargs), no_effects
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/ad_util.py", line 47, in add_abstract
+    return lattice_join(xs, ys)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1290, in lattice_join
+    return y.join(x)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1510, in join
+    return self.update(weak_type=weak_type, named_shape=named_shape)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1479, in update
+    return ShapedArray(shape, dtype, weak_type, named_shape)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 1465, in __init__
+    self.shape = canonicalize_shape(shape)
+KeyboardInterrupt

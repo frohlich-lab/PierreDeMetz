@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in rule run_model in file /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/Snakefile, line 7:
+Error:
+  AttributeError: 'Wildcards' object has no attribute 'protein'
+Wildcards:
+
+Traceback:
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/Snakefile", line 11, in <lambda>

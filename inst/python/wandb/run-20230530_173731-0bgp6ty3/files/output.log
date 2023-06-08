@@ -1,0 +1,84 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 1.100
+epoch done with 1.001
+epoch done with 0.916
+epoch done with 0.843
+epoch done with 0.780
+epoch done with 0.725
+epoch done with 0.679
+epoch done with 0.638
+epoch done with 0.604
+epoch done with 0.575
+epoch done with 0.550
+epoch done with 0.528
+epoch done with 0.508
+epoch done with 0.490
+epoch done with 0.474
+epoch done with 0.459
+epoch done with 0.446
+epoch done with 0.433
+epoch done with 0.422
+epoch done with 0.411
+epoch done with 0.401
+epoch done with 0.391
+epoch done with 0.382
+epoch done with 0.373
+epoch done with 0.364
+epoch done with 0.355
+epoch done with 0.345
+epoch done with 0.334
+epoch done with 0.321
+epoch done with 0.310
+epoch done with 0.300
+epoch done with 0.289
+epoch done with 0.278
+epoch done with 0.267
+epoch done with 0.255
+epoch done with 0.242
+epoch done with 0.228
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 137, in fit_model_grid_jax
+    for epoch in range(n_epochs):
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 21, in generate_batches
+    batch_fold = input_data['fold'][batch_indices]
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/array.py", line 271, in __getitem__
+    return lax_numpy._rewriting_take(self, idx)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3955, in _rewriting_take
+    return _gather(arr, treedef, static_idx, dynamic_idx, indices_are_sorted,
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3964, in _gather
+    indexer = _index_to_gather(shape(arr), idx)  # shared with _scatter_update
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 4091, in _index_to_gather
+    advanced_indexes, idx_advanced_axes, x_advanced_axes = zip(*advanced_pairs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 4089, in <genexpr>
+    advanced_pairs = ((_normalize_index(e, x_shape[j]), i, j)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3809, in _normalize_index
+    return lax.select(index < 0, lax.add(index, axis_size_val), index)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 5071, in deferring_binary_op
+    return binary_op(*args)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 163, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 237, in cache_miss
+    outs, out_flat, out_tree, args_flat = _python_pjit_helper(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 183, in _python_pjit_helper
+    dispatch.check_arg(arg)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/dispatch.py", line 637, in check_arg
+    if not (isinstance(arg, core.Tracer) or _valid_jaxtype(arg)):
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/dispatch.py", line 630, in _valid_jaxtype
+    xla.abstractify(arg)  # faster than core.get_aval
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/xla.py", line 267, in abstractify
+    if aval_fn: return aval_fn(x)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/interpreters/xla.py", line 278, in _make_abstract_python_scalar
+    return ShapedArray((), dtypes._scalar_type_to_dtype(typ, val),
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/dtypes.py", line 183, in _scalar_type_to_dtype
+    if value < np.iinfo(dtype).min or value > np.iinfo(dtype).max:
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/numpy/core/getlimits.py", line 665, in min
+    try:
+KeyboardInterrupt
+epoch done with 0.212

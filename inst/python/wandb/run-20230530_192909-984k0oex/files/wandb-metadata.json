@@ -1,0 +1,61 @@
+{
+    "os": "macOS-13.0.1-arm64-arm-64bit",
+    "python": "3.8.16",
+    "heartbeatAt": "2023-05-30T18:29:17.352176",
+    "startedAt": "2023-05-30T18:29:09.492910",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--data_train",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt",
+        "--data_valid",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt",
+        "--data_obs",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt",
+        "-o",
+        "Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/",
+        "-e",
+        "75",
+        "-p",
+        "250",
+        "--num_resamplings",
+        "0",
+        "--num_samples",
+        "128",
+        "--num_models",
+        "1",
+        "--random_seed",
+        "1",
+        "--union_mode",
+        "False",
+        "--model_type",
+        "tri_state_non_equilibrium_implicit",
+        "--protein",
+        "GRB2-SH3"
+    ],
+    "state": "running",
+    "program": "pierre_mochi__fit_tmodel_3state_doubledeepms.py",
+    "codePath": "inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py",
+    "git": {
+        "remote": "git@github.com:frohlich-lab/PierreDeMetz.git",
+        "commit": "23b16f35061dd33a7100d24a99e0deb87b74e4f0"
+    },
+    "email": "demetz.pierre@icloud.com",
+    "root": "/Users/pierredemetz/UCL_work/Crick/doubledeepms",
+    "host": "Pierres-MBP",
+    "username": "pierredemetz",
+    "executable": "/Users/pierredemetz/miniconda3/envs/pierre/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 272.6004333496094
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 32.0
+    }
+}

@@ -1,0 +1,20 @@
+
+(False, False)
+/Users/pierredemetz/miniconda3/envs/pierre/envs/base_test/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/envs/base_test/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+/Users/pierredemetz/miniconda3/envs/pierre/envs/base_test/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/envs/base_test/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 187, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 188, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 144, in fit_model_grid_jax
+    weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+  File "<string>", line 1, in __new__
+KeyboardInterrupt
+epoch done with 1.130

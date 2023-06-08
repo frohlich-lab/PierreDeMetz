@@ -1,0 +1,87 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 0.965
+epoch done with 0.947
+epoch done with 0.929
+epoch done with 0.912
+epoch done with 0.895
+epoch done with 0.879
+epoch done with 0.863
+epoch done with 0.848
+epoch done with 0.834
+epoch done with 0.819
+epoch done with 0.805
+epoch done with 0.792
+epoch done with 0.778
+epoch done with 0.765
+epoch done with 0.753
+epoch done with 0.741
+epoch done with 0.729
+epoch done with 0.717
+epoch done with 0.706
+epoch done with 0.695
+epoch done with 0.684
+epoch done with 0.673
+epoch done with 0.663
+epoch done with 0.653
+epoch done with 0.643
+epoch done with 0.633
+epoch done with 0.624
+epoch done with 0.615
+epoch done with 0.606
+epoch done with 0.597
+epoch done with 0.588
+epoch done with 0.580
+epoch done with 0.572
+epoch done with 0.564
+epoch done with 0.556
+epoch done with 0.549
+epoch done with 0.542
+epoch done with 0.535
+epoch done with 0.528
+epoch done with 0.522
+epoch done with 0.516
+epoch done with 0.510
+epoch done with 0.505
+epoch done with 0.499
+epoch done with 0.494
+epoch done with 0.490
+epoch done with 0.485
+epoch done with 0.481
+epoch done with 0.477
+epoch done with 0.473
+epoch done with 0.469
+epoch done with 0.466
+epoch done with 0.462
+epoch done with 0.459
+epoch done with 0.456
+epoch done with 0.453
+epoch done with 0.451
+epoch done with 0.448
+epoch done with 0.445
+epoch done with 0.443
+epoch done with 0.440
+epoch done with 0.438
+epoch done with 0.436
+epoch done with 0.434
+epoch done with 0.432
+epoch done with 0.429
+epoch done with 0.428
+epoch done with 0.426
+epoch done with 0.424
+epoch done with 0.422
+epoch done with 0.420
+epoch done with 0.419
+epoch done with 0.417
+epoch done with 0.416
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 140, in fit_model_grid_jax
+    weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+  File "<string>", line 1, in __new__
+KeyboardInterrupt

@@ -1,0 +1,54 @@
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Current SDK version is 0.15.3
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Configure stats pid to 17645
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/.config/wandb/settings
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/settings
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'program': 'pierre_mochi__fit_tmodel_3state_doubledeepms.py'}
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_init.py:_log_setup():507] Logging user logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_185852-ml04aza5/logs/debug.log
+2023-05-30 18:58:52,414 INFO    MainThread:17645 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_185852-ml04aza5/logs/debug-internal.log
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_init.py:init():547] calling init triggers
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'number_additive_traits': 1, 'num_epochs_grid': 75, 'num_epochs': 250, 'num_resamplings': 0, 'num_models': 1, 'random_seed': 1, 'model_type': 'tri_state_non_equilibrium_implicit', 'union_mode': 'False', 'protein': 'GRB2-SH3', 'run_number': 32, 'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.1}
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_init.py:init():571] re-initializing run, found existing run on stack: oxtp80ml
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_run.py:_finish():1893] finishing run lab_frohlich/Complete_test/oxtp80ml
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_run.py:_atexit_cleanup():2127] got exitcode: 0
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_run.py:_restore():2110] restore
+2023-05-30 18:58:52,415 INFO    MainThread:17645 [wandb_run.py:_restore():2116] restore done
+2023-05-30 18:58:58,927 INFO    MainThread:17645 [wandb_run.py:_footer_history_summary_info():3469] rendering history
+2023-05-30 18:58:58,928 INFO    MainThread:17645 [wandb_run.py:_footer_history_summary_info():3501] rendering summary
+2023-05-30 18:58:58,932 INFO    MainThread:17645 [wandb_run.py:_footer_sync_info():3428] logging synced files
+2023-05-30 18:58:58,959 INFO    MainThread:17645 [wandb_init.py:init():596] starting backend
+2023-05-30 18:58:58,959 INFO    MainThread:17645 [wandb_init.py:init():600] setting up manager
+2023-05-30 18:58:58,965 INFO    MainThread:17645 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-05-30 18:58:58,968 INFO    MainThread:17645 [wandb_init.py:init():606] backend started and connected
+2023-05-30 18:58:58,971 INFO    MainThread:17645 [wandb_init.py:init():700] updated telemetry
+2023-05-30 18:58:59,024 INFO    MainThread:17645 [wandb_init.py:init():737] communicating run to backend with 60.0 second timeout
+2023-05-30 18:59:00,346 INFO    MainThread:17645 [wandb_run.py:_on_init():2177] communicating current version
+2023-05-30 18:59:00,414 INFO    MainThread:17645 [wandb_run.py:_on_init():2186] got version response 
+2023-05-30 18:59:00,415 INFO    MainThread:17645 [wandb_init.py:init():787] starting run threads in backend
+2023-05-30 18:59:02,986 INFO    MainThread:17645 [wandb_run.py:_console_start():2158] atexit reg
+2023-05-30 18:59:02,986 INFO    MainThread:17645 [wandb_run.py:_redirect():2013] redirect: SettingsConsole.WRAP_RAW
+2023-05-30 18:59:02,986 INFO    MainThread:17645 [wandb_run.py:_redirect():2078] Wrapping output streams.
+2023-05-30 18:59:02,986 INFO    MainThread:17645 [wandb_run.py:_redirect():2103] Redirects installed.
+2023-05-30 18:59:02,986 INFO    MainThread:17645 [wandb_init.py:init():829] run started, returning control to user process
+2023-05-30 19:02:01,037 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Current SDK version is 0.15.3
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Configure stats pid to 17645
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/.config/wandb/settings
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/settings
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py', 'program': 'pierre_mochi__fit_tmodel_3state_doubledeepms.py'}
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_init.py:_log_setup():507] Logging user logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_190201-nmri8exh/logs/debug.log
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/wandb/run-20230530_190201-nmri8exh/logs/debug-internal.log
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_init.py:init():547] calling init triggers
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'number_additive_traits': 1, 'num_epochs_grid': 75, 'num_epochs': 250, 'num_resamplings': 0, 'num_models': 1, 'random_seed': 1, 'model_type': 'tri_state_non_equilibrium_implicit', 'union_mode': 'False', 'protein': 'GRB2-SH3', 'run_number': 33, 'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001}
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_init.py:init():571] re-initializing run, found existing run on stack: ml04aza5
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_run.py:_finish():1893] finishing run lab_frohlich/Complete_test/ml04aza5
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_run.py:_atexit_cleanup():2127] got exitcode: 0
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_run.py:_restore():2110] restore
+2023-05-30 19:02:01,038 INFO    MainThread:17645 [wandb_run.py:_restore():2116] restore done
+2023-05-30 19:02:07,657 INFO    MainThread:17645 [wandb_run.py:_footer_history_summary_info():3469] rendering history
+2023-05-30 19:02:07,658 INFO    MainThread:17645 [wandb_run.py:_footer_history_summary_info():3501] rendering summary
+2023-05-30 19:02:07,670 INFO    MainThread:17645 [wandb_run.py:_footer_sync_info():3428] logging synced files

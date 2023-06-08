@@ -1,0 +1,6 @@
+name: pierre
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+prefix: /Users/pierredemetz/miniconda3/envs/pierre/envs/pierre

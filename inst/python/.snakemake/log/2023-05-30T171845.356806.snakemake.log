@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+run_model       21              1              1
+total           22              1              1
+
+Select jobs to execute...
+
+[Tue May 30 17:18:46 2023]
+rule run_model:
+    output: Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_performance_perepoch.pdf, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/predicted_fitness.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_weights.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_parameters.txt
+    jobid: 6
+    reason: Missing output files: Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_parameters.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_performance_perepoch.pdf, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/predicted_fitness.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_non_equilibrium_implicit/model_weights.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p, model_type=tri_state_non_equilibrium_implicit
+    resources: tmpdir=/var/folders/fj/2tpv7lyn7wdfyvz0bs3bwkl80000gn/T
+
+Terminating processes on user request, this might take some time.
+Cancelling snakemake on user request.

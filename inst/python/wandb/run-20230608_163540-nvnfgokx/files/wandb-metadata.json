@@ -1,0 +1,65 @@
+{
+    "os": "macOS-13.0.1-arm64-arm-64bit",
+    "python": "3.8.16",
+    "heartbeatAt": "2023-06-08T15:35:41.248150",
+    "startedAt": "2023-06-08T15:35:40.589235",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--data_train",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt",
+        "--data_valid",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt",
+        "--data_obs",
+        "../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt",
+        "-o",
+        "Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/two_state_non_equilibrium/",
+        "-e",
+        "75",
+        "-p",
+        "250",
+        "--num_resamplings",
+        "0",
+        "--num_samples",
+        "128",
+        "--num_models",
+        "1",
+        "--random_seed",
+        "1",
+        "--union_mode",
+        "False",
+        "--model_type",
+        "two_state_non_equilibrium",
+        "--protein",
+        "GRB2-SH3",
+        "--project_name",
+        "pierre_mochi__fit_tmodel_3state_doubledeepms",
+        "--wandb",
+        "True"
+    ],
+    "state": "running",
+    "program": "pierre_mochi__fit_tmodel_3state_doubledeepms.py",
+    "codePath": "inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py",
+    "git": {
+        "remote": "git@github.com:frohlich-lab/PierreDeMetz.git",
+        "commit": "6adf2faddc550f67ad8e5401c14118b8fa87a94b"
+    },
+    "email": "demetz.pierre@icloud.com",
+    "root": "/Users/pierredemetz/UCL_work/Crick/doubledeepms",
+    "host": "Pierres-MacBook-Pro.local",
+    "username": "pierredemetz",
+    "executable": "/Users/pierredemetz/miniconda3/envs/pierre/envs/base_test/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 287.3187713623047
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 32.0
+    }
+}

@@ -1,0 +1,84 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+epoch done with 0.763
+epoch done with 0.724
+epoch done with 0.686
+epoch done with 0.650
+epoch done with 0.617
+epoch done with 0.587
+epoch done with 0.562
+epoch done with 0.540
+epoch done with 0.520
+epoch done with 0.503
+epoch done with 0.487
+epoch done with 0.473
+epoch done with 0.460
+epoch done with 0.448
+epoch done with 0.437
+epoch done with 0.426
+epoch done with 0.416
+epoch done with 0.407
+epoch done with 0.398
+epoch done with 0.390
+epoch done with 0.382
+epoch done with 0.375
+epoch done with 0.369
+epoch done with 0.362
+epoch done with 0.357
+epoch done with 0.351
+epoch done with 0.346
+epoch done with 0.341
+epoch done with 0.337
+epoch done with 0.334
+epoch done with 0.331
+epoch done with 0.328
+epoch done with 0.325
+epoch done with 0.322
+epoch done with 0.320
+epoch done with 0.318
+epoch done with 0.315
+epoch done with 0.313
+epoch done with 0.310
+epoch done with 0.307
+epoch done with 0.305
+epoch done with 0.302
+epoch done with 0.299
+epoch done with 0.297
+epoch done with 0.294
+epoch done with 0.292
+epoch done with 0.289
+epoch done with 0.287
+epoch done with 0.284
+epoch done with 0.282
+epoch done with 0.280
+epoch done with 0.277
+epoch done with 0.275
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 142, in fit_model_grid_jax
+    weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/utils.py", line 72, in apply_weight_constraints
+    constrained_params[layer_name]['w'] = jnp.clip(constrained_params[layer_name]['w'], min_val, max_val)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 163, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 237, in cache_miss
+    outs, out_flat, out_tree, args_flat = _python_pjit_helper(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 185, in _python_pjit_helper
+    out_flat = pjit_p.bind(*args_flat, **params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 2559, in bind
+    return self.bind_with_trace(top_trace, args, params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 346, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 789, in process_primitive
+    return primitive.impl(*tracers, **params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1277, in _pjit_call_impl
+    in_shardings = _resolve_in_shardings(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/pjit.py", line 1188, in _resolve_in_shardings
+    if pxla.check_device_backend_on_shardings(pjit_in_shardings):
+KeyboardInterrupt
+epoch done with 0.273

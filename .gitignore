@@ -13,6 +13,3 @@ misc/
 .RData
 inst/python/__pycache__
 inst/python/.ipynb_checkpoints
-inst/python/.snakemake
-inst/python/Results/
-inst/python/wandb

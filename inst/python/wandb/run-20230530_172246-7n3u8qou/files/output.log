@@ -1,0 +1,31 @@
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 180, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 181, in <listcomp>
+    fit_model_grid_jax(
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 137, in fit_model_grid_jax
+    for batch in batch_data:
+  File "/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/training.py", line 22, in generate_batches
+    batch_bind = input_data['bind'][batch_indices]
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/array.py", line 271, in __getitem__
+    return lax_numpy._rewriting_take(self, idx)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3955, in _rewriting_take
+    return _gather(arr, treedef, static_idx, dynamic_idx, indices_are_sorted,
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/numpy/lax_numpy.py", line 3982, in _gather
+    y = lax.gather(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/lax/slicing.py", line 280, in gather
+    return gather_p.bind(
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 343, in bind
+    return self.bind_with_trace(find_top_trace(args), args, params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 346, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/util.py", line 78, in safe_map
+    return list(map(f, *args))
+  File "/Users/pierredemetz/miniconda3/envs/pierre/lib/python3.8/site-packages/jax/_src/core.py", line 436, in full_raise
+    return self.pure(val)
+KeyboardInterrupt
+epoch done with 0.764

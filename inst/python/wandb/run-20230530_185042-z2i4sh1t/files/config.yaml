@@ -1,0 +1,74 @@
+wandb_version: 1
+
+number_additive_traits:
+  desc: null
+  value: 1
+num_epochs_grid:
+  desc: null
+  value: 75
+num_epochs:
+  desc: null
+  value: 250
+num_resamplings:
+  desc: null
+  value: 0
+num_models:
+  desc: null
+  value: 1
+random_seed:
+  desc: null
+  value: 1
+model_type:
+  desc: null
+  value: tri_state_non_equilibrium_implicit
+union_mode:
+  desc: null
+  value: 'False'
+protein:
+  desc: null
+  value: GRB2-SH3
+run_number:
+  desc: null
+  value: 29
+num_samples:
+  desc: null
+  value: 128
+learning_rate:
+  desc: null
+  value: 0.001
+l1_regularization_factor:
+  desc: null
+  value: 0.1
+l2_regularization_factor:
+  desc: null
+  value: 0.0001
+_wandb:
+  desc: null
+  value:
+    python_version: 3.8.16
+    cli_version: 0.15.3
+    framework: keras
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1685469049.60808
+    t:
+      1:
+      - 2
+      - 3
+      - 12
+      - 55
+      2:
+      - 2
+      - 3
+      - 12
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      - 23
+      4: 3.8.16
+      5: 0.15.3
+      8:
+      - 4
+      - 5

@@ -1,0 +1,34 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+run_model        9              1              1
+total           10              1              1
+
+Select jobs to execute...
+
+[Thu Jun  8 13:57:48 2023]
+rule run_model:
+    output: Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    jobid: 1
+    reason: Missing output files: Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p, model_type=tri_state_equilibrium_state
+    resources: tmpdir=/var/folders/fj/2tpv7lyn7wdfyvz0bs3bwkl80000gn/T
+
+Terminating processes on user request, this might take some time.
+[Thu Jun  8 13:57:49 2023]
+Error in rule run_model:
+    jobid: 1
+    output: Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    shell:
+        
+        mkdir -p Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train ../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt         --data_valid ../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt         --data_obs ../../Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt         -o Results/Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium_state         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Complete log: .snakemake/log/2023-06-08T135746.160845.snakemake.log
