@@ -69,25 +69,17 @@ learn_rate = [float(i) for i in args.learning_rate.split(",")]
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-from tensorflow import keras
-from keras.models import load_model
 import os
 
 import jax
-from jax.experimental import sparse
-from jax.tree_util import tree_map
 import jax.numpy as jnp
 import haiku as hk
-import optax
-from jax import jit
-import pickle
 from functools import partial
 
 from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, apply_weight_constraints, shuffle_weights
 from training import model_training, fit_model_grid_jax
 from dataloading import load_model_data_jax, resample_training_data_jax
 from model_creation import create_model_fn, create_model_jax
-import wandb
 #######################################################################
 ## SETUP ##
 #######################################################################

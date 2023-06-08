@@ -8,6 +8,7 @@ dependencies:
   - pandas=1.5.3
   - snakemake-minimal=7.26.0
   - pip=23.0.1
+  - configargparse=1.5.3
 
   - pip:
     - diffrax==0.3.1
@@ -30,4 +31,5 @@ dependencies:
     - patsy==0.5.3
     - pillow==9.5.0
     - wandb==0.15.3
+
 prefix: /Users/pierredemetz/miniconda3/envs/pierre
