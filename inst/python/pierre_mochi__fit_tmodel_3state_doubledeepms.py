@@ -89,7 +89,7 @@ from model_creation import create_model_fn, create_model_jax
 model_directory = os.path.join(output_directory, "whole_model")
 #Create output model directory
 try:
-    os.mkdir(model_directory)
+    os.mkdirs(model_directory,)
 except FileExistsError:
     print("Warning: Output model directory already exists.")
 
@@ -97,7 +97,7 @@ except FileExistsError:
 plot_directory = os.path.join(output_directory, "plots")
 #Create output plot directory
 try:
-    os.mkdir(plot_directory)
+    os.mkdirs(plot_directory)
 except FileExistsError:
     print("Warning: Output plot directory already exists.")
 
@@ -105,7 +105,7 @@ except FileExistsError:
 weights_directory = os.path.join(output_directory, "weights")
 #Create output plot directory
 try:
-  os.mkdir(weights_directory)
+  os.mkdirs(weights_directory)
 except FileExistsError:
   print("Warning: Output weights directory already exists.")
 

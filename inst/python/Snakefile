@@ -28,7 +28,7 @@ rule run_model:
         --data_train Res/{params.wc.protein}/{params.wc.dataset}/dataset_train.txt \
         --data_valid Res/{params.wc.protein}/{params.wc.dataset}/dataset_valid.txt \
         --data_obs Res/{params.wc.protein}/{params.wc.dataset}/dataset_all.txt \
-        -o Res/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
+        -o Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
         --model_type {params.wc.model_type} \
         --protein {params.wc.protein} \
