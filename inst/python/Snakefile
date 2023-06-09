@@ -23,7 +23,8 @@ rule run_model:
     params:
         wc = lambda wildcards: wildcards
     resources:
-        mem_mb = 100000
+        mem_mb = 10000
+        disk_mb = 3000
     shell:
         """
         mkdir -p Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};

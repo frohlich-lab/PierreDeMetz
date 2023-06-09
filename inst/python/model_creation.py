@@ -51,7 +51,8 @@ def create_model_fn(number_additive_traits, l1, l2, rng, model_type = 'tri_state
         else:
             folding_nonlinear_layer = StateProbFolded(model_type)(binding_additive_trait_layer,
                                                                   folding_additive_trait_layer_foldingset)
-
+        #jax.debug.print("{x}",x=folding_nonlinear_layer.shape)
+        #jax.debug.print("{x}",x=folding_nonlinear_layer)
 
         folding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
@@ -127,7 +128,8 @@ def create_model_fn_class(number_additive_traits, l1, l2, rng, specs=(False,Fals
 
         args_folding = (synthesis_additive_trait_layer, folding_additive_trait_layer_foldingset)
         folding_nonlinear_layer = model.solve_folding(args_folding)
-
+        #jax.debug.print("{x}",x=folding_nonlinear_layer.shape)
+        #jax.debug.print("{x}",x=folding_nonlinear_layer)
         folding_additive_layer = hk.Linear(1,
                                            w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "uniform"),
                                            with_bias=True,
@@ -161,8 +163,9 @@ def create_model_fn_class(number_additive_traits, l1, l2, rng, specs=(False,Fals
 def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding,
                      number_additive_traits, model_type = 'tri_state_explicit', specs=(True,False,False)):
     # Create model
-    print(specs)
     model_fn = create_model_fn_class(number_additive_traits, l1, l2, rng,specs, model_type)
+    #model_fn = create_model_fn(number_additive_traits, l1, l2, rng, model_type)
+
     model = hk.without_apply_rng(hk.transform(model_fn))
 
     opt_init, opt_update = optax.adam(learn_rate)
