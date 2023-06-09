@@ -1,6 +1,6 @@
 # List of parameters
 model_types = ["tri_state_equilibrium","two_state_non_equilibrium","tri_state_non_equilibrium"]
-proteins = ["GRB2-SH3", "PSD95-PDZ3"]
+proteins = ["GRB2-SH3","GB1", "PSD95-PDZ3"]
 datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p"]
 
 rule all:

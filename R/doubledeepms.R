@@ -18,9 +18,9 @@ doubledeepms <- function(
     stopStage = 1,
     base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results",
     tmodel_job_number = 1,
-    tmodel_grid_search = FALSE,
+    tmodel_grid_search = TRUE,
     tmodel_protein = "GB1",
-    tmodel_subset = "binding_only"
+    tmodel_subset = "100"
 ){
   
   # startStage=1
