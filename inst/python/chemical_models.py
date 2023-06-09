@@ -126,7 +126,7 @@ class ThreeStateEquilibrium(ChemicalModel):
     #@jax.jit
     def solve_folding(self, args_folding):
         results = self.opt_vectorize(self.x0_two, args_folding, self.objective_folding)
-        return results.T[:][2].reshape(-1, 1)
+        return results.T[:][1].reshape(-1, 1)
     #@jax.jit
     def solve_binding(self, args_binding):
         results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
@@ -152,6 +152,7 @@ class TwoStateNonEquilibrium(ChemicalModel):
 
         delta_g_do, delta_g_df = args
         x_f = x
+
         #f_xf = flux_folding(x2=x_f, delta_g =delta_g_df)
         f_xf = jnp.exp(-delta_g_df) - x_f
 
@@ -259,7 +260,7 @@ class ThreeStateNonEquilibrium(ChemicalModel):
 
     def solve_folding(self, args_folding):
         results = self.opt_vectorize(self.x0_two, args_folding, self.objective_folding)
-        return results.T[:][2].reshape(-1, 1)
+        return results.T[:][1].reshape(-1, 1)
 
     def solve_binding(self, args_binding):
         results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
