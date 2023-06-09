@@ -3,6 +3,7 @@ model_types = ["tri_state_equilibrium","two_state_non_equilibrium","tri_state_no
 proteins = ["GRB2-SH3","GB1", "PSD95-PDZ3"]
 datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p"]
 
+# Need to change path with ../../Results/mochi/......   if used locally
 rule all:
     input:
         expand([
@@ -21,6 +22,8 @@ rule run_model:
         params = "Res/{protein}/{dataset}/{model_type}/model_parameters.txt"
     params:
         wc = lambda wildcards: wildcards
+    resources:
+        mem_mb = 100000
     shell:
         """
         mkdir -p Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};
