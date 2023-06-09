@@ -141,7 +141,7 @@ class TwoStateNonEquilibrium(ChemicalModel):
     def __init__(self, is_implicit, is_degradation):
         super().__init__(is_implicit)
         self.x0_two = jnp.array([1/2])
-        self.x0_tri = jnp.array([1/2,1/2])
+        self.x0_tri = jnp.array([1/2, 1/2])
         self.is_degradation = is_degradation
 
     def objective_folding(self, *args):
@@ -175,13 +175,15 @@ class TwoStateNonEquilibrium(ChemicalModel):
         if self.is_degradation==False:
             #f_xb = flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
             #f_xf = flux_folding(x2=x_f, delta_g=delta_g_df) - flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
-            f_xf = (jnp.exp(-delta_g_df) - x_f) - (x_b * jnp.exp(delta_g_db) - x_f)
-            f_xb = (x_b * jnp.exp(delta_g_db) - x_f)
+            f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
+            f_xf = jnp.exp(-delta_g_df) - x_f - f_xb
 
         else:
-            if_xb = flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db) - flux_degradation(x1=x_b, delta_g=delta_g_dd)
-            if_xf = flux_folding(x2=x_f, delta_g=delta_g_df) - flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
+            #f_xb = flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db) - flux_degradation(x1=x_b, delta_g=delta_g_dd)
+            #f_xf = flux_folding(x2=x_f, delta_g=delta_g_df) - flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
             #f_xf = (jnp.exp(-delta_g_df) - x_f) - (x_b * jnp.exp(delta_g_db) - x_f)
+            f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
+            f_xf = jnp.exp(-delta_g_df) - x_f - f_xb + x_b * jnp.exp(delta_g_dd)
 
         if not self.is_implicit:
             return jnp.array([f_xf, f_xb]).reshape(-1,)
@@ -219,7 +221,8 @@ class ThreeStateNonEquilibrium(ChemicalModel):
         #f_xo = flux_synthesis(flux, x_o, delta_g_do) - flux_folding(x_o, x_f, delta_g_df)
         #f_xf = flux_folding(x_o, x_f, delta_g_df)
 
-        f_xo = - (x_o * jnp.exp(-delta_g_df) - x_f) + (jnp.exp(-delta_g_do) - x_o)
+        #f_xo = - (x_o * jnp.exp(-delta_g_df) - x_f) + (jnp.exp(-delta_g_do) - x_o)
+        f_xo = flux * jnp.exp(delta_g_do) + x_f * jnp.exp(delta_g_df) -2 * x_o
         f_xf = (x_o * jnp.exp(-delta_g_df) - x_f)
 
         if not self.is_implicit:
@@ -244,9 +247,9 @@ class ThreeStateNonEquilibrium(ChemicalModel):
         #f_xb = flux_binding(x_f, x_b, delta_g_db) - flux_degradation(x_b, delta_g_dd)
         #f_xf = flux_folding(x_o, x_f, delta_g_df) - flux_binding(x_f, x_b, delta_g_db)
 
-        f_xo = - (x_o * jnp.exp(-delta_g_df) - x_f) + (jnp.exp(delta_g_do) - x_o)
-        f_xf = (x_o * jnp.exp(-delta_g_df) - x_f) - (x_b * jnp.exp(delta_g_db) - x_f)
-        f_xb = (x_b * jnp.exp(delta_g_db) - x_f) - x_b * jnp.exp(-delta_g_dd)
+        f_xo = flux * jnp.exp(delta_g_do) + x_f * jnp.exp(delta_g_df) -2 * x_o
+        f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
+        f_xf = x_o * jnp.exp(-delta_g_df) - x_f - f_xb + - x_b * jnp.exp(delta_g_dd)
 
         if not self.is_implicit:
             return jnp.array([f_xo, f_xf, f_xb]).reshape(-1,)
