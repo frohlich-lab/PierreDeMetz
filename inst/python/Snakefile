@@ -1,34 +1,34 @@
 # List of parameters
-model_types = ["tri_state_equilibrium_state","two_state_non_equilibrium","tri_state_non_equilibrium"]
-proteins = ["GRB2-SH3", "GB1", "PSD95-PDZ3"]
-datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p"]
+model_types = ["tri_state_equilibrium","two_state_non_equilibrium","tri_state_non_equilibrium"]
+proteins = ["GRB2-SH3", "PSD95-PDZ3"]
+datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p"]
 
 rule all:
     input:
         expand([
-            "Results/mochi/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
-            "Results/mochi/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
-            "Results/mochi/{protein}/{dataset}/{model_type}/model_weights.txt",
-            "Results/mochi/{protein}/{dataset}/{model_type}/model_parameters.txt"
+            "Res/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
+            "Res/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
+            "Res/{protein}/{dataset}/{model_type}/model_weights.txt",
+            "Res/{protein}/{dataset}/{model_type}/model_parameters.txt"
         ], protein=proteins, dataset=datasets, model_type=model_types)
 
 
 rule run_model:
     output:
-        pdf = "Results/mochi/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
-        pred = "Results/mochi/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
-        weights = "Results/mochi/{protein}/{dataset}/{model_type}/model_weights.txt",
-        params = "Results/mochi/{protein}/{dataset}/{model_type}/model_parameters.txt"
+        pdf = "Res/{protein}/{dataset}/{model_type}/model_performance_perepoch.pdf",
+        pred = "Res/{protein}/{dataset}/{model_type}/predicted_fitness.txt",
+        weights = "Res/{protein}/{dataset}/{model_type}/model_weights.txt",
+        params = "Res/{protein}/{dataset}/{model_type}/model_parameters.txt"
     params:
         wc = lambda wildcards: wildcards
     shell:
         """
-        mkdir -p Results/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};
+        mkdir -p Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};
         python pierre_mochi__fit_tmodel_3state_doubledeepms.py \
-        --data_train Results/mochi/{params.wc.protein}/{params.wc.dataset}/dataset_train.txt \
-        --data_valid Results/mochi/{params.wc.protein}/{params.wc.dataset}/dataset_valid.txt \
-        --data_obs Results/mochi/{params.wc.protein}/{params.wc.dataset}/dataset_all.txt \
-        -o Results/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
+        --data_train Res/{params.wc.protein}/{params.wc.dataset}/dataset_train.txt \
+        --data_valid Res/{params.wc.protein}/{params.wc.dataset}/dataset_valid.txt \
+        --data_obs Res/{params.wc.protein}/{params.wc.dataset}/dataset_all.txt \
+        -o Res/mochi/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
         --model_type {params.wc.model_type} \
         --protein {params.wc.protein} \

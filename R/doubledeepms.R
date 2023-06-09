@@ -1,12 +1,3 @@
-#directory_path <- "Users/pierredemetz/UCL_work/Crick/doubledeepms/R"
-#all_r_files <- list.files(path = directory_path, pattern = "\\.R$", full.names = TRUE)
-
-#for (file in all_r_files) {
-#  source(file)
-#  print(file)
-#}
-
-#source('Users/pierredemetz/UCL_work/Crick/doubledeepms/R/doubledeepms_thermo_model_results.R')
 
 #' doubledeepms
 #'
@@ -22,26 +13,21 @@
 #'
 #' @return Nothing
 #' @export
-#' 
-#library(reticulate)
-#use_python("/Users/pierredemetz/miniconda3/envs/pierre/bin/python")
-#py_run_file("/Users/pierredemetz/UCL_work/Crick/doubledeepms/inst/python/pierre_mochi__fit_tmodel_3state_doubledeepms.py")
-
 doubledeepms <- function(
-  startStage = 0,
-  stopStage = 15,
-  base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results/",
-  tmodel_job_number = 1,
-  tmodel_grid_search = TRUE,
-  tmodel_protein = "PSD95-PDZ3",
-  tmodel_subset = 50
-  ){
+    startStage = 0,
+    stopStage = 1,
+    base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results",
+    tmodel_job_number = 1,
+    tmodel_grid_search = FALSE,
+    tmodel_protein = "GB1",
+    tmodel_subset = "binding_only"
+){
   
   # startStage=1
   # stopStage=15
   # base_dir = "/users/project/prj004631/afaure/DMS/Results/doubledeepms_proj"
   # rerun_raw = F
-
+  
   colour_scheme <- list(
     "shade 0" = list(
       "#F4270C",
@@ -74,14 +60,14 @@ doubledeepms <- function(
       "#5CB8FF",
       "#B22222"
     ))
-
+  
   #First and last analysis stages
   first_stage <- startStage
   last_stage <- stopStage
-
+  
   ### Fit thermo models
   ###########################
-
+  
   stagenum <- 0
   doubledeepms_fit_thermo_model(
     base_dir = base_dir,
@@ -91,10 +77,10 @@ doubledeepms <- function(
     tmodel_subset = as.character(tmodel_subset),
     tmodel_hyperparameters = file.path(base_dir, "Data", "mochi", "hyperparameters.txt"),
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Evaluate thermo model results
   ###########################
-
+  
   stagenum <- 1
   #GB1
   doubledeepms_thermo_model_results(
@@ -272,10 +258,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_thermo_model_results_GRB2-SH3subsample50p", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Add 3D structure metrics
   ###########################
-
+  
   stagenum <- 2
   #GB1
   doubledeepms_structure_metrics(
@@ -297,10 +283,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_structure_metrics_GRB2-SH3", stagenum=stagenum, base_dir=base_dir),
     pdb_file = file.path(base_dir, "Data", "pdb", "2vwf.pdb"),
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Fitness plots
   ###########################
-
+  
   stagenum <- 3
   #PSD95-PDZ3 and GRB2-SH3
   doubledeepms_fitness_plots(
@@ -316,10 +302,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_fitness_plots", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Plot fitness heatmaps
   ###########################
-
+  
   stagenum <- 4
   #GB1
   doubledeepms_fitness_heatmaps(
@@ -351,10 +337,10 @@ doubledeepms <- function(
     colour_scheme = colour_scheme,
     plot_width = 11,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Plot free energy scatterplots
   ###########################
-
+  
   stagenum <- 5
   #All domains
   doubledeepms_free_energy_scatterplots(
@@ -370,10 +356,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_free_energy_scatterplots", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Plot free energy heatmaps
   ###########################
-
+  
   stagenum <- 6
   #GB1
   doubledeepms_free_energy_heatmaps(
@@ -399,10 +385,10 @@ doubledeepms <- function(
     colour_scheme = colour_scheme,
     plot_width = 11,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Protein stability plots
   ###########################
-
+  
   stagenum <- 7
   #All domains
   doubledeepms_protein_stability_plots(
@@ -428,16 +414,16 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_protein_stability_plots", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Binding interface plots
   ###########################
-
+  
   stagenum <- 8
   # GRB2-SH3
   doubledeepms_interface_mechanisms(
-    base_dir = base_dir,
-    domain_name = "GRB2-SH3",
-    outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_ligand_interface_plots", stagenum=stagenum, base_dir=base_dir),
+    base_dir = base_dir, 
+    domain_name = "GRB2-SH3", 
+    outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_ligand_interface_plots", stagenum=stagenum, base_dir=base_dir), 
     mut_subset_list = list(
       c("T", "F","Q","H", "S", "V", "I", "C"),
       c("T", "S", "L", "V", "A", "K", "R")),
@@ -460,11 +446,11 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_binding_interface", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
-
+  
+  
   ### Allostery plots
   ###########################
-
+  
   stagenum <- 9
   #All domains
   doubledeepms_allostery_plots(
@@ -480,16 +466,16 @@ doubledeepms <- function(
     annotation_list = list(
       "PSD95-PDZ3" = file.path(base_dir, "Data", "annotations", "PSD95-PDZ3", "PSD95-PDZ3_annotations.txt")),
     ohm_file_list = list(
-      "GB1" = file.path(base_dir, "Data", "ohm", "ohm_2gb1_ddPCA_GB1only.txt"),
+      "GB1" = file.path(base_dir, "Data", "ohm", "ohm_2gb1_ddPCA_GB1only.txt"), 
       "PSD95-PDZ3" = file.path(base_dir, "Data", "ohm", "ohm_1be9_ddPCA_PDZonly.txt"),
       "GRB2-SH3" = file.path(base_dir, "Data", "ohm", "ohm_2vwf_ddPCA_GRB2only.txt")),
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_allostery_plots", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Allostery scatterplots
   ###########################
-
+  
   stagenum <- 10
   #All domains
   doubledeepms_allostery_scatterplots(
@@ -503,10 +489,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_allostery_scatterplots", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Downsampling analysis
   ###########################
-
+  
   stagenum <- 11
   #GB1
   doubledeepms_downsampling_analysis(
@@ -536,45 +522,45 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_downsampling_analysis_PSD95-PDZ3", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### Foldx comparisons
   ###########################
-
+  
   stagenum <- 12
   #All domains
   doubledeepms_foldx_comparisons(
     input_file = file.path(base_dir, paste0("009", "_doubledeepms_allostery_plots"), "dg_singles.txt"),
     foldx_file_list = list(
-      "GB1" = file.path(base_dir, "Data", "foldx", "GB1", "PS_2gb1_nowater_noligand_restrict_scanning_output.txt"),
+      "GB1" = file.path(base_dir, "Data", "foldx", "GB1", "PS_2gb1_nowater_noligand_restrict_scanning_output.txt"), 
       "PSD95-PDZ3" = file.path(base_dir, "Data", "foldx", "PSD95-PDZ3", "PS_1be9_nowater_noligand_restrict_scanning_output.txt"),
       "GRB2-SH3" = file.path(base_dir, "Data", "foldx", "GRB2-SH3", "PS_2vwf_nowater_noligand_restrict_scanning_output.txt")),
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_foldx_comparisons", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### PolyPhen2 comparisons
   ###########################
-
+  
   stagenum <- 13
   #All domains
   doubledeepms_polyphen2_comparisons(
     input_file = file.path(base_dir, paste0("009", "_doubledeepms_allostery_plots"), "dg_singles.txt"),
     polyphen2_file = file.path(base_dir, "Data", "polyphen2", "poyphen2_short.txt"),
     position_offset = list(
-      # "GB1" = 0,
+      # "GB1" = 0, 
       "PSD95-PDZ3" = 0,
       "GRB2-SH3" = 158),
     uniprot_id = list(
-      # "GB1" = "",
+      # "GB1" = "", 
       "PSD95-PDZ3" = "DLG4_HUMAN",
       "GRB2-SH3" = "GRB2_HUMAN"),
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_polyphen2_comparisons", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### 3did comparisons
   ###########################
-
+  
   stagenum <- 14
   #All domains
   doubledeepms_3did_comparisons(
@@ -592,10 +578,10 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_3did_comparisons", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
-
+  
   ### EVE comparisons
   ###########################
-
+  
   stagenum <- 15
   #All domains
   doubledeepms_eve_comparisons(
@@ -606,4 +592,6 @@ doubledeepms <- function(
     outpath = doubledeepms__format_dir(dir_suffix="_doubledeepms_eve_comparisons", stagenum=stagenum, base_dir=base_dir),
     colour_scheme = colour_scheme,
     execute = (first_stage <= stagenum & last_stage >= stagenum))
+  
 }
+

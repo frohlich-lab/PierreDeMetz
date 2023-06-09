@@ -16,34 +16,34 @@
 #' @export
 #' @import data.table
 doubledeepms_fit_thermo_model <- function(
-  base_dir,
-  mochi_output_name = "mochi__fit_tmodel_3state_sparse_dimsum128",
-  tmodel_job_number = 1,
-  tmodel_grid_search = FALSE,
-  tmodel_protein = "all",
-  tmodel_subset = "50",
-  tmodel_hyperparameters,
-  execute = TRUE
-  ){
-
+    base_dir,
+    mochi_output_name = "mochi__fit_tmodel_3state_sparse_dimsum128",
+    tmodel_job_number = 1,
+    tmodel_grid_search = FALSE,
+    tmodel_protein = "all",
+    tmodel_subset = "100",
+    tmodel_hyperparameters,
+    execute = TRUE
+){
+  
   #Return if analysis not executed
   if(!execute){
     return()
   }
-
+  
   #Display status
   message(paste("\n\n*******", paste("running stage: doubledeepms_fit_thermo_model for", tmodel_protein), "*******\n\n"))
-
+  
   #Create output directory
   mochi_base_dir <- file.path(base_dir, "Data", "mochi")
   doubledeepms__create_dir(doubledeepms_dir = mochi_base_dir, overwrite_dir = FALSE)
-
+  
   #Domain name
   domain_names <- unlist(strsplit(tmodel_protein, ","))
   if(domain_names == "all"){ 
     domain_names = c("GB1", "GRB2-SH3", "PSD95-PDZ3")
   }
-
+  
   #Loop over all proteins
   for(domain_name in domain_names){
     #Fitness data
@@ -53,14 +53,14 @@ doubledeepms_fit_thermo_model <- function(
     if(!file.exists(fitness_dir)){
       stop(paste0("No fitness data for ", domain_name), call. = FALSE)
     }
-
+    
     #Abundance fitness data (optional)
     pca_type <- "Abundance"
     fitness_dir <- file.path(base_dir, "Data", "fitness", domain_name, pca_type)
     if(file.exists(fitness_dir)){
       fitness_folding_inpath <- file.path(fitness_dir, list.files(fitness_dir))
     }
-
+    
     #Binding fitness data (required)
     pca_type <- "Binding"
     fitness_dir <- file.path(base_dir, "Data", "fitness", domain_name, pca_type)
@@ -69,7 +69,7 @@ doubledeepms_fit_thermo_model <- function(
     }else{
       stop(paste0("No binding fitness data for ", domain_name), call. = FALSE)
     }
-
+    
     #Subset
     fit_type <- "fb"
     mut_order_subset_train <- "1,2"
@@ -91,7 +91,7 @@ doubledeepms_fit_thermo_model <- function(
       tmodel_subsample_prop <- as.integer(tmodel_subset)/100
       mochi_output_name <- paste0(mochi_output_name, "_subsample", tmodel_subset, "p")
     }
-
+    
     #Hyperparameters
     #Turn off grid search for monte carlo simulations
     if(tmodel_job_number!=1){
@@ -107,7 +107,7 @@ doubledeepms_fit_thermo_model <- function(
       }
       num_samples <- hyper_dt[protein==domain_name & subsample_prop==as.integer(tmodel_subsample_prop*100) & binding_only==(tmodel_subset=="binding_only") & singles_only==(tmodel_subset=="singles_only"),as.character(num_samples)]
     }
-
+    
     #Output folder
     doubledeepms__create_dir(doubledeepms_dir = file.path(mochi_base_dir, domain_name), overwrite_dir = FALSE)
     mochi_outpath <- file.path(mochi_base_dir, domain_name, mochi_output_name)
@@ -121,11 +121,10 @@ doubledeepms_fit_thermo_model <- function(
       mut_order_subset_obs = mut_order_subset_obs,
       fit_type = fit_type,
       subsample_prop = tmodel_subsample_prop,
-      mochi_script = system.file("python", "mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepmsv2"),
+      mochi_script = system.file("python", "mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepms"),
       mochi_outpath = mochi_outpath,
       num_samples = num_samples,
       learning_rate = learning_rate,
       job_number = tmodel_job_number)
   }
 }
-#print('R test')

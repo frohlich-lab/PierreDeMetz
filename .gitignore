@@ -1,10 +1,8 @@
-
 R/
 misc/
 .Rproj.user
 *.pdf
 *.pdb
-*.txt
 .DS_Store
 .Rhistory
 .Rbuildignore
@@ -14,3 +12,6 @@ misc/
 inst/python/__pycache__
 inst/python/.ipynb_checkpoints
 inst/python/wandb
+inst/python/Res
+Data/
+Results/
