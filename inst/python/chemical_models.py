@@ -12,6 +12,8 @@ def create_chemical_model(model_type, is_implicit, is_degradation):
         return TwoStateNonEquilibrium(is_implicit, is_degradation)
     elif model_type == 'tri_state_non_equilibrium':
         return ThreeStateNonEquilibrium(is_implicit)
+    elif model_type == 'tri_state_equilibrium_explicit':
+        return ThreeStateEquilibriumExplicit()
     else:
         raise ValueError(f'Unknown model_type {model_type}')
 
@@ -266,6 +268,20 @@ class ThreeStateNonEquilibrium(ChemicalModel):
         results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
         return results.T[:][2].reshape(-1, 1)
 
+class ThreeStateEquilibriumExplicit(ChemicalModel):
+    def __init__(self):
+        super().__init__(self)
+
+    def solve_folding(self, args):
+        delta_g_do, delta_g_df = args
+        return 1/(1+jnp.exp(delta_g_df)).reshape(-1, 1)
+
+    def solve_binding(self, args):
+        delta_g_df, delta_g_db,delta_g_dd, delta_g_do = args
+        return 1/(1+jnp.exp(delta_g_db)*(1+jnp.exp(delta_g_df))).reshape(-1, 1)
+
+
+
 if __name__ == '__main__':
     delta_g_df = jnp.array([0.5, 0.2])
     delta_g_db = jnp.array([0.5, 0.2])
@@ -304,5 +320,15 @@ if __name__ == '__main__':
     solution_binding = three_state_non_eq_model.solve_binding(args_binding)
 
     print('Three State Non Equilibrium')
+    print("Solution for folding:", solution_folding)
+    print("Solution for binding:", solution_binding)
+
+    ### THREE STATE EQ EXPLICIT
+    three_state_eq_explicit = ThreeStateEquilibriumExplicit()
+
+    solution_folding = three_state_eq_explicit.solve_folding(args_folding)
+    solution_binding = three_state_eq_explicit.solve_binding(args_binding)
+
+    print('Three State Eq Explicit')
     print("Solution for folding:", solution_folding)
     print("Solution for binding:", solution_binding)
