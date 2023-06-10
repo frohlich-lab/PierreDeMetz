@@ -6,6 +6,7 @@ import numpy as np
 from utils import apply_weight_constraints
 import wandb
 
+
 def generate_batches(input_data, batch_size, rng):
 
     num_samples = input_data['select'].shape[0]

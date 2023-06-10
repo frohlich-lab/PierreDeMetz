@@ -15,3 +15,4 @@ inst/python/wandb
 inst/python/Res
 Data/
 Results/
+inst/python/Snakefile
