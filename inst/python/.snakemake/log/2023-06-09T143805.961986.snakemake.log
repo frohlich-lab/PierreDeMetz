@@ -1,0 +1,213 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+run_model        9              1              1
+total           10              1              1
+
+Select jobs to execute...
+
+[Fri Jun  9 14:38:16 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    jobid: 3
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 3 has been submitted with SLURM jobid 52942617 (log: .snakemake/slurm_logs/rule_run_model/52942617.log).
+
+[Fri Jun  9 14:38:16 2023]
+rule run_model:
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    jobid: 5
+    reason: Missing output files: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf
+    wildcards: protein=GB1, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=two_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 5 has been submitted with SLURM jobid 52942618 (log: .snakemake/slurm_logs/rule_run_model/52942618.log).
+
+[Fri Jun  9 14:38:16 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 7
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 7 has been submitted with SLURM jobid 52942619 (log: .snakemake/slurm_logs/rule_run_model/52942619.log).
+
+[Fri Jun  9 14:38:17 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    jobid: 9
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 9 has been submitted with SLURM jobid 52942620 (log: .snakemake/slurm_logs/rule_run_model/52942620.log).
+
+[Fri Jun  9 14:38:17 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    jobid: 2
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=two_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 2 has been submitted with SLURM jobid 52942621 (log: .snakemake/slurm_logs/rule_run_model/52942621.log).
+
+[Fri Jun  9 14:38:17 2023]
+rule run_model:
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 4
+    reason: Missing output files: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    wildcards: protein=GB1, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 4 has been submitted with SLURM jobid 52942622 (log: .snakemake/slurm_logs/rule_run_model/52942622.log).
+
+[Fri Jun  9 14:38:17 2023]
+rule run_model:
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    jobid: 6
+    reason: Missing output files: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt
+    wildcards: protein=GB1, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 6 has been submitted with SLURM jobid 52942623 (log: .snakemake/slurm_logs/rule_run_model/52942623.log).
+
+[Fri Jun  9 14:38:18 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    jobid: 8
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=two_state_non_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 8 has been submitted with SLURM jobid 52942625 (log: .snakemake/slurm_logs/rule_run_model/52942625.log).
+
+[Fri Jun  9 14:38:18 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 1
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_account=u_froehlichf, slurm_partition=cpu
+
+No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+Job 1 has been submitted with SLURM jobid 52942626 (log: .snakemake/slurm_logs/rule_run_model/52942626.log).
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942617' failed, SLURM status is: 'FAILED'
+    jobid: 3
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942617.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_non_equilibrium         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942618' failed, SLURM status is: 'FAILED'
+    jobid: 5
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942618.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type two_state_non_equilibrium         --protein GB1         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942619' failed, SLURM status is: 'OUT_OF_MEMORY'
+    jobid: 7
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942619.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium         --protein PSD95-PDZ3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942620' failed, SLURM status is: 'OUT_OF_MEMORY'
+    jobid: 9
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942620.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_non_equilibrium         --protein PSD95-PDZ3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942621' failed, SLURM status is: 'FAILED'
+    jobid: 2
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942621.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type two_state_non_equilibrium         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942622' failed, SLURM status is: 'FAILED'
+    jobid: 4
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942622.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium         --protein GB1         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942623' failed, SLURM status is: 'FAILED'
+    jobid: 6
+    output: Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942623.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GB1/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_non_equilibrium         --protein GB1         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Fri Jun  9 14:39:25 2023]
+Error in rule run_model:
+    message: SLURM-job '52942625' failed, SLURM status is: 'OUT_OF_MEMORY'
+    jobid: 8
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/model_parameters.txt
+    log: .snakemake/slurm_logs/rule_run_model/52942625.log (check log file(s) for error details)
+    shell:
+        
+        mkdir -p Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/two_state_non_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type two_state_non_equilibrium         --protein PSD95-PDZ3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+

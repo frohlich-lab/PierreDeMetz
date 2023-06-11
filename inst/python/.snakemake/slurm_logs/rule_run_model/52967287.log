@@ -1,0 +1,39 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 14:10:51 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_non_equilibrium
+    resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52967287, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+wandb: Currently logged in as: demetz-pierre (lab_frohlich). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_141215-bcwy8cwe
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 1
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/bcwy8cwe
+2023-06-10 14:12:33.366609: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+2023-06-10 14:13:06.246811: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 52967287 ON ca088 CANCELLED AT 2023-06-10T14:20:08 ***
+slurmstepd: error: *** STEP 52967287.0 ON ca088 CANCELLED AT 2023-06-10T14:20:08 ***
+Will exit after finishing currently running jobs (scheduler).

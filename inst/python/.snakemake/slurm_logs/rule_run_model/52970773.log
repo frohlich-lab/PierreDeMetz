@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 6
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 6
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 17:03:32 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_non_equilibrium/model_parameters.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_non_equilibrium
+    resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52970773, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 52970773 ON ca032 CANCELLED AT 2023-06-10T17:13:55 ***
+slurmstepd: error: *** STEP 52970773.0 ON ca032 CANCELLED AT 2023-06-10T17:13:55 ***
+Will exit after finishing currently running jobs (scheduler).

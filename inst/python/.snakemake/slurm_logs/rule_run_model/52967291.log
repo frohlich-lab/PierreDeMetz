@@ -1,0 +1,9 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 52967291.0 ON ca008 CANCELLED AT 2023-06-10T14:20:08 ***
+slurmstepd: error: *** JOB 52967291 ON ca008 CANCELLED AT 2023-06-10T14:20:08 ***
