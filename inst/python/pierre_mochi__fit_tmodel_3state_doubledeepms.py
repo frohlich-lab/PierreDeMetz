@@ -85,7 +85,7 @@ from model_creation import create_model_fn, create_model_jax
 #######################################################################
 
 import os
-os.environ["WANDB__SERVICE_WAIT"] = "300"
+os.environ["WANDB__SERVICE_WAIT"] = "600"
 
 #Output model directory
 model_directory = os.path.join(output_directory, "whole_model")
