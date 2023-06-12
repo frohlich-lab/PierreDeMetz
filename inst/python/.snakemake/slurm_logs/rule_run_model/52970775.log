@@ -1,0 +1,116 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 6
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 6
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 16:58:14 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=40000, mem_mib=38147, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52970775, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+wandb: Currently logged in as: demetz-pierre (lab_frohlich). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_165908-9jzl4sgc
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 1
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/9jzl4sgc
+2023-06-10 16:59:21.636207: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+2023-06-10 16:59:38.128963: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 1 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/9jzl4sgc
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_165908-9jzl4sgc/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_170300-1ldkercs
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 2
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/1ldkercs
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: / 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.363
+wandb: 
+wandb: 🚀 View run Run 2 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/1ldkercs
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_170300-1ldkercs/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_170638-z6zw0kur
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 3
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/z6zw0kur
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 3 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/z6zw0kur
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_170638-z6zw0kur/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_171017-89q8vr6p
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 4
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/89q8vr6p
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 52970775.0 ON ca035 CANCELLED AT 2023-06-10T17:13:55 ***
+slurmstepd: error: *** JOB 52970775 ON ca035 CANCELLED AT 2023-06-10T17:13:55 ***

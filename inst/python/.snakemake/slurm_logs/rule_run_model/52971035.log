@@ -1,0 +1,3947 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=60000, mem_mib=57221, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=60000, mem_mib=57221, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 17:45:11 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_parameters.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium_explicit/model_performance_perepoch.pdf
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium_explicit
+    resources: mem_mb=60000, mem_mib=57221, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52971035, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+wandb: Currently logged in as: demetz-pierre (lab_frohlich). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_174604-8olvi7qp
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 1
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8olvi7qp
+2023-06-10 17:46:14.425365: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+2023-06-10 17:46:15.885080: E external/org_tensorflow/tensorflow/compiler/xla/python/pjit.cc:461] fastpath_data is none
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: / 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 1 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8olvi7qp
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_174604-8olvi7qp/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_174719-wgr8t4m4
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 2
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/wgr8t4m4
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.363
+wandb: 
+wandb: 🚀 View run Run 2 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/wgr8t4m4
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_174719-wgr8t4m4/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_174836-omtqecty
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 3
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/omtqecty
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 3 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/omtqecty
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_174836-omtqecty/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_174953-mgooczop
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 4
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/mgooczop
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.363
+wandb: 
+wandb: 🚀 View run Run 4 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/mgooczop
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_174953-mgooczop/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175109-ismp76qx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 5
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ismp76qx
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.802
+epoch done with 0.787
+epoch done with 0.772
+epoch done with 0.758
+epoch done with 0.743
+epoch done with 0.729
+epoch done with 0.715
+epoch done with 0.701
+epoch done with 0.688
+epoch done with 0.674
+epoch done with 0.661
+epoch done with 0.649
+epoch done with 0.636
+epoch done with 0.624
+epoch done with 0.612
+epoch done with 0.600
+epoch done with 0.589
+epoch done with 0.578
+epoch done with 0.567
+epoch done with 0.557
+epoch done with 0.547
+epoch done with 0.537
+epoch done with 0.528
+epoch done with 0.520
+epoch done with 0.512
+epoch done with 0.505
+epoch done with 0.497
+epoch done with 0.490
+epoch done with 0.484
+epoch done with 0.478
+epoch done with 0.472
+epoch done with 0.466
+epoch done with 0.461
+epoch done with 0.456
+epoch done with 0.451
+epoch done with 0.446
+epoch done with 0.442
+epoch done with 0.438
+epoch done with 0.434
+epoch done with 0.430
+epoch done with 0.426
+epoch done with 0.423
+epoch done with 0.420
+epoch done with 0.417
+epoch done with 0.414
+epoch done with 0.411
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.403
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.393
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.817
+epoch done with 0.800
+epoch done with 0.784
+epoch done with 0.768
+epoch done with 0.753
+epoch done with 0.737
+epoch done with 0.722
+epoch done with 0.708
+epoch done with 0.693
+epoch done with 0.679
+epoch done with 0.665
+epoch done with 0.652
+epoch done with 0.639
+epoch done with 0.626
+epoch done with 0.614
+epoch done with 0.602
+epoch done with 0.590
+epoch done with 0.579
+epoch done with 0.568
+epoch done with 0.558
+epoch done with 0.547
+epoch done with 0.538
+epoch done with 0.529
+epoch done with 0.520
+epoch done with 0.512
+epoch done with 0.505
+epoch done with 0.497
+epoch done with 0.491
+epoch done with 0.484
+epoch done with 0.478
+epoch done with 0.472
+epoch done with 0.466
+epoch done with 0.461
+epoch done with 0.455
+epoch done with 0.450
+epoch done with 0.446
+epoch done with 0.441
+epoch done with 0.437
+epoch done with 0.433
+epoch done with 0.429
+epoch done with 0.425
+epoch done with 0.421
+epoch done with 0.418
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.403
+epoch done with 0.401
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.390
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.385
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+epoch done with 0.363
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.798
+epoch done with 0.783
+epoch done with 0.769
+epoch done with 0.754
+epoch done with 0.740
+epoch done with 0.726
+epoch done with 0.712
+epoch done with 0.698
+epoch done with 0.684
+epoch done with 0.671
+epoch done with 0.658
+epoch done with 0.645
+epoch done with 0.633
+epoch done with 0.621
+epoch done with 0.609
+epoch done with 0.597
+epoch done with 0.586
+epoch done with 0.575
+epoch done with 0.565
+epoch done with 0.555
+epoch done with 0.545
+epoch done with 0.536
+epoch done with 0.527
+epoch done with 0.518
+epoch done with 0.511
+epoch done with 0.503
+epoch done with 0.496
+epoch done with 0.489
+epoch done with 0.483
+epoch done with 0.477
+epoch done with 0.471
+epoch done with 0.466
+epoch done with 0.460
+epoch done with 0.455
+epoch done with 0.451
+epoch done with 0.446
+epoch done with 0.441
+epoch done with 0.437
+epoch done with 0.433
+epoch done with 0.430
+epoch done with 0.426
+epoch done with 0.423
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.410
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.402
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.395
+epoch done with 0.393
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.858
+epoch done with 0.841
+epoch done with 0.823
+epoch done with 0.807
+epoch done with 0.790
+epoch done with 0.774
+epoch done with 0.758
+epoch done with 0.742
+epoch done with 0.727
+epoch done with 0.712
+epoch done with 0.697
+epoch done with 0.682
+epoch done with 0.668
+epoch done with 0.655
+epoch done with 0.642
+epoch done with 0.628
+epoch done with 0.616
+epoch done with 0.603
+epoch done with 0.591
+epoch done with 0.580
+epoch done with 0.568
+epoch done with 0.558
+epoch done with 0.547
+epoch done with 0.537
+epoch done with 0.528
+epoch done with 0.519
+epoch done with 0.510
+epoch done with 0.503
+epoch done with 0.495
+epoch done with 0.488
+epoch done with 0.482
+epoch done with 0.475
+epoch done with 0.469
+epoch done with 0.464
+epoch done with 0.458
+epoch done with 0.453
+epoch done with 0.448
+epoch done with 0.443
+epoch done with 0.439
+epoch done with 0.434
+epoch done with 0.430
+epoch done with 0.426
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.403
+epoch done with 0.401
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.390
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+epoch done with 0.363
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.954
+epoch done with 0.938
+epoch done with 0.921
+epoch done with 0.905
+epoch done with 0.888
+epoch done with 0.872
+epoch done with 0.856
+epoch done with 0.841
+epoch done with 0.825
+epoch done with 0.810
+epoch done with 0.795
+epoch done with 0.781
+epoch done with 0.766
+epoch done with 0.752
+epoch done with 0.738
+epoch done with 0.724
+epoch done with 0.711
+epoch done with 0.697
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▇▆▆▆▅▅▅▄▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.365
+wandb: 
+wandb: 🚀 View run Run 5 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ismp76qx
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175109-ismp76qx/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175225-qzor6k5x
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 6
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/qzor6k5x
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: / 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 6 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/qzor6k5x
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175225-qzor6k5x/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175341-3lqk43i9
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 7
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/3lqk43i9
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 7 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/3lqk43i9
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175341-3lqk43i9/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175457-oqlikx57
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 8
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/oqlikx57
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.367
+wandb: 
+wandb: 🚀 View run Run 8 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/oqlikx57
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175457-oqlikx57/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175614-dddl7hxw
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 9
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/dddl7hxw
+epoch done with 0.684
+epoch done with 0.671
+epoch done with 0.658
+epoch done with 0.645
+epoch done with 0.633
+epoch done with 0.621
+epoch done with 0.609
+epoch done with 0.597
+epoch done with 0.585
+epoch done with 0.574
+epoch done with 0.563
+epoch done with 0.552
+epoch done with 0.542
+epoch done with 0.532
+epoch done with 0.522
+epoch done with 0.513
+epoch done with 0.504
+epoch done with 0.495
+epoch done with 0.488
+epoch done with 0.480
+epoch done with 0.473
+epoch done with 0.467
+epoch done with 0.460
+epoch done with 0.455
+epoch done with 0.450
+epoch done with 0.445
+epoch done with 0.440
+epoch done with 0.436
+epoch done with 0.431
+epoch done with 0.427
+epoch done with 0.423
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.403
+epoch done with 0.401
+epoch done with 0.398
+epoch done with 0.395
+epoch done with 0.393
+epoch done with 0.390
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.380
+epoch done with 0.378
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.799
+epoch done with 0.784
+epoch done with 0.769
+epoch done with 0.754
+epoch done with 0.740
+epoch done with 0.726
+epoch done with 0.712
+epoch done with 0.698
+epoch done with 0.685
+epoch done with 0.671
+epoch done with 0.658
+epoch done with 0.646
+epoch done with 0.633
+epoch done with 0.621
+epoch done with 0.609
+epoch done with 0.598
+epoch done with 0.586
+epoch done with 0.576
+epoch done with 0.565
+epoch done with 0.555
+epoch done with 0.545
+epoch done with 0.536
+epoch done with 0.527
+epoch done with 0.519
+epoch done with 0.511
+epoch done with 0.504
+epoch done with 0.497
+epoch done with 0.490
+epoch done with 0.483
+epoch done with 0.477
+epoch done with 0.471
+epoch done with 0.466
+epoch done with 0.461
+epoch done with 0.456
+epoch done with 0.451
+epoch done with 0.446
+epoch done with 0.442
+epoch done with 0.438
+epoch done with 0.434
+epoch done with 0.430
+epoch done with 0.426
+epoch done with 0.423
+epoch done with 0.420
+epoch done with 0.417
+epoch done with 0.414
+epoch done with 0.411
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.403
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.389
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.813
+epoch done with 0.798
+epoch done with 0.783
+epoch done with 0.769
+epoch done with 0.754
+epoch done with 0.740
+epoch done with 0.726
+epoch done with 0.712
+epoch done with 0.698
+epoch done with 0.685
+epoch done with 0.671
+epoch done with 0.658
+epoch done with 0.646
+epoch done with 0.633
+epoch done with 0.621
+epoch done with 0.609
+epoch done with 0.598
+epoch done with 0.586
+epoch done with 0.575
+epoch done with 0.565
+epoch done with 0.555
+epoch done with 0.545
+epoch done with 0.535
+epoch done with 0.526
+epoch done with 0.518
+epoch done with 0.510
+epoch done with 0.503
+epoch done with 0.495
+epoch done with 0.489
+epoch done with 0.482
+epoch done with 0.476
+epoch done with 0.470
+epoch done with 0.465
+epoch done with 0.459
+epoch done with 0.454
+epoch done with 0.449
+epoch done with 0.445
+epoch done with 0.440
+epoch done with 0.436
+epoch done with 0.432
+epoch done with 0.429
+epoch done with 0.425
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.410
+epoch done with 0.407
+epoch done with 0.404
+epoch done with 0.402
+epoch done with 0.399
+epoch done with 0.397
+epoch done with 0.395
+epoch done with 0.392
+epoch done with 0.390
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.624
+epoch done with 0.615
+epoch done with 0.606
+epoch done with 0.597
+epoch done with 0.588
+epoch done with 0.579
+epoch done with 0.571
+epoch done with 0.563
+epoch done with 0.555
+epoch done with 0.547
+epoch done with 0.540
+epoch done with 0.533
+epoch done with 0.527
+epoch done with 0.520
+epoch done with 0.514
+epoch done with 0.508
+epoch done with 0.502
+epoch done with 0.496
+epoch done with 0.491
+epoch done with 0.486
+epoch done with 0.480
+epoch done with 0.476
+epoch done with 0.471
+epoch done with 0.466
+epoch done with 0.462
+epoch done with 0.457
+epoch done with 0.453
+epoch done with 0.449
+epoch done with 0.445
+epoch done with 0.442
+epoch done with 0.438
+epoch done with 0.435
+epoch done with 0.431
+epoch done with 0.428
+epoch done with 0.425
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.414
+epoch done with 0.411
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.404
+epoch done with 0.402
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.368
+epoch done with 0.367
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.684
+epoch done with 0.670
+epoch done with 0.657
+epoch done with 0.645
+epoch done with 0.632
+epoch done with 0.620
+epoch done with 0.609
+epoch done with 0.597
+epoch done with 0.587
+epoch done with 0.577
+epoch done with 0.567
+epoch done with 0.558
+epoch done with 0.549
+epoch done with 0.541
+epoch done with 0.533
+epoch done with 0.525
+epoch done with 0.517
+epoch done with 0.510
+epoch done with 0.504
+epoch done with 0.497
+epoch done with 0.491
+epoch done with 0.485
+epoch done with 0.479
+epoch done with 0.474
+epoch done with 0.469
+epoch done with 0.464
+epoch done with 0.459
+epoch done with 0.454
+epoch done with 0.450
+epoch done with 0.446
+epoch done with 0.442
+epoch done with 0.438
+epoch done with 0.434
+epoch done with 0.430
+epoch done with 0.427
+epoch done with 0.424
+epoch done with 0.421
+epoch done with 0.418
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.410
+epoch done with 0.408
+epoch done with 0.406
+epoch done with 0.403
+epoch done with 0.401
+epoch done with 0.399
+epoch done with 0.397
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.368
+wandb: 
+wandb: 🚀 View run Run 9 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/dddl7hxw
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175614-dddl7hxw/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175730-ca55y2ut
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 10
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ca55y2ut
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▇▆▆▅▅▅▅▄▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 10 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ca55y2ut
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175730-ca55y2ut/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_175846-vplxlg4k
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 11
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/vplxlg4k
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.367
+wandb: 
+wandb: 🚀 View run Run 11 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/vplxlg4k
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_175846-vplxlg4k/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180003-sg1gs856
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 12
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/sg1gs856
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 12 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/sg1gs856
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180003-sg1gs856/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180133-kc7ey61y
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 13
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/kc7ey61y
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.390
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.386
+epoch done with 0.385
+epoch done with 0.383
+epoch done with 0.382
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.368
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.979
+epoch done with 0.960
+epoch done with 0.940
+epoch done with 0.921
+epoch done with 0.903
+epoch done with 0.885
+epoch done with 0.868
+epoch done with 0.850
+epoch done with 0.833
+epoch done with 0.817
+epoch done with 0.801
+epoch done with 0.785
+epoch done with 0.769
+epoch done with 0.754
+epoch done with 0.740
+epoch done with 0.725
+epoch done with 0.711
+epoch done with 0.697
+epoch done with 0.684
+epoch done with 0.671
+epoch done with 0.659
+epoch done with 0.646
+epoch done with 0.634
+epoch done with 0.621
+epoch done with 0.609
+epoch done with 0.598
+epoch done with 0.586
+epoch done with 0.575
+epoch done with 0.563
+epoch done with 0.553
+epoch done with 0.542
+epoch done with 0.532
+epoch done with 0.522
+epoch done with 0.513
+epoch done with 0.504
+epoch done with 0.496
+epoch done with 0.488
+epoch done with 0.480
+epoch done with 0.473
+epoch done with 0.467
+epoch done with 0.460
+epoch done with 0.455
+epoch done with 0.449
+epoch done with 0.445
+epoch done with 0.440
+epoch done with 0.435
+epoch done with 0.431
+epoch done with 0.427
+epoch done with 0.423
+epoch done with 0.419
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.403
+epoch done with 0.400
+epoch done with 0.397
+epoch done with 0.395
+epoch done with 0.392
+epoch done with 0.390
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.374
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.624
+epoch done with 0.615
+epoch done with 0.606
+epoch done with 0.597
+epoch done with 0.588
+epoch done with 0.579
+epoch done with 0.571
+epoch done with 0.563
+epoch done with 0.555
+epoch done with 0.547
+epoch done with 0.540
+epoch done with 0.533
+epoch done with 0.527
+epoch done with 0.520
+epoch done with 0.514
+epoch done with 0.508
+epoch done with 0.502
+epoch done with 0.496
+epoch done with 0.491
+epoch done with 0.485
+epoch done with 0.480
+epoch done with 0.476
+epoch done with 0.471
+epoch done with 0.466
+epoch done with 0.462
+epoch done with 0.457
+epoch done with 0.453
+epoch done with 0.449
+epoch done with 0.445
+epoch done with 0.441
+epoch done with 0.438
+epoch done with 0.434
+epoch done with 0.431
+epoch done with 0.428
+epoch done with 0.425
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.411
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.404
+epoch done with 0.402
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.368
+epoch done with 0.367
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.862
+epoch done with 0.842
+epoch done with 0.822
+epoch done with 0.803
+epoch done with 0.784
+epoch done with 0.765
+epoch done with 0.747
+epoch done with 0.730
+epoch done with 0.713
+epoch done with 0.696
+epoch done with 0.681
+epoch done with 0.665
+epoch done with 0.651
+epoch done with 0.636
+epoch done with 0.623
+epoch done with 0.609
+epoch done with 0.596
+epoch done with 0.584
+epoch done with 0.572
+epoch done with 0.561
+epoch done with 0.551
+epoch done with 0.541
+epoch done with 0.532
+epoch done with 0.523
+epoch done with 0.515
+epoch done with 0.507
+epoch done with 0.499
+epoch done with 0.492
+epoch done with 0.486
+epoch done with 0.479
+epoch done with 0.473
+epoch done with 0.467
+epoch done with 0.461
+epoch done with 0.456
+epoch done with 0.451
+epoch done with 0.446
+epoch done with 0.442
+epoch done with 0.437
+epoch done with 0.433
+epoch done with 0.429
+epoch done with 0.425
+epoch done with 0.422
+epoch done with 0.418
+epoch done with 0.415
+epoch done with 0.412
+epoch done with 0.409
+epoch done with 0.406
+epoch done with 0.404
+epoch done with 0.401
+epoch done with 0.399
+epoch done with 0.397
+epoch done with 0.395
+epoch done with 0.393
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.381
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.891
+epoch done with 0.873
+epoch done with 0.856
+epoch done with 0.838
+epoch done with 0.822
+epoch done with 0.807
+epoch done with 0.792
+epoch done with 0.777
+epoch done with 0.763
+epoch done with 0.748
+epoch done with 0.734
+epoch done with 0.720
+epoch done with 0.707
+epoch done with 0.693
+epoch done with 0.680
+epoch done with 0.667
+epoch done with 0.654
+epoch done with 0.642
+epoch done with 0.629
+epoch done with 0.617
+epoch done with 0.605
+epoch done with 0.594
+epoch done with 0.582
+epoch done with 0.571
+epoch done with 0.560
+epoch done with 0.550
+epoch done with 0.540
+epoch done with 0.530
+epoch done with 0.521
+epoch done with 0.512
+epoch done with 0.504
+epoch done with 0.496
+epoch done with 0.489
+epoch done with 0.482
+epoch done with 0.475
+epoch done with 0.469
+epoch done with 0.463
+epoch done with 0.458
+epoch done with 0.453
+epoch done with 0.448
+epoch done with 0.443
+epoch done with 0.439
+epoch done with 0.434
+epoch done with 0.430
+epoch done with 0.427
+epoch done with 0.423
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.410
+epoch done with 0.407
+epoch done with 0.404
+epoch done with 0.401
+epoch done with 0.399
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.378
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▆▅▅▅▅▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.364
+wandb: 
+wandb: 🚀 View run Run 13 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/kc7ey61y
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180133-kc7ey61y/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180257-n53x2m50
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 14
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/n53x2m50
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.363
+wandb: 
+wandb: 🚀 View run Run 14 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/n53x2m50
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180257-n53x2m50/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180424-4uu809q2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 15
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/4uu809q2
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▅▄▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.366
+wandb: 
+wandb: 🚀 View run Run 15 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/4uu809q2
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180424-4uu809q2/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180547-gkftvhfv
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 16
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/gkftvhfv
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit ██▇▇▆▆▅▅▅▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.366
+wandb: 
+wandb: 🚀 View run Run 16 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/gkftvhfv
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180547-gkftvhfv/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180709-irkpxj80
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 17
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/irkpxj80
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▄▄▄▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 17 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/irkpxj80
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180709-irkpxj80/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_180837-z3id6x50
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 18
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/z3id6x50
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.806
+epoch done with 0.789
+epoch done with 0.773
+epoch done with 0.758
+epoch done with 0.742
+epoch done with 0.727
+epoch done with 0.713
+epoch done with 0.698
+epoch done with 0.684
+epoch done with 0.670
+epoch done with 0.657
+epoch done with 0.644
+epoch done with 0.631
+epoch done with 0.619
+epoch done with 0.607
+epoch done with 0.595
+epoch done with 0.583
+epoch done with 0.572
+epoch done with 0.562
+epoch done with 0.552
+epoch done with 0.542
+epoch done with 0.533
+epoch done with 0.524
+epoch done with 0.516
+epoch done with 0.508
+epoch done with 0.501
+epoch done with 0.494
+epoch done with 0.487
+epoch done with 0.481
+epoch done with 0.475
+epoch done with 0.469
+epoch done with 0.464
+epoch done with 0.458
+epoch done with 0.453
+epoch done with 0.448
+epoch done with 0.444
+epoch done with 0.439
+epoch done with 0.435
+epoch done with 0.431
+epoch done with 0.427
+epoch done with 0.424
+epoch done with 0.420
+epoch done with 0.417
+epoch done with 0.414
+epoch done with 0.411
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.402
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.393
+epoch done with 0.391
+epoch done with 0.390
+epoch done with 0.388
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.383
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.365
+epoch done with 0.364
+epoch done with 0.363
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.732
+epoch done with 0.718
+epoch done with 0.704
+epoch done with 0.690
+epoch done with 0.677
+epoch done with 0.663
+epoch done with 0.650
+epoch done with 0.638
+epoch done with 0.625
+epoch done with 0.614
+epoch done with 0.602
+epoch done with 0.591
+epoch done with 0.580
+epoch done with 0.570
+epoch done with 0.560
+epoch done with 0.551
+epoch done with 0.542
+epoch done with 0.534
+epoch done with 0.526
+epoch done with 0.518
+epoch done with 0.510
+epoch done with 0.503
+epoch done with 0.497
+epoch done with 0.490
+epoch done with 0.484
+epoch done with 0.478
+epoch done with 0.473
+epoch done with 0.467
+epoch done with 0.462
+epoch done with 0.457
+epoch done with 0.453
+epoch done with 0.448
+epoch done with 0.444
+epoch done with 0.440
+epoch done with 0.436
+epoch done with 0.432
+epoch done with 0.429
+epoch done with 0.425
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.410
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.403
+epoch done with 0.401
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.385
+epoch done with 0.384
+epoch done with 0.382
+epoch done with 0.381
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.367
+epoch done with 0.366
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.736
+epoch done with 0.721
+epoch done with 0.706
+epoch done with 0.693
+epoch done with 0.679
+epoch done with 0.666
+epoch done with 0.653
+epoch done with 0.640
+epoch done with 0.628
+epoch done with 0.616
+epoch done with 0.604
+epoch done with 0.593
+epoch done with 0.582
+epoch done with 0.572
+epoch done with 0.562
+epoch done with 0.553
+epoch done with 0.544
+epoch done with 0.535
+epoch done with 0.527
+epoch done with 0.519
+epoch done with 0.512
+epoch done with 0.505
+epoch done with 0.498
+epoch done with 0.492
+epoch done with 0.486
+epoch done with 0.480
+epoch done with 0.474
+epoch done with 0.469
+epoch done with 0.463
+epoch done with 0.458
+epoch done with 0.454
+epoch done with 0.449
+epoch done with 0.445
+epoch done with 0.441
+epoch done with 0.437
+epoch done with 0.433
+epoch done with 0.429
+epoch done with 0.426
+epoch done with 0.422
+epoch done with 0.419
+epoch done with 0.416
+epoch done with 0.413
+epoch done with 0.410
+epoch done with 0.408
+epoch done with 0.405
+epoch done with 0.403
+epoch done with 0.400
+epoch done with 0.398
+epoch done with 0.396
+epoch done with 0.394
+epoch done with 0.392
+epoch done with 0.391
+epoch done with 0.389
+epoch done with 0.387
+epoch done with 0.386
+epoch done with 0.384
+epoch done with 0.383
+epoch done with 0.382
+epoch done with 0.380
+epoch done with 0.379
+epoch done with 0.378
+epoch done with 0.377
+epoch done with 0.376
+epoch done with 0.375
+epoch done with 0.374
+epoch done with 0.373
+epoch done with 0.372
+epoch done with 0.371
+epoch done with 0.370
+epoch done with 0.369
+epoch done with 0.369
+epoch done with 0.368
+epoch done with 0.367
+epoch done with 0.366
+epoch done with 0.366
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.760
+epoch done with 0.628
+epoch done with 0.523
+epoch done with 0.458
+epoch done with 0.423
+epoch done with 0.401
+epoch done with 0.386
+epoch done with 0.374
+epoch done with 0.366
+epoch done with 0.360
+epoch done with 0.354
+epoch done with 0.347
+epoch done with 0.340
+epoch done with 0.332
+epoch done with 0.321
+epoch done with 0.308
+epoch done with 0.294
+epoch done with 0.278
+epoch done with 0.261
+epoch done with 0.244
+epoch done with 0.228
+epoch done with 0.214
+epoch done with 0.202
+epoch done with 0.192
+epoch done with 0.183
+epoch done with 0.175
+epoch done with 0.169
+epoch done with 0.163
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.593
+epoch done with 0.507
+epoch done with 0.456
+epoch done with 0.425
+epoch done with 0.404
+epoch done with 0.391
+epoch done with 0.381
+epoch done with 0.376
+epoch done with 0.371
+epoch done with 0.368
+epoch done with 0.365
+epoch done with 0.362
+epoch done with 0.357
+epoch done with 0.350
+epoch done with 0.338
+epoch done with 0.323
+epoch done with 0.305
+epoch done with 0.286
+epoch done with 0.267
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▅▅▅▄▄▄▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 18 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/z3id6x50
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_180837-z3id6x50/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181009-uvc48mtk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 19
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/uvc48mtk
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▅▅▄▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 19 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/uvc48mtk
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181009-uvc48mtk/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181139-xieyaw1h
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 20
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/xieyaw1h
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▅▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 20 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/xieyaw1h
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181139-xieyaw1h/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181309-8mu6pjy4
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 21
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8mu6pjy4
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▅▄▄▄▄▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.133
+wandb: 
+wandb: 🚀 View run Run 21 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8mu6pjy4
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181309-8mu6pjy4/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181439-ydr1z7ki
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 22
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ydr1z7ki
+epoch done with 0.248
+epoch done with 0.230
+epoch done with 0.215
+epoch done with 0.201
+epoch done with 0.190
+epoch done with 0.180
+epoch done with 0.172
+epoch done with 0.165
+epoch done with 0.160
+epoch done with 0.156
+epoch done with 0.152
+epoch done with 0.150
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.550
+epoch done with 0.488
+epoch done with 0.447
+epoch done with 0.420
+epoch done with 0.402
+epoch done with 0.389
+epoch done with 0.381
+epoch done with 0.375
+epoch done with 0.370
+epoch done with 0.368
+epoch done with 0.365
+epoch done with 0.364
+epoch done with 0.363
+epoch done with 0.363
+epoch done with 0.361
+epoch done with 0.353
+epoch done with 0.339
+epoch done with 0.321
+epoch done with 0.301
+epoch done with 0.279
+epoch done with 0.258
+epoch done with 0.239
+epoch done with 0.222
+epoch done with 0.206
+epoch done with 0.193
+epoch done with 0.184
+epoch done with 0.175
+epoch done with 0.168
+epoch done with 0.163
+epoch done with 0.158
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.546
+epoch done with 0.486
+epoch done with 0.446
+epoch done with 0.418
+epoch done with 0.401
+epoch done with 0.388
+epoch done with 0.380
+epoch done with 0.374
+epoch done with 0.370
+epoch done with 0.367
+epoch done with 0.365
+epoch done with 0.363
+epoch done with 0.354
+epoch done with 0.339
+epoch done with 0.320
+epoch done with 0.300
+epoch done with 0.278
+epoch done with 0.257
+epoch done with 0.237
+epoch done with 0.220
+epoch done with 0.205
+epoch done with 0.193
+epoch done with 0.183
+epoch done with 0.175
+epoch done with 0.168
+epoch done with 0.163
+epoch done with 0.158
+epoch done with 0.155
+epoch done with 0.151
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.703
+epoch done with 0.575
+epoch done with 0.490
+epoch done with 0.442
+epoch done with 0.412
+epoch done with 0.394
+epoch done with 0.382
+epoch done with 0.373
+epoch done with 0.366
+epoch done with 0.361
+epoch done with 0.355
+epoch done with 0.350
+epoch done with 0.343
+epoch done with 0.335
+epoch done with 0.323
+epoch done with 0.309
+epoch done with 0.292
+epoch done with 0.273
+epoch done with 0.254
+epoch done with 0.235
+epoch done with 0.219
+epoch done with 0.206
+epoch done with 0.195
+epoch done with 0.185
+epoch done with 0.177
+epoch done with 0.170
+epoch done with 0.165
+epoch done with 0.160
+epoch done with 0.156
+epoch done with 0.154
+epoch done with 0.151
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.145
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.547
+epoch done with 0.487
+epoch done with 0.446
+epoch done with 0.419
+epoch done with 0.401
+epoch done with 0.388
+epoch done with 0.380
+epoch done with 0.374
+epoch done with 0.370
+epoch done with 0.367
+epoch done with 0.363
+epoch done with 0.352
+epoch done with 0.336
+epoch done with 0.317
+epoch done with 0.297
+epoch done with 0.275
+epoch done with 0.254
+epoch done with 0.234
+epoch done with 0.218
+epoch done with 0.203
+epoch done with 0.192
+epoch done with 0.182
+epoch done with 0.174
+epoch done with 0.168
+epoch done with 0.163
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▄▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 22 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ydr1z7ki
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181439-ydr1z7ki/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181608-ka7lexxd
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 23
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ka7lexxd
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▅▅▄▄▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 23 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/ka7lexxd
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181608-ka7lexxd/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181743-u66i5mlp
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 24
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/u66i5mlp
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: / 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▅▄▄▄▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 24 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/u66i5mlp
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181743-u66i5mlp/logs
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_181914-4jny5hgj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 25
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/4jny5hgj
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▆▅▅▅▅▄▄▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 25 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/4jny5hgj
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_181914-4jny5hgj/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182046-v4zd0dbu
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 26
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/v4zd0dbu
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.566
+epoch done with 0.493
+epoch done with 0.447
+epoch done with 0.421
+epoch done with 0.403
+epoch done with 0.390
+epoch done with 0.381
+epoch done with 0.375
+epoch done with 0.371
+epoch done with 0.368
+epoch done with 0.366
+epoch done with 0.364
+epoch done with 0.363
+epoch done with 0.362
+epoch done with 0.358
+epoch done with 0.349
+epoch done with 0.336
+epoch done with 0.318
+epoch done with 0.299
+epoch done with 0.278
+epoch done with 0.259
+epoch done with 0.240
+epoch done with 0.224
+epoch done with 0.208
+epoch done with 0.195
+epoch done with 0.185
+epoch done with 0.176
+epoch done with 0.169
+epoch done with 0.163
+epoch done with 0.158
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.581
+epoch done with 0.501
+epoch done with 0.453
+epoch done with 0.422
+epoch done with 0.403
+epoch done with 0.390
+epoch done with 0.382
+epoch done with 0.376
+epoch done with 0.371
+epoch done with 0.368
+epoch done with 0.366
+epoch done with 0.364
+epoch done with 0.363
+epoch done with 0.361
+epoch done with 0.356
+epoch done with 0.348
+epoch done with 0.336
+epoch done with 0.319
+epoch done with 0.300
+epoch done with 0.281
+epoch done with 0.261
+epoch done with 0.244
+epoch done with 0.227
+epoch done with 0.211
+epoch done with 0.198
+epoch done with 0.187
+epoch done with 0.178
+epoch done with 0.170
+epoch done with 0.164
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.150
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.547
+epoch done with 0.486
+epoch done with 0.446
+epoch done with 0.418
+epoch done with 0.400
+epoch done with 0.388
+epoch done with 0.380
+epoch done with 0.374
+epoch done with 0.370
+epoch done with 0.367
+epoch done with 0.365
+epoch done with 0.363
+epoch done with 0.353
+epoch done with 0.337
+epoch done with 0.318
+epoch done with 0.298
+epoch done with 0.277
+epoch done with 0.256
+epoch done with 0.236
+epoch done with 0.219
+epoch done with 0.204
+epoch done with 0.193
+epoch done with 0.183
+epoch done with 0.175
+epoch done with 0.169
+epoch done with 0.163
+epoch done with 0.158
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.770
+epoch done with 0.614
+epoch done with 0.508
+epoch done with 0.451
+epoch done with 0.417
+epoch done with 0.397
+epoch done with 0.383
+epoch done with 0.374
+epoch done with 0.366
+epoch done with 0.360
+epoch done with 0.354
+epoch done with 0.349
+epoch done with 0.342
+epoch done with 0.334
+epoch done with 0.325
+epoch done with 0.313
+epoch done with 0.298
+epoch done with 0.283
+epoch done with 0.266
+epoch done with 0.249
+epoch done with 0.234
+epoch done with 0.220
+epoch done with 0.209
+epoch done with 0.198
+epoch done with 0.189
+epoch done with 0.180
+epoch done with 0.173
+epoch done with 0.167
+epoch done with 0.162
+epoch done with 0.158
+epoch done with 0.154
+epoch done with 0.152
+epoch done with 0.150
+epoch done with 0.148
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▄▄▄▃▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.133
+wandb: 
+wandb: 🚀 View run Run 26 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/v4zd0dbu
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182046-v4zd0dbu/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182214-js1dno0h
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 27
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/js1dno0h
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▅▄▄▄▄▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 27 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/js1dno0h
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182214-js1dno0h/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182336-vl2x14ue
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 28
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/vl2x14ue
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▅▄▄▄▄▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.13
+wandb: 
+wandb: 🚀 View run Run 28 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/vl2x14ue
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182336-vl2x14ue/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182458-xq1jzoz2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 29
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/xq1jzoz2
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▅▄▄▄▄▄▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 29 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/xq1jzoz2
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182458-xq1jzoz2/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182622-l1feoupj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 30
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/l1feoupj
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▄▄▄▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.131
+wandb: 
+wandb: 🚀 View run Run 30 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/l1feoupj
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182622-l1feoupj/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182746-cbr06257
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 31
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/cbr06257
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.642
+epoch done with 0.535
+epoch done with 0.471
+epoch done with 0.432
+epoch done with 0.408
+epoch done with 0.392
+epoch done with 0.382
+epoch done with 0.374
+epoch done with 0.368
+epoch done with 0.364
+epoch done with 0.359
+epoch done with 0.355
+epoch done with 0.349
+epoch done with 0.340
+epoch done with 0.328
+epoch done with 0.313
+epoch done with 0.294
+epoch done with 0.274
+epoch done with 0.253
+epoch done with 0.235
+epoch done with 0.218
+epoch done with 0.203
+epoch done with 0.192
+epoch done with 0.182
+epoch done with 0.175
+epoch done with 0.168
+epoch done with 0.163
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.150
+epoch done with 0.148
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.01, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.654
+epoch done with 0.543
+epoch done with 0.474
+epoch done with 0.435
+epoch done with 0.410
+epoch done with 0.394
+epoch done with 0.382
+epoch done with 0.374
+epoch done with 0.368
+epoch done with 0.363
+epoch done with 0.358
+epoch done with 0.352
+epoch done with 0.345
+epoch done with 0.334
+epoch done with 0.322
+epoch done with 0.306
+epoch done with 0.289
+epoch done with 0.270
+epoch done with 0.251
+epoch done with 0.234
+epoch done with 0.219
+epoch done with 0.205
+epoch done with 0.193
+epoch done with 0.184
+epoch done with 0.175
+epoch done with 0.169
+epoch done with 0.163
+epoch done with 0.159
+epoch done with 0.155
+epoch done with 0.152
+epoch done with 0.149
+epoch done with 0.147
+epoch done with 0.145
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.667
+epoch done with 0.551
+epoch done with 0.479
+epoch done with 0.437
+epoch done with 0.410
+epoch done with 0.393
+epoch done with 0.382
+epoch done with 0.374
+epoch done with 0.367
+epoch done with 0.362
+epoch done with 0.358
+epoch done with 0.353
+epoch done with 0.346
+epoch done with 0.338
+epoch done with 0.327
+epoch done with 0.312
+epoch done with 0.294
+epoch done with 0.275
+epoch done with 0.255
+epoch done with 0.236
+epoch done with 0.219
+epoch done with 0.205
+epoch done with 0.193
+epoch done with 0.184
+epoch done with 0.176
+epoch done with 0.169
+epoch done with 0.164
+epoch done with 0.159
+epoch done with 0.156
+epoch done with 0.153
+epoch done with 0.150
+epoch done with 0.148
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.744
+epoch done with 0.614
+epoch done with 0.512
+epoch done with 0.453
+epoch done with 0.420
+epoch done with 0.399
+epoch done with 0.384
+epoch done with 0.374
+epoch done with 0.366
+epoch done with 0.360
+epoch done with 0.354
+epoch done with 0.347
+epoch done with 0.340
+epoch done with 0.330
+epoch done with 0.319
+epoch done with 0.306
+epoch done with 0.291
+epoch done with 0.274
+epoch done with 0.257
+epoch done with 0.240
+epoch done with 0.225
+epoch done with 0.212
+epoch done with 0.200
+epoch done with 0.190
+epoch done with 0.181
+epoch done with 0.174
+epoch done with 0.167
+epoch done with 0.162
+epoch done with 0.158
+epoch done with 0.154
+epoch done with 0.151
+epoch done with 0.149
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.681
+epoch done with 0.560
+epoch done with 0.483
+epoch done with 0.438
+epoch done with 0.410
+epoch done with 0.394
+epoch done with 0.382
+epoch done with 0.373
+epoch done with 0.367
+epoch done with 0.361
+epoch done with 0.356
+epoch done with 0.351
+epoch done with 0.345
+epoch done with 0.336
+epoch done with 0.325
+epoch done with 0.310
+epoch done with 0.293
+epoch done with 0.273
+epoch done with 0.253
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▅▄▄▄▄▄▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.132
+wandb: 
+wandb: 🚀 View run Run 31 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/cbr06257
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182746-cbr06257/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_182909-8tjtwnez
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 32
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8tjtwnez
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▅▄▄▄▄▃▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.13
+wandb: 
+wandb: 🚀 View run Run 32 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/8tjtwnez
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_182909-8tjtwnez/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183035-zrijy73d
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 33
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/zrijy73d
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.005 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: / 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.128
+wandb: 
+wandb: 🚀 View run Run 33 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/zrijy73d
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183035-zrijy73d/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183205-6dzz7kfk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 34
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/6dzz7kfk
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.128
+wandb: 
+wandb: 🚀 View run Run 34 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/6dzz7kfk
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183205-6dzz7kfk/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183333-thcg26iu
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 35
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/thcg26iu
+epoch done with 0.235
+epoch done with 0.219
+epoch done with 0.205
+epoch done with 0.194
+epoch done with 0.184
+epoch done with 0.176
+epoch done with 0.170
+epoch done with 0.164
+epoch done with 0.160
+epoch done with 0.156
+epoch done with 0.153
+epoch done with 0.150
+epoch done with 0.148
+epoch done with 0.147
+epoch done with 0.146
+epoch done with 0.145
+epoch done with 0.144
+epoch done with 0.143
+epoch done with 0.142
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+Grid search using {'num_samples': 128, 'learning_rate': 0.001, 'l1_regularization_factor': 0.1, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.705
+epoch done with 0.582
+epoch done with 0.494
+epoch done with 0.445
+epoch done with 0.416
+epoch done with 0.397
+epoch done with 0.384
+epoch done with 0.374
+epoch done with 0.367
+epoch done with 0.362
+epoch done with 0.356
+epoch done with 0.350
+epoch done with 0.342
+epoch done with 0.332
+epoch done with 0.321
+epoch done with 0.307
+epoch done with 0.291
+epoch done with 0.273
+epoch done with 0.256
+epoch done with 0.238
+epoch done with 0.223
+epoch done with 0.209
+epoch done with 0.197
+epoch done with 0.187
+epoch done with 0.179
+epoch done with 0.171
+epoch done with 0.166
+epoch done with 0.161
+epoch done with 0.157
+epoch done with 0.153
+epoch done with 0.150
+epoch done with 0.148
+epoch done with 0.146
+epoch done with 0.144
+epoch done with 0.142
+epoch done with 0.141
+epoch done with 0.140
+epoch done with 0.139
+epoch done with 0.139
+epoch done with 0.138
+epoch done with 0.137
+epoch done with 0.137
+epoch done with 0.136
+epoch done with 0.136
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.134
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.130
+epoch done with 0.130
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.363
+epoch done with 0.302
+epoch done with 0.168
+epoch done with 0.142
+epoch done with 0.138
+epoch done with 0.135
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.130
+epoch done with 0.131
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.358
+epoch done with 0.311
+epoch done with 0.184
+epoch done with 0.143
+epoch done with 0.134
+epoch done with 0.135
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.364
+epoch done with 0.300
+epoch done with 0.167
+epoch done with 0.140
+epoch done with 0.136
+epoch done with 0.133
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.131
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.127
+wandb: 
+wandb: 🚀 View run Run 35 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/thcg26iu
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183333-thcg26iu/logs
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183505-tolbx7bn
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 36
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/tolbx7bn
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.128
+wandb: 
+wandb: 🚀 View run Run 36 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/tolbx7bn
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183505-tolbx7bn/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183637-owpvrums
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 37
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/owpvrums
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: \ 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: | 0.005 MB of 0.017 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▅▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.126
+wandb: 
+wandb: 🚀 View run Run 37 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/owpvrums
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183637-owpvrums/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183809-9aie5mr8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 38
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/9aie5mr8
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.128
+wandb: 
+wandb: 🚀 View run Run 38 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/9aie5mr8
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183809-9aie5mr8/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_183939-mir1omuh
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 39
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/mir1omuh
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.126
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.125
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.1, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.356
+epoch done with 0.304
+epoch done with 0.185
+epoch done with 0.145
+epoch done with 0.136
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.131
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.129
+epoch done with 0.127
+epoch done with 0.128
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.366
+epoch done with 0.261
+epoch done with 0.156
+epoch done with 0.140
+epoch done with 0.136
+epoch done with 0.133
+epoch done with 0.131
+epoch done with 0.132
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.126
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.356
+epoch done with 0.294
+epoch done with 0.184
+epoch done with 0.145
+epoch done with 0.135
+epoch done with 0.133
+epoch done with 0.133
+epoch done with 0.130
+epoch done with 0.131
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.128
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.132
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+Grid search using {'num_samples': 128, 'learning_rate': 0.01, 'l1_regularization_factor': 0.001, 'l2_regularization_factor': 0.01, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium_explicit', 'specs': (False, False)}
+epoch done with 0.364
+epoch done with 0.256
+epoch done with 0.157
+epoch done with 0.139
+epoch done with 0.135
+epoch done with 0.134
+epoch done with 0.132
+epoch done with 0.132
+epoch done with 0.131
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.130
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.129
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.129
+epoch done with 0.128
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.128
+epoch done with 0.128
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.127
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.126
+epoch done with 0.127
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▅▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.127
+wandb: 
+wandb: 🚀 View run Run 39 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/mir1omuh
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_183939-mir1omuh/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_184111-5dmq96ne
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 40
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/5dmq96ne
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▇▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.126
+wandb: 
+wandb: 🚀 View run Run 40 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/5dmq96ne
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_184111-5dmq96ne/logs
+wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_184243-b4lumze8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 41
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/b4lumze8
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:143: FutureWarning: jax.tree_flatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_flatten instead.
+  leaves, treedef = jax.tree_flatten(tree)
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:144: FutureWarning: jax.tree_unflatten is deprecated, and will be removed in a future release. Use jax.tree_util.tree_unflatten instead.
+  return jax.tree_unflatten(treedef, leaves)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb: val_loss_fit █▆▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: val_loss_fit 0.128
+wandb: 
+wandb: 🚀 View run Run 41 at: https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/b4lumze8
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230610_184243-b4lumze8/logs
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.15.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.15.3
+wandb: Run data is saved locally in /nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/wandb/run-20230610_184414-p60ynryt
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Run 42
+wandb: ⭐️ View project at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms
+wandb: 🚀 View run at https://wandb.ai/lab_frohlich/pierre_mochi__fit_tmodel_3state_doubledeepms/runs/p60ynryt
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 52971035 ON ca145 CANCELLED AT 2023-06-10T18:45:01 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 52971035.0 ON ca145 CANCELLED AT 2023-06-10T18:45:01 DUE TO TIME LIMIT ***
+Will exit after finishing currently running jobs (scheduler).
+Will exit after finishing currently running jobs (scheduler).

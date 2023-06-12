@@ -1,0 +1,94 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10000, mem_mib=9537, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10000, mem_mib=9537, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 01:36:07 2023]
+rule run_model:
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=10000, mem_mib=9537, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52959906, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Warning: Output model directory already exists.
+Warning: Output plot directory already exists.
+Warning: Output weights directory already exists.
+Warning: Output boostrap directory already exists.
+Grid search using {'num_samples': 128, 'learning_rate': 0.0001, 'l1_regularization_factor': 0.0001, 'l2_regularization_factor': 0.0001, 'number_additive_traits': 1, 'model_type': 'tri_state_equilibrium', 'specs': (False, False)}
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 187, in <module>
+    grid_results = [
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 188, in <listcomp>
+    fit_model_grid_jax(
+  File "/nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/training.py", line 92, in fit_model_grid_jax
+    wandb.init(
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 1169, in init
+    raise e
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 1146, in init
+    wi.setup(kwargs)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 172, in setup
+    self._wl = wandb_setup.setup(settings=setup_settings)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 327, in setup
+    ret = _setup(settings=settings)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 320, in _setup
+    wl = _WandbSetup(settings=settings)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 303, in __init__
+    _WandbSetup._instance = _WandbSetup__WandbSetup(settings=settings, pid=pid)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 114, in __init__
+    self._setup()
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 250, in _setup
+    self._setup_manager()
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_setup.py", line 277, in _setup_manager
+    self._manager = wandb_manager._Manager(settings=self._settings)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/wandb_manager.py", line 145, in __init__
+    self._service.start()
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/service/service.py", line 199, in start
+    self._launch_server()
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/service/service.py", line 193, in _launch_server
+    _sentry.reraise(e)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/analytics/sentry.py", line 146, in reraise
+    raise exc.with_traceback(sys.exc_info()[2])
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/service/service.py", line 191, in _launch_server
+    self._wait_for_ports(fname, proc=internal_proc)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/wandb/sdk/service/service.py", line 141, in _wait_for_ports
+    raise ServiceStartTimeoutError(
+wandb.sdk.service.service.ServiceStartTimeoutError: Timed out waiting for wandb service to start after 30.0 seconds. Try increasing the timeout with the `_service_wait` setting.
+[Sat Jun 10 01:40:52 2023]
+Error in rule run_model:
+    jobid: 0
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    shell:
+        
+        mkdir -p Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+srun: error: ca035: task 0: Exited with exit code 1
+[Sat Jun 10 01:40:54 2023]
+Error in rule run_model:
+    jobid: 0
+    output: Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    shell:
+        
+        mkdir -p Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_train.txt         --data_valid Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_valid.txt         --data_obs Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/dataset_all.txt         -o Res/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message

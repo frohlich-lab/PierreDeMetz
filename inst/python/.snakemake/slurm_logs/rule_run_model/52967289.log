@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Sat Jun 10 14:17:01 2023]
+rule run_model:
+    output: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_performance_perepoch.pdf, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/predicted_fitness.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_weights.txt, Res/PSD95-PDZ3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p/tri_state_equilibrium/model_parameters.txt
+    wildcards: protein=PSD95-PDZ3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p, model_type=tri_state_equilibrium
+    resources: mem_mb=30000, mem_mib=28611, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52967289, slurm_account=u_froehlichf, slurm_partition=cpu
+
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 52967289 ON ca085 CANCELLED AT 2023-06-10T14:20:08 ***
+slurmstepd: error: *** STEP 52967289.0 ON ca085 CANCELLED AT 2023-06-10T14:20:08 ***
+Will exit after finishing currently running jobs (scheduler).

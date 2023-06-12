@@ -1,0 +1,71 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954
+Select jobs to execute...
+
+[Fri Jun  9 11:33:02 2023]
+rule run_model:
+    output: Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    jobid: 0
+    reason: Missing output files: Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    wildcards: protein=GRB2-SH3, dataset=mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p, model_type=tri_state_equilibrium_state
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=/tmp/slurm_52935076, slurm_account=u_froehlichf, slurm_partition=cpu
+
+/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Traceback (most recent call last):
+  File "pierre_mochi__fit_tmodel_3state_doubledeepms.py", line 141, in <module>
+    model_data_jax = load_model_data_jax({
+  File "/nemo/lab/froehlichf/home/users/demetzp/PierreDeMetz/inst/python/dataloading.py", line 13, in load_model_data_jax
+    df = pd.read_csv(file_dict[name])
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/util/_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 950, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 605, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 1442, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 1735, in _make_engine
+    self.handles = get_handle(
+  File "/camp/home/demetzp/.conda/envs/demetzp/lib/python3.8/site-packages/pandas/io/common.py", line 856, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: 'Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt'
+[Fri Jun  9 11:33:31 2023]
+Error in rule run_model:
+    jobid: 0
+    output: Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    shell:
+        
+        mkdir -p Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt         --data_valid Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt         --data_obs Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt         -o Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium_state         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+srun: error: ca056: task 0: Exited with exit code 1
+[Fri Jun  9 11:33:31 2023]
+Error in rule run_model:
+    jobid: 0
+    output: Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_performance_perepoch.pdf, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/predicted_fitness.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_weights.txt, Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/model_parameters.txt
+    shell:
+        
+        mkdir -p Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state;
+        python pierre_mochi__fit_tmodel_3state_doubledeepms.py         --data_train Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_train.txt         --data_valid Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_valid.txt         --data_obs Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/dataset_all.txt         -o Results/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample50p/tri_state_equilibrium_state/         -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False         --model_type tri_state_equilibrium_state         --protein GRB2-SH3         --project_name pierre_mochi__fit_tmodel_3state_doubledeepms         --wandb True;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
