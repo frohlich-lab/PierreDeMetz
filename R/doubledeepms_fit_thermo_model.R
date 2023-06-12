@@ -121,7 +121,7 @@ doubledeepms_fit_thermo_model <- function(
       mut_order_subset_obs = mut_order_subset_obs,
       fit_type = fit_type,
       subsample_prop = tmodel_subsample_prop,
-      mochi_script = system.file("python", "mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepms"),
+      mochi_script = system.file("python", "pierre_mochi__fit_tmodel_3state_doubledeepms.py", package = "doubledeepms"),
       mochi_outpath = mochi_outpath,
       num_samples = num_samples,
       learning_rate = learning_rate,

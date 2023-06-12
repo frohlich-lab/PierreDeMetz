@@ -111,7 +111,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
         input_dim_binding=input_data['train']['bind'].shape[1],
         number_additive_traits=param_dict['number_additive_traits'],
         model_type=param_dict['model_type'],
-        specs=param_dict['specs']
+        is_implicit=param_dict['is_implicit'],
         )
 
     @jax.jit

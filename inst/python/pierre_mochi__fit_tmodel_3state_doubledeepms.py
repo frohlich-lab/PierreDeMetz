@@ -31,7 +31,7 @@ parser.add_argument("--wandb", '-w', default = 'False', help = "Whether to use w
 parser.add_argument("--project_name", '-pn', default = 'pierre_mochi__fit_tmodel_3state_doubledeepms', help = "Wandb project name (default:pierre_mochi__fit_tmodel_3state_doubledeepms)")
 parser.add_argument('--is_implicit', action='store_true', default=False, help='Set is_implicit as True')
 parser.add_argument('--is_degradation', action='store_true', default=False, help='Set is_degradation as True')
-
+#
 
 #Parse the arguments
 args = parser.parse_args()
@@ -53,8 +53,8 @@ protein = args.protein
 wandb_status = args.wandb
 project_name = args.project_name
 is_implicit = args.is_implicit
-is_degradation = args.is_degradation
-specs = (is_implicit, is_degradation)
+#is_degradation = args.is_degradation
+#specs = (is_implicit, is_degradation)
 
 #Grid search arguments
 l1 = [float(i) for i in args.l1_regularization_factor.split(",")]
@@ -169,7 +169,7 @@ if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) ==
         "l2_regularization_factor": l2[0],
         "number_additive_traits": 1,
         "model_type": model_type,
-        "specs": specs
+        "is_implicit": is_implicit
     }
 
 else:
@@ -180,7 +180,7 @@ else:
         "l2_regularization_factor": l,
         "number_additive_traits": 1,
         "model_type": model_type,
-        "specs": specs
+        "is_implicit": is_implicit
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
@@ -217,7 +217,7 @@ model, opt_init, opt_update = create_model_jax(
     input_dim_binding=model_data_jax['train']['bind'].shape[1],
     number_additive_traits=best_params['number_additive_traits'],
     model_type=best_params['model_type'],
-    specs=best_params['specs']
+    is_implicit=best_params['is_implicit']
 )
 
 weights = model.init(next(rngs),
@@ -233,7 +233,8 @@ weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 history, model, trained_weights = model_training(model,
                                                  opt_state,
                                                  opt_update,
-                                                 weights, best_params, model_data_jax, num_epochs, next(rngs))
+                                                 weights, best_params, model_data_jax, num_epochs, next(rngs),
+                                                 wandb_config)
 
 # Model predictions on observed variants
 model_outputs= model.apply(trained_weights,

@@ -5,11 +5,13 @@ from jax import vmap
 from diffrax import diffeqsolve, ODETerm, Dopri5
 import equinox as eqx
 
-def create_chemical_model(model_type, is_implicit, is_degradation):
+def create_chemical_model(model_type, is_implicit):
     if model_type == 'tri_state_equilibrium':
         return ThreeStateEquilibrium(is_implicit)
-    elif model_type == 'two_state_non_equilibrium':
-        return TwoStateNonEquilibrium(is_implicit, is_degradation)
+    elif model_type == 'two_state_non_equilibrium_nondeg':
+        return TwoStateNonEquilibriumNonDeg(is_implicit)
+    elif model_type == 'two_state_non_equilibrium_deg':
+        return TwoStateNonEquilibriumDeg(is_implicit)
     elif model_type == 'tri_state_non_equilibrium':
         return ThreeStateNonEquilibrium(is_implicit)
     elif model_type == 'tri_state_equilibrium_explicit':
@@ -135,16 +137,14 @@ class ThreeStateEquilibrium(ChemicalModel):
         return results.T[:][2].reshape(-1, 1)
 
 
-class TwoStateNonEquilibrium(ChemicalModel):
+class TwoStateNonEquilibriumDeg(ChemicalModel):
     x0_two: jnp.ndarray #= eqx.static_field()
     x0_tri: jnp.ndarray #=  eqx.static_field()
-    is_degradation: bool = eqx.static_field()
 
-    def __init__(self, is_implicit, is_degradation):
+    def __init__(self, is_implicit):
         super().__init__(is_implicit)
         self.x0_two = jnp.array([1/2])
         self.x0_tri = jnp.array([1/2, 1/2])
-        self.is_degradation = is_degradation
 
     def objective_folding(self, *args):
         if not self.is_implicit:
@@ -175,18 +175,65 @@ class TwoStateNonEquilibrium(ChemicalModel):
         x_f, x_b = x
         l = 1.0
 
-        if self.is_degradation==False:
-            #f_xb = flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
-            #f_xf = flux_folding(x2=x_f, delta_g=delta_g_df) - flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
-            f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
-            f_xf = jnp.exp(-delta_g_df) - x_f - f_xb
+        f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
+        f_xf = jnp.exp(-delta_g_df) - x_f - f_xb + x_b * jnp.exp(delta_g_dd)
 
+        if not self.is_implicit:
+            return jnp.array([f_xf, f_xb]).reshape(-1,)
         else:
-            #f_xb = flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db) - flux_degradation(x1=x_b, delta_g=delta_g_dd)
-            #f_xf = flux_folding(x2=x_f, delta_g=delta_g_df) - flux_binding(x1=x_f, x2=x_b, delta_g=delta_g_db)
-            #f_xf = (jnp.exp(-delta_g_df) - x_f) - (x_b * jnp.exp(delta_g_db) - x_f)
-            f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l - x_b * jnp.exp(delta_g_dd)
-            f_xf = jnp.exp(-delta_g_df) - x_f - f_xb + x_b * jnp.exp(delta_g_dd)
+            result = jnp.square(f_xf) + jnp.square(f_xb)
+            return jnp.squeeze(result)
+
+    def solve_folding(self, args_folding):
+        results = self.opt_vectorize(self.x0_two, args_folding, self.objective_folding)
+        return results.T[:].flatten().reshape(-1, 1)
+
+    def solve_binding(self, args_binding):
+        results = self.opt_vectorize(self.x0_tri, args_binding, self.objective_binding)
+        return results.T[:][1].reshape(-1, 1)
+
+class TwoStateNonEquilibriumNonDeg(ChemicalModel):
+    x0_two: jnp.ndarray #= eqx.static_field()
+    x0_tri: jnp.ndarray #=  eqx.static_field()
+
+    def __init__(self, is_implicit):
+        super().__init__(is_implicit)
+        self.x0_two = jnp.array([1/2])
+        self.x0_tri = jnp.array([1/2, 1/2])
+
+    def objective_folding(self, *args):
+        if not self.is_implicit:
+            t, x, args = args
+        else:
+            x, args = args
+
+        delta_g_do, delta_g_df = args
+        x_f = x
+
+        #f_xf = flux_folding(x2=x_f, delta_g =delta_g_df)
+        f_xf = jnp.exp(-delta_g_df) - x_f
+
+        if not self.is_implicit:
+            return jnp.array([f_xf]).reshape(-1,)
+        else:
+            result = jnp.square(f_xf)
+            return jnp.squeeze(result)
+
+    def objective_binding(self, *args):
+        if not self.is_implicit:
+            t, x, args = args
+        else:
+            x, args = args
+
+        delta_g_do, delta_g_df, delta_g_db, delta_g_dd = args
+
+        x_f, x_b = x
+        l = 1.0
+
+
+        f_xb = -x_b * jnp.exp(delta_g_db) + x_f * l
+        f_xf = jnp.exp(-delta_g_df) - x_f - f_xb
+
 
         if not self.is_implicit:
             return jnp.array([f_xf, f_xb]).reshape(-1,)
@@ -302,9 +349,7 @@ if __name__ == '__main__':
     print("Solution for binding:", solution_binding)
 
     ### TWO STATE NON EQUILIBRIUM
-    two_state_non_eq_model = TwoStateNonEquilibrium(is_implicit = True,
-                                              is_degradation = False)
-
+    two_state_non_eq_model = TwoStateNonEquilibriumDeg(is_implicit = True)
 
     solution_folding = two_state_non_eq_model.solve_folding(args_folding)
     solution_binding = two_state_non_eq_model.solve_binding(args_binding)
