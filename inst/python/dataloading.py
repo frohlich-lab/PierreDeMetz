@@ -102,15 +102,12 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
     return tensor_dict
 
 def load_model_data_complex(file_dict, union_mode=False):
+    amino_acid_to_index = {'A': 0, 'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'H': 6, 'I': 7, 'K': 8, 'L': 9, 'M': 10, 'N': 11, 'P': 12, 'Q': 13, 'R': 14, 'S': 15, 'T': 16, 'V': 17, 'W': 18, 'Y': 19}
     data_dict = {}
     for name in file_dict.keys():
-        # Initialize
         data_dict[name] = {}
-
-        # Read the entire file once
         df = pd.read_csv(file_dict[name])
 
-        # Column names
         ALL_COLUMNS = list(df.columns)
         SELECT_COLUMNS = [col for col in ALL_COLUMNS if col.startswith("dataset_")]
         FOLD_COLUMNS = [col for col in ALL_COLUMNS if col.startswith("fold_") or col == "WT"]
@@ -120,9 +117,8 @@ def load_model_data_complex(file_dict, union_mode=False):
         SEQUENCE_COLUMN = "variant_sequence"
         TRAINING_SET_COLUMN = "training_set"
 
-        # Create empty matrices for bind and fold
-        mutation_matrix_bind = jnp.zeros((len(df), 26, 26), dtype=jnp.float32)
-        mutation_matrix_fold = jnp.zeros((len(df), 26, 26), dtype=jnp.float32)
+        mutation_matrix_bind = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
+        mutation_matrix_fold = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
         location_matrix_bind = jnp.zeros((len(df), len(df.columns) - len(BIND_COLUMNS)), dtype=jnp.float32)
         location_matrix_fold = jnp.zeros((len(df), len(df.columns) - len(FOLD_COLUMNS)), dtype=jnp.float32)
 
@@ -135,12 +131,11 @@ def load_model_data_complex(file_dict, union_mode=False):
             match = re.match(r"([A-Z])(\d+)([A-Z])", stripped_col)
             if match:
                 original, position, mutation = match.groups()
-                mutation_matrix_bind = mutation_matrix_bind.at[:, ord(original) - ord('A'), ord(mutation) - ord('A')].set(df[col])
+                mutation_matrix_bind = mutation_matrix_bind.at[:, amino_acid_to_index[original], amino_acid_to_index[mutation]].set(df[col])
                 location_matrix_bind = location_matrix_bind.at[:, int(position)-1].set(df[col])
             else:
                 print(f"Could not parse column name: {col}")
 
-        # Now do the same for FOLD_COLUMNS
         for i, col in enumerate(FOLD_COLUMNS):
             if col == "WT":
                 continue
@@ -148,12 +143,11 @@ def load_model_data_complex(file_dict, union_mode=False):
             match = re.match(r"([A-Z])(\d+)([A-Z])", stripped_col)
             if match:
                 original, position, mutation = match.groups()
-                mutation_matrix_fold = mutation_matrix_fold.at[:, ord(original) - ord('A'), ord(mutation) - ord('A')].set(df[col])
+                mutation_matrix_fold = mutation_matrix_fold.at[:, amino_acid_to_index[original], amino_acid_to_index[mutation]].set(df[col])
                 location_matrix_fold = location_matrix_fold.at[:, int(position)-1].set(df[col])
             else:
                 print(f"Could not parse column name: {col}")
 
-        # Save (sparse) tensors
         data_dict[name]["select"] = jnp.array(df[SELECT_COLUMNS], dtype=jnp.float32)
         data_dict[name]["bind_mutation"] = mutation_matrix_bind
         data_dict[name]["bind_location"] = location_matrix_bind
@@ -162,7 +156,6 @@ def load_model_data_complex(file_dict, union_mode=False):
         data_dict[name]["target"] = jnp.array(df[TARGET_COLUMN], dtype=jnp.float32)
         data_dict[name]["target_sd"] = jnp.array(df[TARGET_SD_COLUMN], dtype=jnp.float32)
 
-        # Save remaining columns
         if SEQUENCE_COLUMN in df.columns:
             data_dict[name]["sequence"] = np.array(df[SEQUENCE_COLUMN].values)
         if TRAINING_SET_COLUMN in df.columns:

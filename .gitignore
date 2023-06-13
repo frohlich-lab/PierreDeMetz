@@ -16,3 +16,4 @@ inst/python/Res
 Data/
 Results/
 inst/python/Snakefile
+inst/python/.snakemake/

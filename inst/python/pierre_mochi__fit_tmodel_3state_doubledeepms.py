@@ -30,8 +30,8 @@ parser.add_argument("--protein", '-prot', default = 'GRB2', help = "Protein name
 parser.add_argument("--wandb", '-w', default = 'False', help = "Whether to use wandb (default:False)")
 parser.add_argument("--project_name", '-pn', default = 'pierre_mochi__fit_tmodel_3state_doubledeepms', help = "Wandb project name (default:pierre_mochi__fit_tmodel_3state_doubledeepms)")
 parser.add_argument('--is_implicit', action='store_true', default=False, help='Set is_implicit as True')
-parser.add_argument('--is_degradation', action='store_true', default=False, help='Set is_degradation as True')
-#
+#parser.add_argument('--is_degradation', action='store_true', default=False, help='Set is_degradation as True')
+
 
 #Parse the arguments
 args = parser.parse_args()
@@ -77,9 +77,10 @@ import haiku as hk
 from functools import partial
 
 from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, apply_weight_constraints, shuffle_weights
-from training import model_training, fit_model_grid_jax
-from dataloading import load_model_data_jax, resample_training_data_jax
+from training import model_training, fit_model_grid_jax, fit_model_grid_complex
+from dataloading import load_model_data_jax, resample_training_data_jax, load_model_data_complex
 from model_creation import create_model_fn, create_model_jax
+
 #######################################################################
 ## SETUP ##
 #######################################################################
@@ -135,12 +136,9 @@ wandb_config = {
 }
 
 
-
 rngs = hk.PRNGSequence(jax.random.PRNGKey(42))
 
-
-#Load model data
-model_data_jax = load_model_data_jax({
+model_data_jax = load_model_data_complex({
     "train": data_train_file,
     "valid": data_valid_file,
     "obs": data_obs_file
@@ -187,7 +185,7 @@ else:
     rngs_grid = jax.random.split(rng, len(parameter_grid))
 
     grid_results = [
-        fit_model_grid_jax(
+        fit_model_grid_complex(
             params,
             model_data_jax,
             num_epochs_grid,
@@ -212,9 +210,6 @@ model, opt_init, opt_update = create_model_jax(
     learn_rate=best_params['learning_rate'],
     l1=best_params['l1_regularization_factor'],
     l2=best_params['l2_regularization_factor'],
-    input_dim_select=model_data_jax['train']['select'].shape[1],
-    input_dim_folding=model_data_jax['train']['fold'].shape[1],
-    input_dim_binding=model_data_jax['train']['bind'].shape[1],
     number_additive_traits=best_params['number_additive_traits'],
     model_type=best_params['model_type'],
     is_implicit=best_params['is_implicit']

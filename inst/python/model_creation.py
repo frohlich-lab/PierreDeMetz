@@ -159,35 +159,39 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                          inputs_mutation_binding,
                          inputs_location_binding):
 
+        inputs_mutation_folding = inputs_mutation_folding.reshape((inputs_mutation_folding.shape[0], -1))
+        inputs_mutation_binding= inputs_mutation_binding.reshape((inputs_mutation_binding.shape[0], -1))
 
         input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
         input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
 
         model = create_chemical_model(model_type, is_implicit)
 
+
         ####################### PRE-MODEL LAYERS
         mutation_layer_folding = hk.Linear(number_additive_traits,
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
-                                   name='mutation_layer')(inputs_mutation_folding)
-
+                                   name='mutation_layer_fold')(inputs_mutation_folding)
         location_layer_folding = hk.Linear(number_additive_traits,
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
-                                   name='location_layer')(inputs_location_folding)
+                                   name='location_layer_fold')(inputs_location_folding)
 
+        #location_layer_folding = jnp.reshape(location_layer_folding, (-1, 1, 1))
         inputs_folding = mutation_layer_folding + location_layer_folding
 
         mutation_layer_binding = hk.Linear(number_additive_traits,
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
-                                   name='mutation_layer')(inputs_mutation_binding)
+                                   name='mutation_layer_bind')(inputs_mutation_binding)
 
         location_layer_binding = hk.Linear(number_additive_traits,
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
-                                   name='location_layer')(inputs_location_binding)
+                                   name='location_layer_bind')(inputs_location_binding)
 
+        #location_layer_binding = jnp.reshape(location_layer_binding, (-1, 1, 1))
         inputs_binding = mutation_layer_binding + location_layer_binding
 
         ####################### MODEL LAYERS
@@ -211,7 +215,6 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                                                  with_bias=False,
                                                  name = 'folding_additive_trait'
                                                  )(inputs_folding)
-
         binding_additive_trait_layer = hk.Linear(number_additive_traits,
                                                  w_init=hk.initializers.VarianceScaling(1.0, "fan_in",
                                                                                         "truncated_normal"),
@@ -252,10 +255,10 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
 
 
 
-def create_model_jax(rng, learn_rate, l1, l2, input_dim_select, input_dim_folding, input_dim_binding,
+def create_model_jax(rng, learn_rate, l1, l2,
                      number_additive_traits, model_type = 'tri_state_explicit', is_implicit = True):
 
-    model_fn = create_model_fn_class(number_additive_traits, l1, l2, rng, is_implicit, model_type)
+    model_fn = create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit, model_type)
     #model_fn = create_model_fn(number_additive_traits, l1, l2, rng, model_type)
 
     model = hk.without_apply_rng(hk.transform(model_fn))
