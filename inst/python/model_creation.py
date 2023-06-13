@@ -178,7 +178,6 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                                    with_bias=False,
                                    name='location_layer_fold')(inputs_location_folding)
 
-        #location_layer_folding = jnp.reshape(location_layer_folding, (-1, 1, 1))
         inputs_folding = mutation_layer_folding + location_layer_folding
 
         mutation_layer_binding = hk.Linear(number_additive_traits,
@@ -191,7 +190,6 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                                    with_bias=False,
                                    name='location_layer_bind')(inputs_location_binding)
 
-        #location_layer_binding = jnp.reshape(location_layer_binding, (-1, 1, 1))
         inputs_binding = mutation_layer_binding + location_layer_binding
 
         ####################### MODEL LAYERS
@@ -259,6 +257,7 @@ def create_model_jax(rng, learn_rate, l1, l2,
                      number_additive_traits, model_type = 'tri_state_explicit', is_implicit = True):
 
     model_fn = create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit, model_type)
+    #model_fn = create_model_fn_class(number_additive_traits, l1, l2, rng, is_implicit, model_type)
     #model_fn = create_model_fn(number_additive_traits, l1, l2, rng, model_type)
 
     model = hk.without_apply_rng(hk.transform(model_fn))

@@ -257,3 +257,64 @@ def fit_model_grid_complex(param_dict, input_data, n_epochs, rng, wandb_config):
             wandb.log({'val_loss_fit': round(val_loss.item(),3)})
 
     return val_loss.item()
+
+
+
+def model_training_complex(model, opt_state,opt_update, weights, param_dict, input_data, n_epochs, rng, wandb_config):
+
+    print("Training the model with %s" % (param_dict))
+    rng_batches = jax.random.split(rng, num=n_epochs)
+    wandb_config_updated = {**wandb_config, **param_dict}
+
+    if wandb_config['status'] == 'True':
+        wandb.init(
+        project=wandb_config['project_name'],
+        entity = 'lab_frohlich',
+        config=wandb_config_updated,
+        group = wandb_config['model_type'],
+        job_type='final_model_training',
+        reinit=True,
+        name = f'Actual model training : {param_dict}')
+
+    @jax.jit
+    def loss_fn(weights, inputs_select, inputs_folding_mutation, inputs_folding_location,
+                inputs_binding_mutation, inputs_binding_location, target):
+        output, _, _, _, _ = model.apply(weights, inputs_select, inputs_folding_mutation, inputs_folding_location,
+                                         inputs_binding_mutation, inputs_binding_location)
+        loss = jnp.mean(jnp.abs(target - output))
+        return loss
+
+    @jax.jit
+    def update(weights, opt_state, inputs_select, inputs_folding_mutation, inputs_folding_location,
+                inputs_binding_mutation, inputs_binding_location, target):
+        grads = jax.grad(loss_fn)(weights, inputs_select, inputs_folding_mutation, inputs_folding_location,
+                                  inputs_binding_mutation, inputs_binding_location, target)
+        updates, opt_state = opt_update(grads, opt_state)
+        weights = optax.apply_updates(weights, updates)
+        return weights, opt_state
+
+    history = []
+    for epoch in range(n_epochs):
+        batch_data = generate_batches_complex(input_data['train'], param_dict['num_samples'], rng_batches[epoch])
+        for batch in batch_data:
+            inputs_select, inputs_folding_mutation, inputs_folding_location, inputs_binding_mutation, inputs_binding_location, target = batch
+            weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding_mutation, inputs_folding_location,
+                                        inputs_binding_mutation, inputs_binding_location, target)
+
+            weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
+            weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+
+        val_loss = loss_fn(weights, input_data['valid']['select'],
+                        input_data['valid']['fold_mutation'],
+                        input_data['valid']['fold_location'],
+                        input_data['valid']['bind_mutation'],
+                        input_data['valid']['bind_location'],
+                        input_data['valid']['target'])
+
+        history.append(val_loss.item())
+        print(f'epoch done with {val_loss.item():.3f}')
+
+        if wandb_config['status'] == 'True':
+            wandb.log({'val_loss_train': round(val_loss.item(),3)})
+
+    return history, model, weights

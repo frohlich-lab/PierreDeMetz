@@ -30,6 +30,7 @@ parser.add_argument("--protein", '-prot', default = 'GRB2', help = "Protein name
 parser.add_argument("--wandb", '-w', default = 'False', help = "Whether to use wandb (default:False)")
 parser.add_argument("--project_name", '-pn', default = 'pierre_mochi__fit_tmodel_3state_doubledeepms', help = "Wandb project name (default:pierre_mochi__fit_tmodel_3state_doubledeepms)")
 parser.add_argument('--is_implicit', action='store_true', default=False, help='Set is_implicit as True')
+parser.add_argument('--is_complex', action='store_true', default=False, help='Set is_degradation as True')
 #parser.add_argument('--is_degradation', action='store_true', default=False, help='Set is_degradation as True')
 
 
@@ -53,6 +54,7 @@ protein = args.protein
 wandb_status = args.wandb
 project_name = args.project_name
 is_implicit = args.is_implicit
+is_complex = args.is_complex
 #is_degradation = args.is_degradation
 #specs = (is_implicit, is_degradation)
 
@@ -77,7 +79,7 @@ import haiku as hk
 from functools import partial
 
 from utils import constrained_gradients, StateProbBound, StateProbFolded, Between, apply_weight_constraints, shuffle_weights
-from training import model_training, fit_model_grid_jax, fit_model_grid_complex
+from training import model_training, fit_model_grid_jax, fit_model_grid_complex, model_training_complex
 from dataloading import load_model_data_jax, resample_training_data_jax, load_model_data_complex
 from model_creation import create_model_fn, create_model_jax
 
@@ -138,13 +140,22 @@ wandb_config = {
 
 rngs = hk.PRNGSequence(jax.random.PRNGKey(42))
 
-model_data_jax = load_model_data_complex({
-    "train": data_train_file,
-    "valid": data_valid_file,
-    "obs": data_obs_file
-    },
-                                     union_mode
-                                     )
+if is_complex==True:
+    model_data_jax = load_model_data_complex({
+        "train": data_train_file,
+        "valid": data_valid_file,
+        "obs": data_obs_file
+        },
+                                        union_mode
+                                        )
+else:
+    model_data_jax = load_model_data_jax({
+        "train": data_train_file,
+        "valid": data_valid_file,
+        "obs": data_obs_file
+        },
+                                        union_mode
+                                        )
 
 #Resample training data
 if num_resamplings!=0:
@@ -182,8 +193,9 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs_grid = jax.random.split(rng, len(parameter_grid))
+    rngs_grid = jax.random.split(rng, len(parameter_grid[:1]))
 
+if is_complex==True:
     grid_results = [
         fit_model_grid_complex(
             params,
@@ -192,13 +204,28 @@ else:
             rng_key,
             {**wandb_config, 'run_number': i+1}
         )
-        for i, (params, rng_key) in enumerate(zip(parameter_grid, rngs_grid))
+        for i, (params, rng_key) in enumerate(zip(parameter_grid[:1], rngs_grid))
     ]
 
     best_params = parameter_grid[np.argmin(grid_results)]
 
     print("Best: %f using %s" % (min(grid_results), best_params))
 
+elif is_complex==False:
+    grid_results = [
+        fit_model_grid_jax(
+            params,
+            model_data_jax,
+            num_epochs_grid,
+            rng_key,
+            {**wandb_config, 'run_number': i+1}
+        )
+        for i, (params, rng_key) in enumerate(zip(parameter_grid[:1], rngs_grid))
+    ]
+
+    best_params = parameter_grid[np.argmin(grid_results)]
+
+    print("Best: %f using %s" % (min(grid_results), best_params))
 
 #######################################################################
 ## BUILD FINAL NEURAL NETWORK ##
@@ -215,31 +242,51 @@ model, opt_init, opt_update = create_model_jax(
     is_implicit=best_params['is_implicit']
 )
 
-weights = model.init(next(rngs),
-                     jnp.ones_like(model_data_jax['train']['select']),
-                     jnp.ones_like(model_data_jax['train']['fold']),
-                     jnp.ones_like(model_data_jax['train']['bind']))
+if is_complex==True:
+    weights = model.init(rng,
+                        jnp.ones_like(model_data_jax['train']['select']),
+                        jnp.ones_like(model_data_jax['train']['fold_mutation']),
+                        jnp.ones_like(model_data_jax['train']['fold_location']),
+                        jnp.ones_like(model_data_jax['train']['bind_mutation']),
+                        jnp.ones_like(model_data_jax['train']['bind_location']))
+elif is_complex==False:
+    weights = model.init(next(rngs),
+                    jnp.ones_like(model_data_jax['train']['select']),
+                    jnp.ones_like(model_data_jax['train']['fold']),
+                    jnp.ones_like(model_data_jax['train']['bind']))
 
 opt_state = opt_init(weights)
 
 weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
 weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
+if is_complex==True:
+    history, model, trained_weights = model_training_complex(model,
+                                                    opt_state,
+                                                    opt_update,
+                                                    weights, best_params, model_data_jax, num_epochs, next(rngs),
+                                                    wandb_config)
+if is_complex==False:
+    history, model, trained_weights = model_training(model,
+                                                    opt_state,
+                                                    opt_update,
+                                                    weights, best_params, model_data_jax, num_epochs, next(rngs),
+                                                    wandb_config)
 
-history, model, trained_weights = model_training(model,
-                                                 opt_state,
-                                                 opt_update,
-                                                 weights, best_params, model_data_jax, num_epochs, next(rngs),
-                                                 wandb_config)
+if is_complex==True:
+    model_outputs= model.apply(trained_weights,
+                                    model_data_jax['obs']['select'],
+                                    model_data_jax['obs']['fold_mutation'],
+                                    model_data_jax['obs']['fold_location'],
+                                    model_data_jax['obs']['bind_mutation'],
+                                    model_data_jax['obs']['bind_location']
+                                    )
+elif is_complex==False:
+    model_outputs= model.apply(trained_weights,
+                               model_data_jax['obs']['select'],
+                               model_data_jax['obs']['fold'],
+                               model_data_jax['obs']['bind'])
 
-# Model predictions on observed variants
-model_outputs= model.apply(trained_weights,
-                                model_data_jax['obs']['select'],
-                                model_data_jax['obs']['fold'],
-                                model_data_jax['obs']['bind']
-                                )
-
-prediction ,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
-
+prediction,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
 
 model_count = 1
 
@@ -255,11 +302,19 @@ my_figure.savefig(os.path.join(plot_directory, "model_performance_perepoch_"+str
 #######################################################################
 
 # Model predictions on observed variants
-model_outputs = model.apply(trained_weights,
-                            model_data_jax['obs']['select'],
-                            model_data_jax['obs']['fold'],
-                            model_data_jax['obs']['bind']
-                        )
+if is_complex==True:
+    model_outputs= model.apply(trained_weights,
+                                    model_data_jax['obs']['select'],
+                                    model_data_jax['obs']['fold_mutation'],
+                                    model_data_jax['obs']['fold_location'],
+                                    model_data_jax['obs']['bind_mutation'],
+                                    model_data_jax['obs']['bind_location']
+                                    )
+elif is_complex==False:
+    model_outputs= model.apply(trained_weights,
+                               model_data_jax['obs']['select'],
+                               model_data_jax['obs']['fold'],
+                               model_data_jax['obs']['bind'])
 
 prediction,folding_additive_layer_output, binding_additive_layer_output, folding_additive_trait_layer_outputs, binding_additive_trait_layer_outputs = model_outputs
 
