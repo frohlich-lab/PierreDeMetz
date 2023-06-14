@@ -3,6 +3,8 @@ import jax
 import pandas as pd
 import jax.numpy as jnp
 import pprint
+import re
+
 
 def load_model_data_jax(file_dict, union_mode=False):
     data_dict = {}
@@ -116,13 +118,15 @@ def load_model_data_complex(file_dict, union_mode=False):
         TARGET_SD_COLUMN = "fitness_sd"
         SEQUENCE_COLUMN = "variant_sequence"
         TRAINING_SET_COLUMN = "training_set"
+        #print(len(df.columns))
+        #print(len(BIND_COLUMNS))
+        #print(len(FOLD_COLUMNS))
 
         mutation_matrix_bind = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
         mutation_matrix_fold = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
         location_matrix_bind = jnp.zeros((len(df), len(df.columns) - len(BIND_COLUMNS)), dtype=jnp.float32)
         location_matrix_fold = jnp.zeros((len(df), len(df.columns) - len(FOLD_COLUMNS)), dtype=jnp.float32)
 
-        import re
 
         for i, col in enumerate(BIND_COLUMNS):
             if col == "WT":
@@ -149,10 +153,12 @@ def load_model_data_complex(file_dict, union_mode=False):
                 print(f"Could not parse column name: {col}")
 
         data_dict[name]["select"] = jnp.array(df[SELECT_COLUMNS], dtype=jnp.float32)
+
         data_dict[name]["bind_mutation"] = mutation_matrix_bind
         data_dict[name]["bind_location"] = location_matrix_bind
         data_dict[name]["fold_mutation"] = mutation_matrix_fold
         data_dict[name]["fold_location"] = location_matrix_fold
+
         data_dict[name]["target"] = jnp.array(df[TARGET_COLUMN], dtype=jnp.float32)
         data_dict[name]["target_sd"] = jnp.array(df[TARGET_SD_COLUMN], dtype=jnp.float32)
 
@@ -176,10 +182,11 @@ if __name__ == '__main__':
     data_valid_file = '/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p//dataset_valid.txt'
     data_obs_file = '/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results//Data/mochi/GRB2-SH3/mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p//dataset_all.txt'
 
-    pprint.pprint(load_model_data_complex({
+    data = load_model_data_complex({
     "train": data_train_file,
     "valid": data_valid_file,
     "obs": data_obs_file
     },
-                                     union_mode
-                                     ))
+                                   union_mode)
+
+    pprint.pprint(data)

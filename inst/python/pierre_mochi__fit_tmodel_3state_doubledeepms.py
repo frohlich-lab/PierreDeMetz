@@ -178,7 +178,8 @@ if len(l1) == 1 and len(l2) == 1 and len(batch_size) == 1 and len(learn_rate) ==
         "l2_regularization_factor": l2[0],
         "number_additive_traits": 1,
         "model_type": model_type,
-        "is_implicit": is_implicit
+        "is_implicit": is_implicit,
+        "is_complex": is_complex
     }
 
 else:
@@ -189,7 +190,8 @@ else:
         "l2_regularization_factor": l,
         "number_additive_traits": 1,
         "model_type": model_type,
-        "is_implicit": is_implicit
+        "is_implicit": is_implicit,
+        "is_complex": is_complex
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
@@ -220,7 +222,7 @@ elif is_complex==False:
             rng_key,
             {**wandb_config, 'run_number': i+1}
         )
-        for i, (params, rng_key) in enumerate(zip(parameter_grid[:1], rngs_grid))
+        for i, (params, rng_key) in enumerate(zip(parameter_grid, rngs_grid))
     ]
 
     best_params = parameter_grid[np.argmin(grid_results)]
@@ -239,7 +241,8 @@ model, opt_init, opt_update = create_model_jax(
     l2=best_params['l2_regularization_factor'],
     number_additive_traits=best_params['number_additive_traits'],
     model_type=best_params['model_type'],
-    is_implicit=best_params['is_implicit']
+    is_implicit=best_params['is_implicit'],
+    is_complex=best_params['is_complex']
 )
 
 if is_complex==True:

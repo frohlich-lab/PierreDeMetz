@@ -127,6 +127,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
         number_additive_traits=param_dict['number_additive_traits'],
         model_type=param_dict['model_type'],
         is_implicit=param_dict['is_implicit'],
+        is_complex=param_dict['is_complex']
         )
 
     @jax.jit
@@ -158,6 +159,7 @@ def fit_model_grid_jax(param_dict, input_data, n_epochs, rng, wandb_config):
 
             inputs_select, inputs_folding, inputs_binding, target = batch
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding, inputs_binding, target)
+            #print(weights['folding_additive_trait']['w'])
 
             weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
             weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
@@ -203,6 +205,7 @@ def fit_model_grid_complex(param_dict, input_data, n_epochs, rng, wandb_config):
         number_additive_traits=param_dict['number_additive_traits'],
         model_type=param_dict['model_type'],
         is_implicit=param_dict['is_implicit'],
+        is_complex=param_dict['is_complex']
     )
 
     @jax.jit
@@ -228,6 +231,7 @@ def fit_model_grid_complex(param_dict, input_data, n_epochs, rng, wandb_config):
                          jnp.ones_like(input_data['train']['fold_location']),
                          jnp.ones_like(input_data['train']['bind_mutation']),
                          jnp.ones_like(input_data['train']['bind_location']))
+
     opt_state = opt_init(weights)
     weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
     weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
@@ -239,6 +243,8 @@ def fit_model_grid_complex(param_dict, input_data, n_epochs, rng, wandb_config):
             inputs_select, inputs_folding_mutation, inputs_folding_location, inputs_binding_mutation, inputs_binding_location, target = batch
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding_mutation, inputs_folding_location,
                                         inputs_binding_mutation, inputs_binding_location, target)
+            #print(weights['mutation_layer_fold'])
+            #print(weights['folding_additive_trait']['w'])
 
             weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
             weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
@@ -300,7 +306,6 @@ def model_training_complex(model, opt_state,opt_update, weights, param_dict, inp
             inputs_select, inputs_folding_mutation, inputs_folding_location, inputs_binding_mutation, inputs_binding_location, target = batch
             weights, opt_state = update(weights, opt_state, inputs_select, inputs_folding_mutation, inputs_folding_location,
                                         inputs_binding_mutation, inputs_binding_location, target)
-
             weights = apply_weight_constraints(weights, 'folding_additive', 0, 1e3)
             weights = apply_weight_constraints(weights, 'binding_additive', 0, 1e3)
 
