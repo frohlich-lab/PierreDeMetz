@@ -17,3 +17,4 @@ Data/
 Results/
 inst/python/Snakefile
 inst/python/.snakemake/
+*.pkl

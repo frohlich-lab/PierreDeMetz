@@ -163,6 +163,12 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
         inputs_mutation_folding = inputs_mutation_folding.reshape((inputs_mutation_folding.shape[0], -1))
         inputs_mutation_binding= inputs_mutation_binding.reshape((inputs_mutation_binding.shape[0], -1))
 
+        #jax.debug.print("{x}", x=inputs_mutation_folding.shape)
+        #jax.debug.print("{x}", x=inputs_location_folding[0])
+        #jax.debug.print("{x}", x=inputs_location_folding.shape)
+        #jax.debug.print("{x}", x=inputs_location_binding[0])
+        #jax.debug.print("{x}", x=inputs_mutation_binding[0])
+
         input_layer_select_folding = jnp.expand_dims(inputs_select[:, 0], -1)
         input_layer_select_binding = jnp.expand_dims(inputs_select[:, 1], -1)
 
@@ -230,7 +236,6 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                         folding_additive_trait_layer,
                         binding_additive_trait_layer,
                         degradation_additive_trait_layer)
-
         binding_nonlinear_layer = model.solve_binding(args_binding)
 
         binding_additive_layer = hk.Linear(1,

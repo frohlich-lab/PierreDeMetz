@@ -4,6 +4,7 @@ import pandas as pd
 import jax.numpy as jnp
 import pprint
 import re
+import pickle
 
 
 def load_model_data_jax(file_dict, union_mode=False):
@@ -103,10 +104,27 @@ def resample_training_data_jax(tensor_dict, n_resamplings, rng):
 
     return tensor_dict
 
+def process_row(row, amino_acid_to_index, column_set, prefix):
+    for col in column_set:
+        if row[col] == 1:
+            stripped_col = col.replace(prefix, "")
+            match = re.match(r"([A-Z])(\d+)([A-Z])", stripped_col)
+            if match:
+                original, position, mutation = match.groups()
+                result = pd.Series({
+                    'mutation_matrix_index': (row.name, amino_acid_to_index[original], amino_acid_to_index[mutation]),
+                    'location_matrix_index': (row.name, int(position)-1),
+                })
+                return result
+    return pd.Series({'mutation_matrix_index': None, 'location_matrix_index': None})
+
+
 def load_model_data_complex(file_dict, union_mode=False):
     amino_acid_to_index = {'A': 0, 'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'H': 6, 'I': 7, 'K': 8, 'L': 9, 'M': 10, 'N': 11, 'P': 12, 'Q': 13, 'R': 14, 'S': 15, 'T': 16, 'V': 17, 'W': 18, 'Y': 19}
     data_dict = {}
+
     for name in file_dict.keys():
+        #print(name)
         data_dict[name] = {}
         df = pd.read_csv(file_dict[name])
 
@@ -118,39 +136,54 @@ def load_model_data_complex(file_dict, union_mode=False):
         TARGET_SD_COLUMN = "fitness_sd"
         SEQUENCE_COLUMN = "variant_sequence"
         TRAINING_SET_COLUMN = "training_set"
-        #print(len(df.columns))
-        #print(len(BIND_COLUMNS))
-        #print(len(FOLD_COLUMNS))
 
-        mutation_matrix_bind = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
-        mutation_matrix_fold = jnp.zeros((len(df), 20, 20), dtype=jnp.float32)
-        location_matrix_bind = jnp.zeros((len(df), len(df.columns) - len(BIND_COLUMNS)), dtype=jnp.float32)
-        location_matrix_fold = jnp.zeros((len(df), len(df.columns) - len(FOLD_COLUMNS)), dtype=jnp.float32)
-
-
-        for i, col in enumerate(BIND_COLUMNS):
+        position_values = []
+        for col in (BIND_COLUMNS + FOLD_COLUMNS):
             if col == "WT":
                 continue
-            stripped_col = col.replace("bind_", "")
+            stripped_col = col.replace("bind_", "").replace("fold_", "")
             match = re.match(r"([A-Z])(\d+)([A-Z])", stripped_col)
             if match:
                 original, position, mutation = match.groups()
-                mutation_matrix_bind = mutation_matrix_bind.at[:, amino_acid_to_index[original], amino_acid_to_index[mutation]].set(df[col])
-                location_matrix_bind = location_matrix_bind.at[:, int(position)-1].set(df[col])
-            else:
-                print(f"Could not parse column name: {col}")
+                position_values.append(int(position))
 
-        for i, col in enumerate(FOLD_COLUMNS):
-            if col == "WT":
-                continue
-            stripped_col = col.replace("fold_", "")
-            match = re.match(r"([A-Z])(\d+)([A-Z])", stripped_col)
-            if match:
-                original, position, mutation = match.groups()
-                mutation_matrix_fold = mutation_matrix_fold.at[:, amino_acid_to_index[original], amino_acid_to_index[mutation]].set(df[col])
-                location_matrix_fold = location_matrix_fold.at[:, int(position)-1].set(df[col])
-            else:
-                print(f"Could not parse column name: {col}")
+        num_residues = max(position_values)
+
+        mutation_matrix_bind = np.zeros((len(df), 20, 20), dtype=jnp.float32)
+        mutation_matrix_fold = np.zeros((len(df), 20, 20), dtype=jnp.float32)
+        location_matrix_bind = np.zeros((len(df), num_residues), dtype=jnp.float32)
+        location_matrix_fold = np.zeros((len(df), num_residues), dtype=jnp.float32)
+
+        # create matrix indices using df.apply()
+        df_result = df.apply(lambda row: process_row(row, amino_acid_to_index, BIND_COLUMNS, "bind_"), axis=1)
+        print('one done')
+        #print(df_result)
+        # Set 1 at the mutation position in the mutation and location matrices
+
+
+        for idx, row in df_result.iterrows():
+
+            #print(row['mutation_matrix_index'])
+            if row['mutation_matrix_index'] is not None:
+                mutation_matrix_bind[row['mutation_matrix_index']]=1
+                #print(mutation_matrix_bind[row['mutation_matrix_index']])
+                location_matrix_bind[row['location_matrix_index']]=1
+                #print(row)
+
+        # create matrix indices using df.apply()
+        df_result = df.apply(lambda row: process_row(row, amino_acid_to_index, FOLD_COLUMNS, "fold_"), axis=1)
+
+        # Set 1 at the mutation position in the mutation and location matrices
+        for idx, row in df_result.iterrows():
+
+            if row['mutation_matrix_index'] is not None:
+                mutation_matrix_fold[row['mutation_matrix_index']]=1
+                location_matrix_fold[row['location_matrix_index']]=1
+
+        mutation_matrix_bind = jnp.array(mutation_matrix_bind, dtype=jnp.float32)
+        mutation_matrix_fold = jnp.array(mutation_matrix_fold, dtype=jnp.float32)
+        location_matrix_bind = jnp.array(location_matrix_bind, dtype=jnp.float32)
+        location_matrix_fold = jnp.array(location_matrix_fold, dtype=jnp.float32)
 
         data_dict[name]["select"] = jnp.array(df[SELECT_COLUMNS], dtype=jnp.float32)
 
@@ -173,7 +206,12 @@ def load_model_data_complex(file_dict, union_mode=False):
         if union_mode == 'True':
             data_dict[name] = create_union_dataset(data_dict[name])
 
+    with open('GRB2_SH3.pkl', 'wb') as fp:
+        pickle.dump(data_dict, fp)
+        print('dictionary saved successfully to file')
+
     return data_dict
+
 
 if __name__ == '__main__':
     union_mode = False
@@ -189,4 +227,4 @@ if __name__ == '__main__':
     },
                                    union_mode)
 
-    pprint.pprint(data)
+    #pprint.pprint(data)
