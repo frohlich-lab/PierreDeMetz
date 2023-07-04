@@ -164,6 +164,8 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
         inputs_mutation_binding= inputs_mutation_binding.reshape((inputs_mutation_binding.shape[0], -1))
 
         #jax.debug.print("{x}", x=inputs_mutation_folding.shape)
+        #jax.debug.print("{x}", x=inputs_mutation_folding.shape[1])
+
         #jax.debug.print("{x}", x=inputs_location_folding[0])
         #jax.debug.print("{x}", x=inputs_location_folding.shape)
         #jax.debug.print("{x}", x=inputs_location_binding[0])
@@ -184,7 +186,11 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
                                    name='location_layer_fold')(inputs_location_folding)
-        folding_additive_trait_layer = mutation_layer_folding + location_layer_folding
+
+        concat_input_fold = jnp.concatenate((mutation_layer_folding, location_layer_folding), axis=1)
+        folding_additive_trait_layer = hk.Linear(number_additive_traits,
+                                                 w_init=hk.initializers.VarianceScaling(1.0, "fan_in","truncated_normal"),
+                                                 name='folding_additive_trait')(concat_input_fold)
 
         #bind
         mutation_layer_binding = hk.Linear(number_additive_traits,
@@ -196,7 +202,10 @@ def create_model_fn_complex(number_additive_traits, l1, l2, rng, is_implicit = T
                                    w_init=hk.initializers.VarianceScaling(1.0, "fan_in", "truncated_normal"),
                                    with_bias=False,
                                    name='location_layer_bind')(inputs_location_binding)
-        binding_additive_trait_layer = mutation_layer_binding + location_layer_binding
+        concat_input_bind = jnp.concatenate((mutation_layer_binding, location_layer_binding), axis=1)
+        binding_additive_trait_layer = hk.Linear(number_additive_traits,
+                                                 w_init=hk.initializers.VarianceScaling(1.0, "fan_in","truncated_normal"),
+                                                 name='binding_additive_trait')(concat_input_bind)
 
         #synthesis
         mutation_layer_synthesis = hk.Linear(number_additive_traits,

@@ -14,13 +14,13 @@
 #' @return Nothing
 #' @export
 doubledeepms <- function(
-    startStage = 0,
-    stopStage = 1,
+    startStage = 1,
+    stopStage = 15,
     base_dir = "/Users/pierredemetz/UCL_work/Crick/doubledeepms/Results",
     tmodel_job_number = 1,
     tmodel_grid_search = FALSE,
     tmodel_protein = "GRB2-SH3",
-    tmodel_subset = "50"
+    tmodel_subset = "100"
 ){
   
   # startStage=1

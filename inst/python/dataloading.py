@@ -4,7 +4,6 @@ import pandas as pd
 import jax.numpy as jnp
 import pprint
 import re
-import pickle
 
 
 def load_model_data_jax(file_dict, union_mode=False):
@@ -154,28 +153,15 @@ def load_model_data_complex(file_dict, union_mode=False):
         location_matrix_bind = np.zeros((len(df), num_residues), dtype=jnp.float32)
         location_matrix_fold = np.zeros((len(df), num_residues), dtype=jnp.float32)
 
-        # create matrix indices using df.apply()
         df_result = df.apply(lambda row: process_row(row, amino_acid_to_index, BIND_COLUMNS, "bind_"), axis=1)
-        print('one done')
-        #print(df_result)
-        # Set 1 at the mutation position in the mutation and location matrices
-
 
         for idx, row in df_result.iterrows():
-
-            #print(row['mutation_matrix_index'])
             if row['mutation_matrix_index'] is not None:
                 mutation_matrix_bind[row['mutation_matrix_index']]=1
-                #print(mutation_matrix_bind[row['mutation_matrix_index']])
                 location_matrix_bind[row['location_matrix_index']]=1
-                #print(row)
 
-        # create matrix indices using df.apply()
         df_result = df.apply(lambda row: process_row(row, amino_acid_to_index, FOLD_COLUMNS, "fold_"), axis=1)
-
-        # Set 1 at the mutation position in the mutation and location matrices
         for idx, row in df_result.iterrows():
-
             if row['mutation_matrix_index'] is not None:
                 mutation_matrix_fold[row['mutation_matrix_index']]=1
                 location_matrix_fold[row['location_matrix_index']]=1
@@ -206,10 +192,6 @@ def load_model_data_complex(file_dict, union_mode=False):
         if union_mode == 'True':
             data_dict[name] = create_union_dataset(data_dict[name])
 
-    with open('GRB2_SH3.pkl', 'wb') as fp:
-        pickle.dump(data_dict, fp)
-        print('dictionary saved successfully to file')
-
     return data_dict
 
 
@@ -226,5 +208,3 @@ if __name__ == '__main__':
     "obs": data_obs_file
     },
                                    union_mode)
-
-    #pprint.pprint(data)

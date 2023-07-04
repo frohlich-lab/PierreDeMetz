@@ -44,7 +44,7 @@ doubledeepms__mochi__fit_tmodel_3state <- function(
   num_epochs=1000,
   num_epochs_grid=100,
   validation_set_proportion=0.1,
-  num_resamplings=10,
+  num_resamplings=0,
   num_samples="128,256,512,1024",
   learning_rate="0.0001,0.001,0.01,0.1",
   job_number=1
@@ -296,7 +296,7 @@ doubledeepms__mochi__fit_tmodel_3state <- function(
   
   #Run mochi python script on command-line
   system(paste0(
-    "conda activate pierre;python ", mochi_script,
+    "conda activate /Users/pierredemetz/miniconda3/envs/pierre;python ", mochi_script,
     " --data_train ",
     file.path(mochi_outpath, run_name, "dataset_train.txt"),
     " --data_valid ",
