@@ -195,7 +195,7 @@ else:
     } for i in batch_size for j in learn_rate for k in l1 for l in l2]
 
     rng = jax.random.PRNGKey(random_seed)
-    rngs_grid = jax.random.split(rng, len(parameter_grid[:1]))
+    rngs_grid = jax.random.split(rng, len(parameter_grid))
 
 if is_complex==True:
     grid_results = [
@@ -206,7 +206,7 @@ if is_complex==True:
             rng_key,
             {**wandb_config, 'run_number': i+1}
         )
-        for i, (params, rng_key) in enumerate(zip(parameter_grid[:1], rngs_grid))
+        for i, (params, rng_key) in enumerate(zip(parameter_grid, rngs_grid))
     ]
 
     best_params = parameter_grid[np.argmin(grid_results)]

@@ -1,6 +1,6 @@
 # List of parameters
-model_types = ["tri_state_equilibrium","two_state_non_equilibrium","tri_state_non_equilibrium", "tri_state_equilibrium_explicit"]
-proteins = ["GRB2-SH3","GB1", "PSD95-PDZ3"]
+model_types = ["tri_state_equilibrium","two_state_non_equilibrium_deg","two_state_non_equilibrium_nondeg","tri_state_non_equilibrium", "tri_state_equilibrium_explicit"]
+proteins = ["GRB2-SH3", "PSD95-PDZ3"]
 datasets = ["mochi__fit_tmodel_3state_sparse_dimsum128_subsample100p"]
 
 # Need to change path with ../../Results/mochi/......   if used locally
@@ -23,7 +23,8 @@ rule run_model:
     params:
         wc = lambda wildcards: wildcards
     resources:
-        mem_mb = 60000
+        mem_mb = 60000,
+	runtime = "24h"
     shell:
         """
         mkdir -p Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type};
@@ -32,9 +33,9 @@ rule run_model:
         --data_valid Res/{params.wc.protein}/{params.wc.dataset}/dataset_valid.txt \
         --data_obs Res/{params.wc.protein}/{params.wc.dataset}/dataset_all.txt \
         -o Res/{params.wc.protein}/{params.wc.dataset}/{params.wc.model_type}/ \
-        -e 75  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
+        -e 200  -p 250 --num_resamplings 0 --num_samples 128 --num_models 1 --random_seed 1 --union_mode False \
         --model_type {params.wc.model_type} \
         --protein {params.wc.protein} \
-        --project_name pierre_mochi_complete \
+        --project_name pierre_mochi_complete_normal_1 \
         --wandb True;
         """
